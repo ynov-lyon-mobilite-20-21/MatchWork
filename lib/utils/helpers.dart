@@ -1,0 +1,1 @@
+const ICONS_PATH = "lib/images/icons";
