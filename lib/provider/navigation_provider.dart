@@ -37,8 +37,8 @@ class NavigationProvider extends ChangeNotifier {
       title: 'Profile',
       child: Profile(),
       initialRoute: Profile.route,
-      inactiveIconEndpoint: "$ICONS_PATH//profil_off.png",
-      activeIconEndpoint: "$ICONS_PATH//profil_on.png",
+      inactiveIconEndpoint: "$ICONS_PATH/profil_off.png",
+      activeIconEndpoint: "$ICONS_PATH/profil_on.png",
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
         print('Generating route: ${settings.name}');
@@ -55,8 +55,8 @@ class NavigationProvider extends ChangeNotifier {
       title: 'Swipe',
       child: Swipe(),
       initialRoute: Swipe.route,
-      inactiveIconEndpoint: "$ICONS_PATH//match_off.png",
-      activeIconEndpoint: "$ICONS_PATH//match_on.png",
+      inactiveIconEndpoint: "$ICONS_PATH/match_off.png",
+      activeIconEndpoint: "$ICONS_PATH/match_on.png",
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
         print('Generating route: ${settings.name}');
