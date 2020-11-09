@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:match_work/utils/helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:match_work/provider/navigation_provider.dart';
 
@@ -36,8 +37,9 @@ class Root extends StatelessWidget {
           onWillPop: () async => provider.onWillPop(context),
           child: Scaffold(
             appBar: AppBar(
-              title: const Text('Match Work'),
-              backgroundColor: Color(0xFF0E6D7B)
+              title: Image.asset("lib/images/splash.png", fit: BoxFit.contain, height: 50),
+
+              backgroundColor: PRIMARY_COLOR
             ),
             body: IndexedStack(
               children: screens,
