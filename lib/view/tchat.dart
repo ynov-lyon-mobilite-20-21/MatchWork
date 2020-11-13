@@ -16,7 +16,7 @@ class Tchat extends StatelessWidget {
             "Tchat",
             style: TextStyle(color: Colors.white, fontSize: 30),
           ),
-          color: Colors.yellow,
+          color: Colors.blue,
         ),
       ),
     );

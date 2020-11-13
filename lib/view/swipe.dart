@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class Swipe extends StatelessWidget {
   static const route = '/swipe';
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context).getTheme();
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Center(
         child: Container(
           alignment: Alignment.center,
@@ -13,9 +18,9 @@ class Swipe extends StatelessWidget {
           width: 300,
           child: Text(
             "Swipe",
-            style: TextStyle(color: Colors.white, fontSize: 30),
+            style: theme.textTheme.headline1,
           ),
-          color: Colors.red,
+          color: Colors.redAccent,
         ),
       ),
     );

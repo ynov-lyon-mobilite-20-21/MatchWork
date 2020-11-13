@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
@@ -16,7 +15,7 @@ class Profile extends StatelessWidget {
             "Profile",
             style: TextStyle(color: Colors.white, fontSize: 30),
           ),
-          color: Colors.blue,
+          color: Colors.green,
         ),
       ),
     );

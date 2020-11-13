@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:match_work/utils/helpers.dart';
+import 'package:match_work/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:match_work/provider/navigation_provider.dart';
 
-class Root extends StatelessWidget {
-  static const route = '/';
+class Root extends StatefulWidget {
+  @override
+  _Root createState() => _Root();
+}
 
+class _Root extends State<Root> {
+  bool isDarkModeOn = false;
+
+  static const route = '/';
+ 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NavigationProvider>(
-      builder: (context, provider, child) {
-        final bottomNavigationBarItems = provider.screens
+    return Consumer2<NavigationProvider, ThemeProvider>(
+      builder: (context, navigationProvider, themeProvider, child) {
+        final theme = themeProvider.getTheme();
+        final bottomNavigationBarItems = navigationProvider.screens
             .map((screen) => BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage(screen.inactiveIconEndpoint),
@@ -20,11 +29,11 @@ class Root extends StatelessWidget {
                   image: AssetImage(screen.activeIconEndpoint),
                   height: 30,
                 ),
-                label: screen.title))
+                title: Text(screen.title, style: theme.textTheme.subtitle1)))
             .toList();
 
         // Initialize [Navigator] instance for each screen.
-        final screens = provider.screens
+        final screens = navigationProvider.screens
             .map(
               (screen) => Navigator(
                 key: screen.navigatorState,
@@ -34,24 +43,39 @@ class Root extends StatelessWidget {
             .toList();
 
         return WillPopScope(
-          onWillPop: () async => provider.onWillPop(context),
-          child: Scaffold(
-            appBar: AppBar(
-              title: Image.asset("lib/images/splash.png", fit: BoxFit.contain, height: 50),
-
-              backgroundColor: PRIMARY_COLOR
-            ),
-            body: IndexedStack(
-              children: screens,
-              index: provider.currentTabIndex,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: bottomNavigationBarItems,
-              currentIndex: provider.currentTabIndex,
-              onTap: provider.setTab,
-            ),
-          ),
-        );
+            onWillPop: () async => navigationProvider.onWillPop(context),
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: themeProvider.getTheme(),
+              home: Scaffold(
+                appBar: AppBar(
+                  title: Image.asset("lib/images/splash.png",
+                      fit: BoxFit.contain, height: 50),
+                  backgroundColor: theme.appBarTheme.color,
+                  actions: <Widget>[
+                    Switch(
+                      value: isDarkModeOn,
+                      onChanged: (value) {
+                        setState(() {
+                          isDarkModeOn = value;
+                          themeProvider.changeTheme(isDarkModeOn);
+                        });
+                      },
+                    )
+                  ],
+                ),
+                body: IndexedStack(
+                  children: screens,
+                  index: navigationProvider.currentTabIndex,
+                ),
+                bottomNavigationBar: BottomNavigationBar(
+                  items: bottomNavigationBarItems,
+                  currentIndex: navigationProvider.currentTabIndex,
+                  onTap: navigationProvider.setTab,
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                ),
+              ),
+            ));
       },
     );
   }

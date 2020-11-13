@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final splashDelay = 5;
-  String _image = "lib/images/splash.png";
+  String _image = "lib/images/logo/logo_text_below.png";
   PackageInfo _packageInfo = PackageInfo(
     version: 'Unknown',
   );
@@ -66,8 +66,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     children: <Widget>[
                       Image.asset(
                         _image,
-                        height: 300,
-                        width: 300,
+                        height: 350,
+                        width: 350,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),

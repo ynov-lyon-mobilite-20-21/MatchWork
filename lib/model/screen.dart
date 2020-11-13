@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 class Screen {
 
+  /// [title] of the screen
   final String title;
 
+  /// the view associated to the screen
   final Widget child;
 
+  /// [onGenerateRoute]  automatically generates routes in order to navigate in the application
   final RouteFactory onGenerateRoute;
 
   final String initialRoute;
