@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/utils/helpers.dart';
-import 'package:match_work/view/root.dart';
+import 'package:match_work/view/login_view.dart';
 import 'package:package_info/package_info.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -43,8 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (BuildContext context) => Root()));
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => LoginView()));
   }
 
   @override
