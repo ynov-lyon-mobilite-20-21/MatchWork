@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "404725809868",
+    "firebase_url": "https://matchwork-173d9.firebaseio.com",
+    "project_id": "matchwork-173d9",
+    "storage_bucket": "matchwork-173d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404725809868:android:ef03e2b22f2e76c60df869",
+        "android_client_info": {
+          "package_name": "com.ynov.match_work"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404725809868-9ngn17infn963jrehtvpbrppvco1grcq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOdKoHLVVMpwCMH3AUdJiP1jXcQuLYXlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404725809868-9ngn17infn963jrehtvpbrppvco1grcq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
