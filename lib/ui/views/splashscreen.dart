@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
+import 'package:match_work/ui/views/root.dart';
+import 'package:match_work/ui/widgets/helpers/space.dart';
+import 'package:match_work/utils/helpers.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
-
-import 'login_view.dart';
 
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = PRIMARY_COLOR;
@@ -18,7 +19,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final splashDelay = 5;
-  String _image = "assets/images/logo/logo_text_below.png";
+  String _logo = "assets/images/logo/logo_text_below.png";
+  String _backgroundImage =
+      "assets/images/background/background_splashscreen.png";
+  String _topRightLogo = "assets/images/logo/logo_tuba.png";
   PackageInfo _packageInfo = PackageInfo(
     version: 'Unknown',
   );
@@ -26,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
 
     _loadWidget();
     _initPackageInfo();
@@ -44,68 +49,70 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => LoginView()));
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (BuildContext context) => Root()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.backgroundColor,
-      body: InkWell(
-        child: Stack(
-          fit: StackFit.expand,
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(_backgroundImage), fit: BoxFit.cover)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: 7,
-                  child: Container(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        _image,
-                        height: 350,
-                        width: 350,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                      ),
-                    ],
-                  )),
-                ),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(PRIMARY_COLOR)),
-                      Container(
-                        height: 10,
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Spacer(),
-                            Text(_packageInfo.version,
-                                style: widget.styleTextUnderTheLoader),
-                            Spacer(
-                              flex: 4,
-                            ),
-                            Text(
-                              "@Tuba",
-                              style: widget.styleTextUnderTheLoader,
-                            ),
-                            Spacer(),
-                          ])
-                    ],
+            Container(
+              margin: EdgeInsets.only(top: 15.0, right: 15.0),
+              alignment: Alignment.topRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Image.asset(
+                    _topRightLogo,
+                    width: 60,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            Space(size: 100),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    _logo,
+                    width: MediaQuery.of(context).size.width,
+                    height: 300,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                  ),
+                ],
+              ),
+            ),
+            Space(size: 180),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Loading...",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Space(size: 10),
+                  Text(
+                    "version : ${_packageInfo.version}",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

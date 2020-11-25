@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:match_work/ui/provider/navigation_provider.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,8 @@ class _Root extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+
     return Consumer2<NavigationProvider, ThemeProvider>(
       builder: (context, navigationProvider, themeProvider, child) {
         final theme = themeProvider.getTheme();
