@@ -1,17 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:match_work/provider/navigation_provider.dart';
-import 'package:match_work/provider/theme_provider.dart';
-import 'package:match_work/services/authentication_service.dart';
-import 'package:match_work/view/splashscreen.dart';
+import 'package:match_work/provider_setup.dart';
+import 'package:match_work/ui/provider/navigation_provider.dart';
+import 'package:match_work/ui/views/pushed_screen.dart';
+import 'package:match_work/ui/views/root.dart';
+import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  return runApp(Test());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+  runApp(MyApp());
 }
 
-class Test extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -19,35 +23,28 @@ class Test extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (_) => NavigationProvider()),
-              ChangeNotifierProvider(create: (context) => ThemeProvider()),
-              Provider.value(value: AuthenticationService()),
-              StreamProvider(
-                  create: (context) =>
-                      Provider.of<AuthenticationService>(context, listen: false)
-                          .user),
-            ],
-            child: App(),
-          );
+              providers: providers,
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                home: SplashScreen(),
+                onGenerateRoute: (RouteSettings settings) {
+                  print('Generating route: ${settings.name}');
+                  switch (settings.name) {
+                    case PushedScreen.route:
+                      return MaterialPageRoute(builder: (_) => PushedScreen());
+                    case Root.route:
+                      return MaterialPageRoute(builder: (_) => Root());
+                    default:
+                      return MaterialPageRoute(
+                          builder: (_) => DefaultView(
+                                routePath: settings.name,
+                              ));
+                  }
+                },
+              ));
         }
         return Container();
       },
     );
-  }
-}
-
-class App extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    return Consumer<ThemeProvider>(
-        builder: (context, theme, _) => MaterialApp(
-              onGenerateRoute: NavigationProvider.of(context).onGenerateRoute,
-              debugShowCheckedModeBanner: false,
-              home: SplashScreen(),
-            ));
   }
 }

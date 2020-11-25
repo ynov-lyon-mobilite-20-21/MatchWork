@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:match_work/services/authentication_service.dart';
-import 'package:match_work/utils/form_validators.dart';
+import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/form_validators.dart';
+import 'package:match_work/core/viewmodels/base_model.dart';
 
-class LoginViewModel extends ChangeNotifier {
+class LoginViewModel extends BaseModel {
   AuthenticationService _authenticationService;
-  bool _busy = false;
   String error;
   bool _isRegistration = false;
 
@@ -12,13 +12,6 @@ class LoginViewModel extends ChangeNotifier {
 
   set isRegistration(bool value) {
     _isRegistration = value;
-    notifyListeners();
-  }
-
-  bool get busy => _busy;
-
-  set busy(bool value) {
-    _busy = value;
     notifyListeners();
   }
 
