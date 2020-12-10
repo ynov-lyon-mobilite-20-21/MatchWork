@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
-import 'package:match_work/ui/views/root.dart';
+import 'package:match_work/ui/views/homa_view.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
@@ -127,7 +127,7 @@ class _LoginViewState extends State<LoginView> {
   void validate(BuildContext context, bool success, String error) {
     if (success) {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Root()));
+          .push(MaterialPageRoute(builder: (context) => HomeView()));
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(error),

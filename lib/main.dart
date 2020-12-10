@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:match_work/provider_setup.dart';
-import 'package:match_work/ui/provider/navigation_provider.dart';
-import 'package:match_work/ui/views/pushed_screen.dart';
-import 'package:match_work/ui/views/root.dart';
+import 'package:match_work/ui/views/homa_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
+
+import 'core/constants/app_constants.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,17 +27,19 @@ class MyApp extends StatelessWidget {
               providers: providers,
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: SplashScreen(),
+                home: HomeView(),
                 onGenerateRoute: (RouteSettings settings) {
                   print('Generating route: ${settings.name}');
                   switch (settings.name) {
-                    case PushedScreen.route:
-                      return MaterialPageRoute(builder: (_) => PushedScreen());
-                    case Root.route:
-                      return MaterialPageRoute(builder: (_) => Root());
+                    case RoutePath.Home:
+                      return MaterialPageRoute(builder: (_) => HomeView());
+                    case RoutePath.Login:
+                      return MaterialPageRoute(builder: (_) => HomeView());
+                    case RoutePath.Register:
+                      return MaterialPageRoute(builder: (_) => HomeView());
                     default:
                       return MaterialPageRoute(
-                          builder: (_) => DefaultView(
+                          builder: (_) => ErrorView(
                                 routePath: settings.name,
                               ));
                   }
@@ -46,6 +48,22 @@ class MyApp extends StatelessWidget {
         }
         return Container();
       },
+    );
+  }
+}
+
+class ErrorView extends StatelessWidget {
+  final String routePath;
+
+  ErrorView({Key key, @required this.routePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("ERREUR")),
+      body: Center(
+        child: Text("La route $routePath est introuvable"),
+      ),
     );
   }
 }
