@@ -1,1 +1,2 @@
-const String ICONS_PATH = "assets/images/icons";
+const String IMAGES_PATH = "assets/images";
+const String ICONS_PATH = IMAGES_PATH + "/icons";

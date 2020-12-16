@@ -1,19 +1,26 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/models/chat_message.dart';
+import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/utils/keyboard_utils.dart';
+import 'package:match_work/ui/shared/app_colors.dart';
+import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
 
-class Tchat extends StatefulWidget {
-  static const route = '/tchat';
+class ConversationView extends StatefulWidget {
+  static const route = '/conversation';
+
+  final User caller;
+
+  ConversationView({Key key, @required this.caller}) : super(key: key);
 
   @override
-  _TchatState createState() => _TchatState();
+  _ConversationViewState createState() => _ConversationViewState();
 }
 
-class _TchatState extends State<Tchat> {
+class _ConversationViewState extends State<ConversationView> {
   TextEditingController controller = TextEditingController();
   List<Widget> messagesList = [];
 
@@ -22,11 +29,57 @@ class _TchatState extends State<Tchat> {
     return GestureDetector(
       onTap: () => KeyboardUtils.closeKeyboard(context: context),
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Conversation"),
-        ),
         body: Column(
           children: [
+            Container(
+              color: PRIMARY_COLOR,
+              child: SafeArea(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: Icon(
+                                Platform.isIOS
+                                    ? Icons.arrow_back_ios
+                                    : Icons.arrow_back,
+                                color: Colors.white,
+                                size: 30.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ProfilePictureWidget(
+                                radius: 25.0,
+                                backgroundColor: Colors.white,
+                              ),
+                              Text(
+                                widget.caller.firstName,
+                                textScaleFactor: 1.2,
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
             Expanded(
                 child: SingleChildScrollView(
               child: Padding(
@@ -65,24 +118,24 @@ class _TchatState extends State<Tchat> {
                   IconButton(
                       icon: Icon(
                         Icons.face,
-                        color: Colors.blueAccent,
+                        color: PRIMARY_COLOR,
                       ),
                       onPressed: () {}),
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: "Taper quelque chose...",
-                          hintStyle: TextStyle(color: Colors.blueAccent),
+                          hintStyle: TextStyle(color: PRIMARY_COLOR),
                           border: InputBorder.none),
                       controller: controller,
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.photo_camera, color: Colors.blueAccent),
+                    icon: Icon(Icons.photo_camera, color: PRIMARY_COLOR),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: Icon(Icons.attach_file, color: Colors.blueAccent),
+                    icon: Icon(Icons.attach_file, color: PRIMARY_COLOR),
                     onPressed: () {},
                   )
                 ],
@@ -93,7 +146,7 @@ class _TchatState extends State<Tchat> {
           Container(
             padding: const EdgeInsets.all(15.0),
             decoration:
-                BoxDecoration(color: Colors.blueAccent, shape: BoxShape.circle),
+                BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
             child: InkWell(
               child: Icon(
                 Icons.send,

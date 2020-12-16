@@ -4,10 +4,11 @@ import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/views/pushed_screen.dart';
 import 'package:match_work/ui/views/root.dart';
 import 'package:match_work/ui/widgets/dialogs/exit_dialog.dart';
-import 'package:match_work/ui/widgets/profile.dart';
-import 'package:match_work/ui/widgets/swipe.dart';
-import 'package:match_work/ui/widgets/tchat.dart';
+import 'package:match_work/ui/widgets/tabs/profile.dart';
 import 'package:provider/provider.dart';
+
+import 'file:///C:/Flutter%20Dev/match_work/lib/ui/widgets/tabs/swipe.dart';
+import 'file:///C:/Flutter%20Dev/match_work/lib/ui/widgets/tabs/tchat.dart';
 
 const PROFILE_SCREEN = 0;
 const SWIPE_SCREEN = 1;
