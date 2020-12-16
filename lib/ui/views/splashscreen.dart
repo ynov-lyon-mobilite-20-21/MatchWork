@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/widgets/helpers/space.dart';
-import 'package:match_work/utils/helpers.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 
 class SplashScreen extends StatefulWidget {
-  final Color backgroundColor = PRIMARY_COLOR;
+  final Color backgroundColor = AppColors.PrimaryColor;
   final TextStyle styleTextUnderTheLoader = TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white);
 

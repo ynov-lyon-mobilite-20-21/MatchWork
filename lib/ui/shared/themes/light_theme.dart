@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
 
-// ignore: non_constant_identifier_names
 final ThemeData LightThemeData = ThemeData(
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Color(0xffFFFFFF),
   appBarTheme: AppBarTheme(
-    color: PRIMARY_COLOR,
+    color: AppColors.AppBarColor,
     iconTheme: IconThemeData(
-      color: Colors.white,
+      color: const Color(0xFF006E7F ),
     ),
   ),
   textTheme: TextTheme(
@@ -22,13 +22,13 @@ final ThemeData LightThemeData = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: Colors.greenAccent,
+    color: const Color(0xff006E7F),
   ),
   primarySwatch: Colors.grey,
-  primaryColor: PRIMARY_COLOR,
+  primaryColor: AppColors.PrimaryColor,
   brightness: Brightness.light,
   backgroundColor: const Color(0xFFE5E5E5),
-  accentColor: ACCENT_COLOR,
+  accentColor: AppColors.AccentColor,
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.white54,
 );

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:match_work/provider_setup.dart';
+import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
@@ -9,19 +10,24 @@ import 'package:provider/provider.dart';
 
 import 'core/constants/app_constants.dart';
 import 'ui/provider/theme_provider.dart';
+import 'core/constants/app_constants.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.white, // navigation bar color
+    statusBarColor: AppColors.StatusBarColor, // status bar color
+  ));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
@@ -30,7 +36,7 @@ class MyApp extends StatelessWidget {
               providers: providers,
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: HomeView(),
+                home: SplashScreen(),
                 onGenerateRoute: (RouteSettings settings) {
                   print('Generating route: ${settings.name}');
                   switch (settings.name) {

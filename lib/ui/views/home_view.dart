@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/viewmodels/views/bottom_navigation_bar_view_model.dart';
-import '../../utils/helpers.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -28,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
             appBar: AppBar(
                 title: Image.asset("assets/images/splash.png",
                     fit: BoxFit.contain, height: 50),
-                backgroundColor: PRIMARY_COLOR),
+                backgroundColor: theme.getTheme().appBarTheme.color),
             body: model.currentScreen,
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
@@ -64,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     label: "Tchat"),
               ],
-              backgroundColor: Colors.white,
+              backgroundColor: theme.getTheme().backgroundColor,
               currentIndex: model.currentTab,
               onTap: (int index) {
                 model.currentTab = index;

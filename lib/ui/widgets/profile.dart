@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
                 "Profile",
                 style: TextStyle(color: Colors.white, fontSize: 30),
               ),
-              color: Colors.green,
+              color: theme.getTheme().cardTheme.color,
             ),
           ),
         ],
