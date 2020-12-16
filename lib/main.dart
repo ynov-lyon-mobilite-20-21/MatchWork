@@ -6,6 +6,7 @@ import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
+import 'package:match_work/ui/views/tutorial_view.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_constants.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
               providers: providers,
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: SplashScreen(),
+                home: TutorialView(),
                 onGenerateRoute: (RouteSettings settings) {
                   print('Generating route: ${settings.name}');
                   switch (settings.name) {
