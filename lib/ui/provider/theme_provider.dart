@@ -7,8 +7,8 @@ class ThemeProvider with ChangeNotifier {
   final darkTheme = DarkThemeData;
   final lightTheme = LightThemeData;
 
-  ThemeData _themeData;
-  bool isDarkMode;
+  ThemeData _themeData = LightThemeData;
+  bool isDarkMode = false;
   ThemeData getTheme() => _themeData;
 
   ThemeProvider() {

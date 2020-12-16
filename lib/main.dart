@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:match_work/provider_setup.dart';
 import 'package:match_work/ui/views/home_view.dart';
+import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_constants.dart';
+import 'ui/provider/theme_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder(
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
@@ -34,7 +37,7 @@ class MyApp extends StatelessWidget {
                     case RoutePath.Home:
                       return MaterialPageRoute(builder: (_) => HomeView());
                     case RoutePath.Login:
-                      return MaterialPageRoute(builder: (_) => HomeView());
+                      return MaterialPageRoute(builder: (_) => LoginView());
                     case RoutePath.Register:
                       return MaterialPageRoute(builder: (_) => HomeView());
                     default:
