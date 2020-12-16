@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:match_work/provider_setup.dart';
-import 'package:match_work/ui/views/homa_view.dart';
+import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 

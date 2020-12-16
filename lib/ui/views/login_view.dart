@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
-import 'package:match_work/ui/views/homa_view.dart';
+import 'package:match_work/ui/views/home_view.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
