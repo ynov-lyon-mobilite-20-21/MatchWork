@@ -10,6 +10,8 @@ import 'package:match_work/ui/views/root.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -23,14 +25,13 @@ class MyApp extends StatelessWidget {
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          print(ConversationView.route);
           return MultiProvider(
               providers: providers,
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: Root(),
+                initialRoute: ConversationView.route,
+                //home: SplashScreen(),
                 onGenerateRoute: (RouteSettings settings) {
-                  print('Generating route: ${settings.name}');
                   switch (settings.name) {
                     case PushedScreen.route:
                       return MaterialPageRoute(builder: (_) => PushedScreen());
@@ -39,9 +40,12 @@ class MyApp extends StatelessWidget {
                       return MaterialPageRoute(builder: (_) => Root());
                       break;
                     case ConversationView.route:
-                      print("TEST");
-                      User caller = settings.arguments as User;
-                      print(caller.displayName());
+                      User caller = User(
+                          uid: 'HgjjWAvUdbUpZH70JiX2ZLWA2W22',
+                          lastName: 'Nom',
+                          firstName: 'Prenom',
+                          mail: 'florianspadaro@gmail.com');
+                      //User caller = settings.arguments as User;
                       return MaterialPageRoute(
                           builder: (_) => ConversationView(
                                 caller: caller,

@@ -2,15 +2,32 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:match_work/core/models/user.dart' as AppUser;
+import 'package:match_work/core/repositories/user_repository.dart';
 
 class AuthenticationService {
-  StreamController<User> _userController = StreamController<User>();
-  Stream<User> get user => _userController.stream;
+  UserRepository _userRepository = UserRepository();
+  StreamController<AppUser.User> _userController =
+      StreamController<AppUser.User>();
+  Stream<AppUser.User> get user => _userController.stream;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   AuthenticationService() {
-    _auth.authStateChanges().listen((User user) => _userController.add(user));
+    _auth.authStateChanges().listen((User user) {
+      if (user != null) {
+        _userRepository.getUserByUid(user.uid).then((appUser) {
+          if (appUser == null) {
+            appUser = AppUser.User(
+              uid: user.uid,
+              mail: user.email,
+            );
+            _userRepository.createUser(appUser);
+          }
+          _userController.add(appUser);
+        });
+      }
+    });
   }
 
   Future<String> registrationWithEmailAndPassword(
