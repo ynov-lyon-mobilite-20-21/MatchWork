@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
+import 'package:match_work/ui/views/root.dart';
 import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 
 import 'login_view.dart';
 
@@ -43,9 +46,15 @@ class _SplashScreenState extends State<SplashScreen> {
     return Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => LoginView()));
+  Future<void> navigationPage() async {
+    bool isAuthenticated =
+        await Provider.of<AuthenticationService>(context, listen: false)
+            .isUserLoggedIn();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) =>
+                isAuthenticated ? Root() : LoginView()));
   }
 
   @override

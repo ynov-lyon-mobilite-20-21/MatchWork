@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/models/chat_message.dart';
 import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/conversation_view_model.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
@@ -22,15 +23,13 @@ class ConversationView extends StatefulWidget {
 }
 
 class _ConversationViewState extends State<ConversationView> {
-  List<Widget> messagesList = [];
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget<ConversationViewModel>(
-      model: ConversationViewModel(caller: widget.caller),
+      model: ConversationViewModel(
+          authenticationService: Provider.of(context), caller: widget.caller),
       onModelReady: (model) {
-        model
-            .listenMessageStream(Provider.of<User>(context, listen: false).uid);
+        model.listenMessageStream();
       },
       builder: (context, model, widget) => GestureDetector(
         onTap: () => KeyboardUtils.closeKeyboard(context: context),
@@ -117,10 +116,7 @@ class _ConversationViewState extends State<ConversationView> {
                   );
                 },
               )),
-              chatBar(
-                  model.controller,
-                  () => model.sendMessage(
-                      Provider.of<User>(context, listen: false).uid))
+              chatBar(model.controller, () => model.sendMessage())
             ],
           ),
         ),
@@ -192,8 +188,8 @@ class _ConversationViewState extends State<ConversationView> {
   }
 
   Widget chatMessage(ChatMessage message) {
-    bool isMe =
-        Provider.of<User>(context, listen: false).uid == message.ownerId;
+    bool isMe = Provider.of<AuthenticationService>(context).currentUser.uid ==
+        message.ownerId;
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Row(

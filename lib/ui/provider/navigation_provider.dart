@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/models/user.dart';
+import 'package:match_work/ui/views/conversation_view.dart';
 import 'package:match_work/ui/views/pushed_screen.dart';
 import 'package:match_work/ui/views/root.dart';
 import 'package:match_work/ui/widgets/dialogs/exit_dialog.dart';
@@ -82,6 +84,22 @@ class NavigationProvider extends ChangeNotifier {
       onGenerateRoute: (settings) {
         print('Generating route: ${settings.name}');
         switch (settings.name) {
+          case ConversationView.route:
+            User caller = User(
+                uid: 'Bo0aov0SQeV3zpF31SPYIKDLgqv2',
+                lastName: 'Spadaro',
+                firstName: 'Florian',
+                mail: 'florian.spadaro@ynov.com');
+            /*User caller = User(
+                uid: 'HgjjWAvUdbUpZH70JiX2ZLWA2W22',
+                lastName: 'Nom',
+                firstName: 'Prenom',
+                mail: 'florianspadaro@gmail.com');*/
+            //User caller = settings.arguments as User;
+            return MaterialPageRoute(
+                builder: (_) => ConversationView(
+                      caller: caller,
+                    ));
           default:
             return MaterialPageRoute(builder: (_) => Tchat());
         }

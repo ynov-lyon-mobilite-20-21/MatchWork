@@ -19,5 +19,5 @@ List<SingleChildWidget> uiConsumablesProviders = [
   ChangeNotifierProvider(create: (context) => ThemeProvider()),
   StreamProvider(
       create: (context) =>
-          Provider.of<AuthenticationService>(context, listen: false).user)
+          Provider.of<AuthenticationService>(context, listen: false).outUser)
 ];
