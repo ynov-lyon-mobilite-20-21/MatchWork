@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/views/home_view.dart';
+import 'package:match_work/ui/views/tutorial_view.dart';
 import 'package:match_work/ui/widgets/helpers/space.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
@@ -51,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigationPage() {
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (BuildContext context) => HomeView()));
+        context, MaterialPageRoute(builder: (BuildContext context) => TutorialView()));
   }
 
   @override
