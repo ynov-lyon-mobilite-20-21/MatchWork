@@ -16,8 +16,7 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.white, // navigation bar color
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(// navigation bar color
     statusBarColor: AppColors.StatusBarColor, // status bar color
   ));
   runApp(MyApp());
