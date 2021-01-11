@@ -131,6 +131,7 @@ class _ButtonTestState extends State<ButtonTest> {
             color: AppColors.PrimaryColor,
             height: 50,
             onPressed: () {
+              /// Si on est arrivé a la fun du carousel on met le bouton partout
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomeView()));
             },
