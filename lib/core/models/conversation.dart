@@ -1,24 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/repositories/conversation_repository.dart';
 
 class Conversation {
-  String idParticipant1;
-  String idParticipant2;
+  String senderUid;
+  String receiverUid;
+  String lastMessageContent;
+  Timestamp lastMessageCreatedAt;
   bool isRead;
 
+  User caller;
+
   Conversation(
-      {@required this.idParticipant1,
-      @required this.idParticipant2,
+      {@required this.senderUid,
+      @required this.receiverUid,
+      @required this.lastMessageContent,
+      @required this.lastMessageCreatedAt,
       this.isRead = false});
 
   Conversation.fromSnapshot(DocumentSnapshot snapshot)
-      : idParticipant1 = snapshot.data()['idParticipant1'],
-        idParticipant2 = snapshot.data()['idParticipant2'],
-        isRead = snapshot.data()['isRead'];
+      : senderUid = snapshot
+            .data()[ConversationRepository.conversationSenderUidReference],
+        receiverUid = snapshot
+            .data()[ConversationRepository.conversationReceiverUidReference],
+        lastMessageContent = snapshot.data()[
+            ConversationRepository.conversationLastMessageContentReference],
+        lastMessageCreatedAt = snapshot.data()[
+            ConversationRepository.conversationLastMessageCreatedAtReference],
+        isRead =
+            snapshot.data()[ConversationRepository.conversationIsReadReference];
 
   Map<String, dynamic> toJson() => {
-        'idParticipant1': idParticipant1,
-        'idParticipant2': idParticipant2,
-        'isRead': isRead
+        ConversationRepository.conversationSenderUidReference: senderUid,
+        ConversationRepository.conversationReceiverUidReference: receiverUid,
+        ConversationRepository.conversationLastMessageContentReference:
+            lastMessageContent,
+        ConversationRepository.conversationLastMessageCreatedAtReference:
+            lastMessageCreatedAt,
+        ConversationRepository.conversationIsReadReference: isRead
       };
 }

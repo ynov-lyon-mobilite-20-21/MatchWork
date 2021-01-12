@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/models/conversation.dart';
+import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
+import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/views/conversation_view.dart';
+import 'package:provider/provider.dart';
 
 import '../profile_picture_widget.dart';
-import '../search_bar_widget.dart';
 
 class Tchat extends StatefulWidget {
   static const route = '/tchat';
@@ -17,67 +19,65 @@ class Tchat extends StatefulWidget {
 class _TchatState extends State<Tchat> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SearchBarWidget(),
-        Expanded(
-          child: ListView.builder(
-            itemCount: 20,
-            itemBuilder: (_, index) => index < 3
-                ? ConversationWidget(
-                    caller: new User(firstName: "Prénom", lastName: "NOM"),
-                    hasNewMessages: true,
-                  )
-                : ConversationWidget(
-                    caller: new User(firstName: "Prénom", lastName: "NOM")),
-          ),
-        )
-      ],
-    );
+    return BaseWidget<TchatModel>(
+        model: TchatModel(authenticationService: Provider.of(context)),
+        onModelReady: (model) => model.getConversations(),
+        builder: (context, model, widget) => StreamBuilder<List<Conversation>>(
+              stream: model.getConversations(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView(
+                    children: [
+                      ...snapshot.data
+                          .where((element) => element.isRead == false)
+                          .map(
+                              (Conversation conversation) => ConversationWidget(
+                                    conversation: conversation,
+                                  )),
+                      ...snapshot.data
+                          .where((element) => element.isRead == true)
+                          .map(
+                              (Conversation conversation) => ConversationWidget(
+                                    conversation: conversation,
+                                  )),
+                    ],
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ));
   }
 }
 
 class ConversationWidget extends StatefulWidget {
-  final bool hasNewMessages;
-  final User caller;
+  final Conversation conversation;
 
-  ConversationWidget(
-      {Key key, @required this.caller, this.hasNewMessages = false})
-      : super(key: key);
+  ConversationWidget({Key key, @required this.conversation}) : super(key: key);
 
   @override
   _ConversationWidgetState createState() => _ConversationWidgetState();
 }
 
 class _ConversationWidgetState extends State<ConversationWidget> {
-  bool hasNewMessages;
-
-  @override
-  void initState() {
-    super.initState();
-    hasNewMessages = widget.hasNewMessages;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (hasNewMessages) hasNewMessages = false;
         Navigator.of(context)
-            .pushNamed(ConversationView.route, arguments: widget.caller);
+            .pushNamed(ConversationView.route, arguments: widget.conversation);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        color: hasNewMessages ? Colors.grey : null,
+        color: widget.conversation.isRead ? null : Colors.grey,
         child: Column(
           children: [
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
                 children: [
-                  hasNewMessages
+                  !widget.conversation.isRead
                       ? CircleAvatar(
                           radius: 5.0,
                           backgroundColor: PRIMARY_COLOR,
@@ -99,7 +99,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.caller.displayName(),
+                          widget.conversation.caller.displayName(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: PRIMARY_COLOR),

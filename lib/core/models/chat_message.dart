@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/repositories/conversation_repository.dart';
 
 class ChatMessage {
   String id;
@@ -15,10 +16,16 @@ class ChatMessage {
 
   ChatMessage.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
-        content = snapshot.data()['content'],
-        createdAt = snapshot.data()['createdAt'],
-        ownerId = snapshot.data()['ownerId'];
+        content =
+            snapshot.data()[ConversationRepository.messageContentReference],
+        createdAt =
+            snapshot.data()[ConversationRepository.messageCreatedAtReference],
+        ownerId =
+            snapshot.data()[ConversationRepository.messageOwnerIdReference];
 
-  Map<String, dynamic> toJson() =>
-      {'content': content ?? '', 'createdAt': createdAt, 'ownerId': ownerId};
+  Map<String, dynamic> toJson() => {
+        ConversationRepository.messageContentReference: content ?? '',
+        ConversationRepository.messageCreatedAtReference: createdAt,
+        ConversationRepository.messageOwnerIdReference: ownerId
+      };
 }

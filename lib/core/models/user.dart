@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:match_work/core/repositories/user_repository.dart';
 
 class User {
   String uid;
@@ -24,17 +25,18 @@ class User {
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : uid = snapshot.id,
-        phoneNumber = snapshot.data()['phoneNumber'] ?? '',
-        mail = snapshot.data()['mail'] ?? '',
-        lastName = snapshot.data()['lastName'] ?? '',
-        firstName = snapshot.data()['firstName'] ?? '',
-        pictureUrl = snapshot.data()['pictureUrl'] ?? '';
+        phoneNumber =
+            snapshot.data()[UserRepository.phoneNumberReference] ?? '',
+        mail = snapshot.data()[UserRepository.mailReference] ?? '',
+        lastName = snapshot.data()[UserRepository.lastNameReference] ?? '',
+        firstName = snapshot.data()[UserRepository.firstNameReference] ?? '',
+        pictureUrl = snapshot.data()[UserRepository.pictureUrlReference] ?? '';
 
   Map<String, dynamic> toJson() => {
-        'mail': mail ?? '',
-        'firstName': firstName ?? '',
-        'lastName': lastName ?? '',
-        'pictureUrl': pictureUrl ?? '',
-        'phoneNumber': phoneNumber ?? ''
+        UserRepository.mailReference: mail ?? '',
+        UserRepository.firstNameReference: firstName ?? '',
+        UserRepository.lastNameReference: lastName ?? '',
+        UserRepository.pictureUrlReference: pictureUrl ?? '',
+        UserRepository.phoneNumberReference: phoneNumber ?? ''
       };
 }

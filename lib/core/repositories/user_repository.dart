@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/models/user.dart';
 
 class UserRepository {
+  static String firstNameReference = 'firstName';
+  static String lastNameReference = 'lastName';
+  static String phoneNumberReference = 'phoneNumber';
+  static String mailReference = 'mail';
+  static String pictureUrlReference = 'pictureUrl';
+
   final CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('users');
 
