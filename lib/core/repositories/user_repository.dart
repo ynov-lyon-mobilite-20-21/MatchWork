@@ -45,6 +45,17 @@ class UserRepository {
     }
   }
 
+  Future<User> getUserByMail(String mail) async {
+    QuerySnapshot querySnapshot = await _usersCollection
+        .where(mailReference, isEqualTo: mail)
+        .limit(1)
+        .get();
+    if (querySnapshot.size > 0) {
+      return User.fromSnapshot(querySnapshot.docs.first);
+    }
+    return null;
+  }
+
   Future<bool> createUser(User user) async {
     try {
       await _usersCollection.doc(user.uid).set(user.toJson());

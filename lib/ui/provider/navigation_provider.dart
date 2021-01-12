@@ -85,17 +85,7 @@ class NavigationProvider extends ChangeNotifier {
         print('Generating route: ${settings.name}');
         switch (settings.name) {
           case ConversationView.route:
-            User caller = User(
-                uid: 'Bo0aov0SQeV3zpF31SPYIKDLgqv2',
-                lastName: 'Spadaro',
-                firstName: 'Florian',
-                mail: 'florian.spadaro@ynov.com');
-            /*User caller = User(
-                uid: 'HgjjWAvUdbUpZH70JiX2ZLWA2W22',
-                lastName: 'Nom',
-                firstName: 'Prenom',
-                mail: 'florianspadaro@gmail.com');*/
-            //User caller = settings.arguments as User;
+            User caller = settings.arguments as User;
             return MaterialPageRoute(
                 builder: (_) => ConversationView(
                       caller: caller,

@@ -27,11 +27,9 @@ class ConversationRepository {
   Stream<List<Conversation>> getConversationsStream({@required String userId}) {
     Stream<QuerySnapshot> one = _conversationsCollection
         .where(conversationSenderUidReference, isEqualTo: userId)
-        .orderBy(conversationLastMessageCreatedAtReference, descending: true)
         .snapshots();
     Stream<QuerySnapshot> two = _conversationsCollection
         .where(conversationReceiverUidReference, isEqualTo: userId)
-        .orderBy(conversationLastMessageCreatedAtReference, descending: true)
         .snapshots();
 
     return Rx.combineLatest2(one, two, (QuerySnapshot q1, QuerySnapshot q2) {

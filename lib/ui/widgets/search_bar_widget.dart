@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
 
 class SearchBarWidget extends StatefulWidget {
+  final TextEditingController controller;
+  final Function search;
+
+  SearchBarWidget({Key key, @required this.controller, @required this.search})
+      : super(key: key);
+
   @override
   _SearchBarWidgetState createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  TextEditingController _controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +24,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         children: [
           Expanded(
             child: TextFormField(
-              controller: _controller,
+              controller: widget.controller,
               decoration: InputDecoration(
                 hintText: 'Rechercher...',
                 hintStyle: TextStyle(color: PRIMARY_COLOR),
@@ -36,10 +40,13 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               ),
             ),
           ),
-          Icon(
-            Icons.search,
-            color: PRIMARY_COLOR,
-            size: 25.0,
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: PRIMARY_COLOR,
+              size: 25.0,
+            ),
+            onPressed: widget.search,
           )
         ],
       ),

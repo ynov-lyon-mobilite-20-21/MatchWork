@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:match_work/core/models/conversation.dart';
+import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/views/conversation_view.dart';
+import 'package:match_work/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../profile_picture_widget.dart';
@@ -21,32 +24,51 @@ class _TchatState extends State<Tchat> {
   Widget build(BuildContext context) {
     return BaseWidget<TchatModel>(
         model: TchatModel(authenticationService: Provider.of(context)),
-        onModelReady: (model) => model.getConversations(),
-        builder: (context, model, widget) => StreamBuilder<List<Conversation>>(
-              stream: model.getConversations(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                    children: [
-                      ...snapshot.data
-                          .where((element) => element.isRead == false)
-                          .map(
-                              (Conversation conversation) => ConversationWidget(
-                                    conversation: conversation,
-                                  )),
-                      ...snapshot.data
-                          .where((element) => element.isRead == true)
-                          .map(
-                              (Conversation conversation) => ConversationWidget(
-                                    conversation: conversation,
-                                  )),
-                    ],
-                  );
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+        onModelReady: (model) => model.listenConversationsStream(),
+        builder: (context, model, widget) => Column(
+              children: [
+                model.busy
+                    ? CircularProgressIndicator()
+                    : SearchBarWidget(
+                        controller: model.searchController,
+                        search: () async {
+                          User user = await model.search();
+                          if (user != null) {
+                            Navigator.of(context).pushNamed(
+                                ConversationView.route,
+                                arguments: user);
+                          } else {}
+                        },
+                      ),
+                Expanded(
+                  child: StreamBuilder<List<Conversation>>(
+                    stream: model.outConversations,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView(
+                          children: [
+                            ...snapshot.data
+                                .where((element) => element.isRead == false)
+                                .map((Conversation conversation) =>
+                                    ConversationWidget(
+                                      conversation: conversation,
+                                    )),
+                            ...snapshot.data
+                                .where((element) => element.isRead == true)
+                                .map((Conversation conversation) =>
+                                    ConversationWidget(
+                                      conversation: conversation,
+                                    )),
+                          ],
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ));
   }
 }
@@ -65,8 +87,8 @@ class _ConversationWidgetState extends State<ConversationWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(ConversationView.route, arguments: widget.conversation);
+        Navigator.of(context).pushNamed(ConversationView.route,
+            arguments: widget.conversation.caller);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -106,7 +128,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                           textScaleFactor: 1.3,
                         ),
                         Text(
-                          "Dernier message posté par Nom Prenom, test texte très long",
+                          widget.conversation.lastMessageContent,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.grey[400]),
@@ -115,7 +137,8 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                     ),
                   ),
                   Text(
-                    "16/12/2020",
+                    DateFormat('dd/MM/yyyy').format(
+                        widget.conversation.lastMessageCreatedAt.toDate()),
                     textScaleFactor: 0.8,
                   )
                 ],
