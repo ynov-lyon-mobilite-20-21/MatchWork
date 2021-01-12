@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     version: 'Unknown',
   );
 
+
   @override
   void initState() {
     super.initState();
@@ -51,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPage() {
     Navigator.of(context).popUntil((route) => route.isFirst);
-    /// TODO : Check if it's firsr connection
+
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (BuildContext context) => TutorialView()));
   }

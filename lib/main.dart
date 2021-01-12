@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               providers: providers,
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: SplashScreen(),
+                home: LoginView(),
                 onGenerateRoute: (RouteSettings settings) {
                   print('Generating route: ${settings.name}');
                   switch (settings.name) {

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/services/storage_manager.dart';
 
 import 'home_view.dart';
 
@@ -22,6 +23,20 @@ class TutorialView extends StatefulWidget {
 class _TutorialViewState extends State<TutorialView> {
   int _current = 0;
 
+  final imageSliders = imgList
+      .map((image) => Container(
+            height: 1000,
+            child: Container(
+                child: Stack(children: [
+              Image.network(image, fit: BoxFit.cover, height: 1000),
+              Container(
+                child:
+                    CarouselButtonWidget(images: imgList, currentImage: image),
+              )
+            ])),
+          ))
+      .toList();
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -35,103 +50,50 @@ class _TutorialViewState extends State<TutorialView> {
             options: CarouselOptions(
                 height: height,
                 viewportFraction: 1.0,
-                enableInfiniteScroll: false,
+                enableInfiniteScroll: true,
                 enlargeCenterPage: false,
                 onPageChanged: (index, reason) {
                   setState(() {
                     _current = index;
                   });
                 }),
-            items: imageTest,
+            items: imageSliders,
           ),
-
         ],
       ),
     );
   }
-
-  final imageTest = imgList
-      .map((image) => Container(
-            height: 1000,
-            child: Container(
-                child: Stack(children: [
-              Image.network(image, fit: BoxFit.cover, height: 1000),
-              Container(
-                child: ButtonTest(images: imgList, currentImage: image),
-              )
-            ])),
-          ))
-      .toList();
-
-  final List<Widget> imageSliders = imgList
-      .map((item) => Container(
-            color: Colors.red,
-            child: Container(
-              margin: EdgeInsets.all(5.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(item, fit: BoxFit.cover, width: 500),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(200, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
-                          child: Text(
-                            'No. ${imgList.indexOf(item)} image',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-          ))
-      .toList();
 }
 
-class ButtonTest extends StatefulWidget {
+class CarouselButtonWidget extends StatefulWidget {
   final List<String> images;
   final String currentImage;
 
-  const ButtonTest({Key key, this.images, this.currentImage}) : super(key: key);
+  const CarouselButtonWidget({Key key, this.images, this.currentImage})
+      : super(key: key);
 
   @override
-  _ButtonTestState createState() => _ButtonTestState();
+  _CarouselButtonWidgetState createState() => _CarouselButtonWidgetState();
 }
 
-class _ButtonTestState extends State<ButtonTest> {
+class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
+  static bool isVisible = false;
+
   @override
   Widget build(BuildContext context) {
     var lastImage = widget.images.last;
-    var _current  = widget.images.indexOf(widget.currentImage);
-
+    var _current = widget.images.indexOf(widget.currentImage);
     final double height = MediaQuery.of(context).size.height;
-    if (widget.currentImage == lastImage) {
+
+    if (_current == widget.images.indexOf(lastImage) || isVisible) {
+      isVisible = true;
       return Container(
         padding: EdgeInsets.fromLTRB(250, height - 80, 10, 0),
         child: FlatButton(
             color: AppColors.PrimaryColor,
             height: 50,
             onPressed: () {
-              /// Si on est arrivé a la fun du carousel on met le bouton partout
+              StorageManager.saveData("isFirstLaunch", true);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomeView()));
             },
@@ -139,7 +101,7 @@ class _ButtonTestState extends State<ButtonTest> {
                 style: TextStyle(fontSize: 20, color: Colors.white))),
       );
     } else {
-      return  Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: imgList.map((url) {
           int index = imgList.indexOf(url);
