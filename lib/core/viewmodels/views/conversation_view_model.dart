@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:match_work/core/models/chat_message.dart';
+import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/conversation_repository.dart';
 import 'package:match_work/core/services/authentication_service.dart';
@@ -20,15 +21,34 @@ class ConversationViewModel extends BaseModel {
 
   BehaviorSubject<List<ChatMessage>> _messagesSubject =
       BehaviorSubject<List<ChatMessage>>.seeded([]);
-
   Function(List<ChatMessage>) get _inMessages => _messagesSubject.sink.add;
-
   Stream<List<ChatMessage>> get outMessages => _messagesSubject.stream;
+
+  BehaviorSubject<Conversation> _conversationSubject =
+      BehaviorSubject<Conversation>();
+  Function(Conversation) get _inConversation => _conversationSubject.sink.add;
+  Stream<Conversation> get outConversation => _conversationSubject.stream;
 
   ConversationViewModel(
       {@required AuthenticationService authenticationService,
       @required this.caller})
       : _authenticationService = authenticationService;
+
+  StreamSubscription listenConversationStream() {
+    String authenticatedUserUid = _authenticationService.currentUser.uid;
+    String conversationId = ConversationsUtils.getConversationId(
+        receiverId: authenticatedUserUid, senderId: caller.uid);
+    return _conversationRepository
+        .getConversationStream(conversationId: conversationId)
+        .listen((Conversation conversation) {
+      _inConversation(conversation);
+      if (!conversation.isRead &&
+          conversation.receiverUid == authenticatedUserUid) {
+        _conversationRepository.readConversation(
+            conversationId: conversationId);
+      }
+    });
+  }
 
   StreamSubscription listenMessageStream() {
     String authenticatedUserUid = _authenticationService.currentUser.uid;
@@ -49,6 +69,14 @@ class ConversationViewModel extends BaseModel {
       sendingMessages.removeWhere(
           (sendingMessage) => sendingMessagesToRemove.contains(sendingMessage));
       notifyListeners();
+
+      messages.forEach((message) {
+        if (message.ownerId != _authenticationService.currentUser.uid &&
+            !message.isRead) {
+          _conversationRepository.readMessage(
+              messageId: message.id, conversationId: idConversation);
+        }
+      });
     });
   }
 
@@ -69,5 +97,6 @@ class ConversationViewModel extends BaseModel {
   void dispose() {
     super.dispose();
     _messagesSubject.close();
+    _conversationSubject.close();
   }
 }

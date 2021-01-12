@@ -30,6 +30,7 @@ class _ConversationViewState extends State<ConversationView> {
           authenticationService: Provider.of(context), caller: widget.caller),
       onModelReady: (model) {
         model.listenMessageStream();
+        model.listenConversationStream();
       },
       builder: (context, model, widget) => GestureDetector(
         onTap: () => KeyboardUtils.closeKeyboard(context: context),

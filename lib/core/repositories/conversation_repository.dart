@@ -10,6 +10,7 @@ class ConversationRepository {
   static String messageContentReference = 'content';
   static String messageCreatedAtReference = 'createdAt';
   static String messageOwnerIdReference = 'ownerId';
+  static String messageIsReadReference = 'isRead';
 
   static String conversationSenderUidReference = 'senderUid';
   static String conversationReceiverUidReference = 'receiverUid';
@@ -43,6 +44,13 @@ class ConversationRepository {
                   : conversation.senderUid);
           return conversation;
         }).toList()));
+  }
+
+  Stream<Conversation> getConversationStream(
+      {@required String conversationId}) {
+    return _conversationsCollection.doc(conversationId).snapshots().asyncMap(
+        (DocumentSnapshot snapshot) async =>
+            Conversation.fromSnapshot(snapshot));
   }
 
   Future<Conversation> getConversationById(String conversationId) async {
@@ -87,4 +95,22 @@ class ConversationRepository {
       return false;
     }
   }
+
+  Future<bool> readMessage(
+          {@required String messageId,
+          @required String conversationId}) async =>
+      await _conversationsCollection
+          .doc(conversationId)
+          .collection(conversationMessagesReference)
+          .doc(messageId)
+          .update({messageIsReadReference: true})
+          .then((value) => true)
+          .catchError((error) => false);
+
+  Future<bool> readConversation({@required String conversationId}) async =>
+      await _conversationsCollection
+          .doc(conversationId)
+          .update({conversationIsReadReference: true})
+          .then((value) => true)
+          .catchError((error) => false);
 }

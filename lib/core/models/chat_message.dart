@@ -7,12 +7,14 @@ class ChatMessage {
   String content;
   Timestamp createdAt;
   String ownerId;
+  bool isRead;
 
   ChatMessage(
       {this.id,
       @required this.content,
       @required this.createdAt,
-      @required this.ownerId});
+      @required this.ownerId,
+      this.isRead = false});
 
   ChatMessage.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
@@ -21,11 +23,13 @@ class ChatMessage {
         createdAt =
             snapshot.data()[ConversationRepository.messageCreatedAtReference],
         ownerId =
-            snapshot.data()[ConversationRepository.messageOwnerIdReference];
+            snapshot.data()[ConversationRepository.messageOwnerIdReference],
+        isRead = snapshot.data()[ConversationRepository.messageIsReadReference];
 
   Map<String, dynamic> toJson() => {
         ConversationRepository.messageContentReference: content ?? '',
         ConversationRepository.messageCreatedAtReference: createdAt,
-        ConversationRepository.messageOwnerIdReference: ownerId
+        ConversationRepository.messageOwnerIdReference: ownerId,
+        ConversationRepository.messageIsReadReference: isRead
       };
 }

@@ -4,6 +4,7 @@ import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/conversation_repository.dart';
 
 class Conversation {
+  String id;
   String senderUid;
   String receiverUid;
   String lastMessageContent;
@@ -13,14 +14,16 @@ class Conversation {
   User caller;
 
   Conversation(
-      {@required this.senderUid,
+      {this.id,
+      @required this.senderUid,
       @required this.receiverUid,
       @required this.lastMessageContent,
       @required this.lastMessageCreatedAt,
       this.isRead = false});
 
   Conversation.fromSnapshot(DocumentSnapshot snapshot)
-      : senderUid = snapshot
+      : id = snapshot.id,
+        senderUid = snapshot
             .data()[ConversationRepository.conversationSenderUidReference],
         receiverUid = snapshot
             .data()[ConversationRepository.conversationReceiverUidReference],
