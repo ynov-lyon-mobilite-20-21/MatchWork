@@ -25,7 +25,6 @@ class NavigationProvider extends ChangeNotifier {
   int get currentTabIndex => _currentScreenIndex;
 
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    print('Generating route: ${settings.name}');
     switch (settings.name) {
       case PushedScreen.route:
         return MaterialPageRoute(builder: (_) => PushedScreen());
@@ -48,7 +47,6 @@ class NavigationProvider extends ChangeNotifier {
       activeIconEndpoint: "$ICONS_PATH/profil_on.png",
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        print('Generating route: ${settings.name}');
         switch (settings.name) {
           case PushedScreen.route:
             return MaterialPageRoute(builder: (_) => PushedScreen());
@@ -66,7 +64,6 @@ class NavigationProvider extends ChangeNotifier {
       activeIconEndpoint: "$ICONS_PATH/match_on.png",
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        print('Generating route: ${settings.name}');
         switch (settings.name) {
           default:
             return MaterialPageRoute(builder: (_) => Swipe());
@@ -82,7 +79,6 @@ class NavigationProvider extends ChangeNotifier {
       initialRoute: Tchat.route,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
-        print('Generating route: ${settings.name}');
         switch (settings.name) {
           case ConversationView.route:
             User caller = settings.arguments as User;

@@ -134,7 +134,7 @@ class _ConversationViewState extends State<ConversationView> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).focusColor,
                 borderRadius: BorderRadius.circular(35.0),
                 boxShadow: [
                   BoxShadow(
@@ -146,24 +146,27 @@ class _ConversationViewState extends State<ConversationView> {
                   IconButton(
                       icon: Icon(
                         Icons.face,
-                        color: PRIMARY_COLOR,
+                        color: Theme.of(context).indicatorColor,
                       ),
                       onPressed: () {}),
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: "Taper quelque chose...",
-                          hintStyle: TextStyle(color: PRIMARY_COLOR),
+                          hintStyle: TextStyle(
+                              color: Theme.of(context).indicatorColor),
                           border: InputBorder.none),
                       controller: controller,
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.photo_camera, color: PRIMARY_COLOR),
+                    icon: Icon(Icons.photo_camera,
+                        color: Theme.of(context).indicatorColor),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: Icon(Icons.attach_file, color: PRIMARY_COLOR),
+                    icon: Icon(Icons.attach_file,
+                        color: Theme.of(context).indicatorColor),
                     onPressed: () {},
                   )
                 ],
@@ -191,8 +194,11 @@ class _ConversationViewState extends State<ConversationView> {
   Widget chatMessage(ChatMessage message) {
     bool isMe = Provider.of<AuthenticationService>(context).currentUser.uid ==
         message.ownerId;
+    double widthScreen = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: isMe
+          ? EdgeInsets.only(top: 8.0, right: 10.0, left: (widthScreen * 0.2))
+          : EdgeInsets.only(top: 8.0, left: 10.0, right: (widthScreen * 0.2)),
       child: Row(
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -201,13 +207,18 @@ class _ConversationViewState extends State<ConversationView> {
             constraints: BoxConstraints(
                 minWidth: 20.0,
                 maxWidth: MediaQuery.of(context).size.width * 0.7),
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-                color: isMe ? Colors.blueGrey : Colors.blue,
-                borderRadius: BorderRadius.circular(5.0)),
+                color: isMe
+                    ? Theme.of(context).primaryColorDark
+                    : Theme.of(context).primaryColorLight,
+                borderRadius: BorderRadius.circular(10.0),
+                border: isMe ? null : Border.all(color: Colors.white)),
             child: Text(
               message.content,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                  color:
+                      isMe ? Colors.white : Theme.of(context).indicatorColor),
             ),
           ),
         ],

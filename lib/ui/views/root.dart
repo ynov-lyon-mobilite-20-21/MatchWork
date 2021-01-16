@@ -71,7 +71,6 @@ class _Root extends State<Root> {
                   items: bottomNavigationBarItems,
                   currentIndex: navigationProvider.currentTabIndex,
                   onTap: navigationProvider.setTab,
-                  backgroundColor: theme.scaffoldBackgroundColor,
                 ),
               ),
             ));

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
   final double radius;
@@ -14,8 +13,9 @@ class ProfilePictureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: radius,
-      backgroundColor:
-          backgroundColor == null ? PRIMARY_COLOR : backgroundColor,
+      backgroundColor: backgroundColor == null
+          ? Theme.of(context).indicatorColor
+          : backgroundColor,
       child: CircleAvatar(
         backgroundImage:
             AssetImage(path == null ? IMAGES_PATH + '/unknown_user.png' : path),

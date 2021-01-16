@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/utils/date_utils.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/views/conversation_view.dart';
 import 'package:match_work/ui/widgets/search_bar_widget.dart';
@@ -30,6 +29,8 @@ class _TchatState extends State<Tchat> {
                 model.busy
                     ? CircularProgressIndicator()
                     : SearchBarWidget(
+                        primaryColor: Theme.of(context).focusColor,
+                        secondColor: Theme.of(context).indicatorColor,
                         controller: model.searchController,
                         search: () async {
                           User user = await model.search();
@@ -85,6 +86,8 @@ class ConversationWidget extends StatefulWidget {
 class _ConversationWidgetState extends State<ConversationWidget> {
   @override
   Widget build(BuildContext context) {
+    DateTime dateLastMessage =
+        widget.conversation.lastMessageCreatedAt.toDate();
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(ConversationView.route,
@@ -92,7 +95,6 @@ class _ConversationWidgetState extends State<ConversationWidget> {
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        color: widget.conversation.isRead ? null : Colors.grey,
         child: Column(
           children: [
             Container(
@@ -102,7 +104,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                   !widget.conversation.isRead
                       ? CircleAvatar(
                           radius: 5.0,
-                          backgroundColor: PRIMARY_COLOR,
+                          backgroundColor: Theme.of(context).indicatorColor,
                         )
                       : Container(
                           width: 10.0,
@@ -120,26 +122,28 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.conversation.caller.displayName(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: PRIMARY_COLOR),
-                          textScaleFactor: 1.3,
-                        ),
+                        Text(widget.conversation.caller.displayName(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyText1,
+                            textScaleFactor: 1.3),
                         Text(
                           widget.conversation.lastMessageContent,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.grey[400]),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(fontSize: 15.0),
                         ),
                       ],
                     ),
                   ),
                   Text(
-                    DateFormat('dd/MM/yyyy').format(
-                        widget.conversation.lastMessageCreatedAt.toDate()),
-                    textScaleFactor: 0.8,
+                    DateUtils.isToday(dateLastMessage)
+                        ? DateUtils.getHourFormat(dateLastMessage)
+                        : DateUtils.getDateFormat(dateLastMessage),
+                    style: Theme.of(context).textTheme.caption,
                   )
                 ],
               ),
