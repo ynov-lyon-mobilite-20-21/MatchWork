@@ -41,11 +41,13 @@ class ConversationViewModel extends BaseModel {
     return _conversationRepository
         .getConversationStream(conversationId: conversationId)
         .listen((Conversation conversation) {
-      _inConversation(conversation);
-      if (!conversation.isRead &&
-          conversation.receiverUid == authenticatedUserUid) {
-        _conversationRepository.readConversation(
-            conversationId: conversationId);
+      if (!_conversationSubject.isClosed) {
+        _inConversation(conversation);
+        if (!conversation.isRead &&
+            conversation.receiverUid == authenticatedUserUid) {
+          _conversationRepository.readConversation(
+              conversationId: conversationId);
+        }
       }
     });
   }
@@ -57,26 +59,28 @@ class ConversationViewModel extends BaseModel {
     return _conversationRepository
         .getMessagesStream(idConversation)
         .listen((List<ChatMessage> messages) {
-      _inMessages(messages ?? []);
-      var sendingMessagesToRemove = [];
-      sendingMessages.forEach((ChatMessage sendingMessage) {
-        if (messages
-            .map((ChatMessage message) => message.content)
-            .contains(sendingMessage.content)) {
-          sendingMessagesToRemove.add(sendingMessage);
-        }
-      });
-      sendingMessages.removeWhere(
-          (sendingMessage) => sendingMessagesToRemove.contains(sendingMessage));
-      notifyListeners();
+      if (!_messagesSubject.isClosed) {
+        _inMessages(messages ?? []);
+        var sendingMessagesToRemove = [];
+        sendingMessages.forEach((ChatMessage sendingMessage) {
+          if (messages
+              .map((ChatMessage message) => message.content)
+              .contains(sendingMessage.content)) {
+            sendingMessagesToRemove.add(sendingMessage);
+          }
+        });
+        sendingMessages.removeWhere((sendingMessage) =>
+            sendingMessagesToRemove.contains(sendingMessage));
+        notifyListeners();
 
-      messages.forEach((message) {
-        if (message.ownerId != _authenticationService.currentUser.uid &&
-            !message.isRead) {
-          _conversationRepository.readMessage(
-              messageId: message.id, conversationId: idConversation);
-        }
-      });
+        messages.forEach((message) {
+          if (message.ownerId != _authenticationService.currentUser.uid &&
+              !message.isRead) {
+            _conversationRepository.readMessage(
+                messageId: message.id, conversationId: idConversation);
+          }
+        });
+      }
     });
   }
 

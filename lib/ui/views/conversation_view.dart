@@ -171,16 +171,16 @@ class _ConversationViewState extends State<ConversationView> {
             ),
           ),
           SizedBox(width: 15),
-          Container(
-            padding: const EdgeInsets.all(15.0),
-            decoration:
-                BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
-            child: InkWell(
+          InkWell(
+            onTap: () => onTap(),
+            child: Container(
+              padding: const EdgeInsets.all(15.0),
+              decoration:
+                  BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
               child: Icon(
                 Icons.send,
                 color: Colors.white,
               ),
-              onTap: () => onTap(),
             ),
           )
         ],
