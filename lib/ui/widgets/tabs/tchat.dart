@@ -32,6 +32,7 @@ class _TchatState extends State<Tchat> {
                         primaryColor: Theme.of(context).focusColor,
                         secondColor: Theme.of(context).indicatorColor,
                         controller: model.searchController,
+                        onChanged: (value) => model.onChangeSearch(),
                         search: () async {
                           User user = await model.search();
                           if (user != null) {
@@ -49,13 +50,17 @@ class _TchatState extends State<Tchat> {
                         return ListView(
                           children: [
                             ...snapshot.data
-                                .where((element) => element.isRead == false)
+                                .where((element) =>
+                                    element.isRead == false &&
+                                    model.isConversationToDisplay(element))
                                 .map((Conversation conversation) =>
                                     ConversationWidget(
                                       conversation: conversation,
                                     )),
                             ...snapshot.data
-                                .where((element) => element.isRead == true)
+                                .where((element) =>
+                                    element.isRead == true &&
+                                    model.isConversationToDisplay(element))
                                 .map((Conversation conversation) =>
                                     ConversationWidget(
                                       conversation: conversation,

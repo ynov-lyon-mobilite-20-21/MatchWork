@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController controller;
   final Function search;
+  final Function onChanged;
   final Color primaryColor;
   final Color secondColor;
 
@@ -10,6 +11,7 @@ class SearchBarWidget extends StatefulWidget {
       {Key key,
       @required this.controller,
       @required this.search,
+      @required this.onChanged,
       @required this.primaryColor,
       @required this.secondColor})
       : super(key: key);
@@ -47,6 +49,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               elevation: 10.0,
               borderRadius: BorderRadius.circular(height),
               child: TextFormField(
+                onChanged: (value) => widget.onChanged(value),
                 controller: widget.controller,
                 decoration: InputDecoration(
                   hintText: 'Rechercher...',

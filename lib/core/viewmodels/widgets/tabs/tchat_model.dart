@@ -16,6 +16,7 @@ class TchatModel extends BaseModel {
       ConversationRepository();
   final UserRepository _userRepository = UserRepository();
   final TextEditingController searchController = TextEditingController();
+  String searchText = "";
 
   BehaviorSubject<List<Conversation>> _conversationsSubject =
       BehaviorSubject<List<Conversation>>.seeded([]);
@@ -38,12 +39,27 @@ class TchatModel extends BaseModel {
     });
   }
 
+  void onChangeSearch() {
+    busy = true;
+    searchText = searchController.text;
+    busy = false;
+  }
+
   Future<User> search() async {
     busy = true;
-    String search = searchController.text;
-    User user = await _userRepository.getUserByMail(search);
+    User user = await _userRepository.getUserByMail(searchController.text);
     busy = false;
     return user;
+  }
+
+  bool isConversationToDisplay(Conversation conversation) {
+    if (searchText.isNotEmpty) {
+      return conversation.caller
+          .displayName()
+          .toUpperCase()
+          .contains(searchText.toUpperCase());
+    }
+    return true;
   }
 
   @override
