@@ -204,30 +204,38 @@ class _ConversationViewState extends State<ConversationView> {
         mainAxisAlignment:
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          Container(
-            constraints: BoxConstraints(
-                minWidth: 20.0,
-                maxWidth: MediaQuery.of(context).size.width * 0.7),
-            padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-                color: isMe
-                    ? Theme.of(context).primaryColorDark
-                    : Theme.of(context).primaryColorLight,
-                borderRadius: BorderRadius.circular(10.0),
-                border: isMe ? null : Border.all(color: Colors.white)),
-            child: Text(
-              message.content,
-              style: TextStyle(
-                  color:
-                      isMe ? Colors.white : Theme.of(context).indicatorColor),
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                constraints: BoxConstraints(
+                    minWidth: 20.0,
+                    maxWidth: MediaQuery.of(context).size.width * 0.7),
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                    color: isMe
+                        ? Theme.of(context).primaryColorDark
+                        : Theme.of(context).primaryColorLight,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: isMe ? null : Border.all(color: Colors.white)),
+                child: Text(
+                  message.content,
+                  style: TextStyle(
+                      color: isMe
+                          ? Colors.white
+                          : Theme.of(context).indicatorColor),
+                ),
+              ),
+              isLastMessageRead
+                  ? Icon(
+                      Icons.check,
+                      color: Theme.of(context).indicatorColor,
+                      size: 15.0,
+                    )
+                  : Container()
+            ],
           ),
-          isLastMessageRead
-              ? Icon(
-                  Icons.check,
-                  color: Theme.of(context).indicatorColor,
-                )
-              : Container()
         ],
       ),
     );
