@@ -33,8 +33,7 @@ class _TchatState extends State<Tchat> {
                         secondColor: Theme.of(context).indicatorColor,
                         controller: model.searchController,
                         onChanged: (value) => model.onChangeSearch(),
-                        search: () async {
-                          User user = await model.search();
+                        search: () => model.search().then((User user) {
                           if (user != null) {
                             Navigator.of(context).pushNamed(
                                 ConversationView.route,
@@ -45,7 +44,7 @@ class _TchatState extends State<Tchat> {
                                   "Aucun utilisateur trouvé avec cette adresse mail"),
                             ));
                           }
-                        },
+                        }),
                       ),
                 Expanded(
                   child: StreamBuilder<List<Conversation>>(

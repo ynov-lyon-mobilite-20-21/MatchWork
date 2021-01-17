@@ -68,7 +68,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             ),
           ),
           InkWell(
-            onTap: () => widget.search,
+            onTap: widget.search,
             child: Icon(
               Icons.search,
               color: widget.secondColor,
