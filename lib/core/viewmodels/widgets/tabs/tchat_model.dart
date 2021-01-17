@@ -35,7 +35,9 @@ class TchatModel extends BaseModel {
     return _conversationRepository
         .getConversationsStream(userId: authenticatedUserUid)
         .listen((List<Conversation> conversations) {
-      _inConversations(conversations ?? []);
+      if (!_conversationsSubject.isClosed) {
+        _inConversations(conversations ?? []);
+      }
     });
   }
 

@@ -108,7 +108,8 @@ class _ConversationViewState extends State<ConversationView> {
                                 index < messages.length - snapshot.data.length
                                     ? .5
                                     : 1,
-                            child: chatMessage(message),
+                            child: chatMessage(message,
+                                message.id == model.lastMessageRead.id),
                           );
                         });
                   }
@@ -191,7 +192,7 @@ class _ConversationViewState extends State<ConversationView> {
     );
   }
 
-  Widget chatMessage(ChatMessage message) {
+  Widget chatMessage(ChatMessage message, bool isLastMessageRead) {
     bool isMe = Provider.of<AuthenticationService>(context).currentUser.uid ==
         message.ownerId;
     double widthScreen = MediaQuery.of(context).size.width;
@@ -221,6 +222,12 @@ class _ConversationViewState extends State<ConversationView> {
                       isMe ? Colors.white : Theme.of(context).indicatorColor),
             ),
           ),
+          isLastMessageRead
+              ? Icon(
+                  Icons.check,
+                  color: Theme.of(context).indicatorColor,
+                )
+              : Container()
         ],
       ),
     );

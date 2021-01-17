@@ -17,6 +17,7 @@ class ConversationViewModel extends BaseModel {
   final TextEditingController controller = TextEditingController();
   final ConversationRepository _conversationRepository =
       ConversationRepository();
+  ChatMessage lastMessageRead;
   List<ChatMessage> sendingMessages = []; //Liste des messages en cours d'envoi
 
   BehaviorSubject<List<ChatMessage>> _messagesSubject =
@@ -60,7 +61,8 @@ class ConversationViewModel extends BaseModel {
         .getMessagesStream(idConversation)
         .listen((List<ChatMessage> messages) {
       if (!_messagesSubject.isClosed) {
-        _inMessages(messages ?? []);
+        messages = messages ?? [];
+        _inMessages(messages);
         var sendingMessagesToRemove = [];
         sendingMessages.forEach((ChatMessage sendingMessage) {
           if (messages
@@ -71,7 +73,6 @@ class ConversationViewModel extends BaseModel {
         });
         sendingMessages.removeWhere((sendingMessage) =>
             sendingMessagesToRemove.contains(sendingMessage));
-        notifyListeners();
 
         messages.forEach((message) {
           if (message.ownerId != _authenticationService.currentUser.uid &&
@@ -79,7 +80,20 @@ class ConversationViewModel extends BaseModel {
             _conversationRepository.readMessage(
                 messageId: message.id, conversationId: idConversation);
           }
+          if (message.ownerId == _authenticationService.currentUser.uid &&
+              message.isRead) {
+            if (lastMessageRead == null) {
+              lastMessageRead = message;
+            } else {
+              DateTime messageDate = message.createdAt.toDate();
+              DateTime lastMessageReadDate = lastMessageRead.createdAt.toDate();
+              if (messageDate.isAfter(lastMessageReadDate)) {
+                lastMessageRead = message;
+              }
+            }
+          }
         });
+        notifyListeners();
       }
     });
   }

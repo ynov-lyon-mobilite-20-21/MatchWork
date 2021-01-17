@@ -106,7 +106,9 @@ class _ConversationWidgetState extends State<ConversationWidget> {
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
                 children: [
-                  !widget.conversation.isRead
+                  !widget.conversation.isRead &&
+                          widget.conversation.senderUid ==
+                              widget.conversation.caller.uid
                       ? CircleAvatar(
                           radius: 5.0,
                           backgroundColor: Theme.of(context).indicatorColor,
