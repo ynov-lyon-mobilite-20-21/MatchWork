@@ -15,6 +15,13 @@ class FormValidators {
     return null;
   }
 
+  static String isStrongPassword(String value, [String message]) {
+    if (value.length < 7) {
+      return message == null ? 'Mot de passe trop faible' : message;
+    }
+    return null;
+  }
+
   static String isSameValue(String value, String confirmation,
       [String message]) {
     if (value == confirmation) {

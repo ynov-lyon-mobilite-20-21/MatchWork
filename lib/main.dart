@@ -5,6 +5,8 @@ import 'package:match_work/provider_setup.dart';
 import 'package:match_work/ui/provider/navigation_provider.dart';
 import 'package:match_work/ui/views/pushed_screen.dart';
 import 'package:match_work/ui/views/root.dart';
+import 'package:match_work/ui/views/sign_in_view.dart';
+import 'package:match_work/ui/views/sign_up_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +38,12 @@ class MyApp extends StatelessWidget {
                       break;
                     case Root.route:
                       return MaterialPageRoute(builder: (_) => Root());
+                      break;
+                    case SignInView.route:
+                      return MaterialPageRoute(builder: (_) => SignInView());
+                      break;
+                    case SignUpView.route:
+                      return MaterialPageRoute(builder: (_) => SignUpView());
                       break;
                     default:
                       return MaterialPageRoute(

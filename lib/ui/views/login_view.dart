@@ -1,137 +1,108 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
+import 'package:match_work/ui/shared/app_colors.dart';
+import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/views/root.dart';
+import 'package:match_work/ui/views/sign_in_view.dart';
+import 'package:match_work/ui/views/sign_up_view.dart';
+import 'package:match_work/ui/widgets/round_logo_button.dart';
+import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
 
-import 'base_widget.dart';
-
-class LoginView extends StatefulWidget {
-  @override
-  _LoginViewState createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmationController = TextEditingController();
-
+class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<LoginViewModel>(
-        model: LoginViewModel(
-            authenticationService: Provider.of<AuthenticationService>(context)),
-        builder: (_, model, __) => Scaffold(
-              body: ChangeNotifierProvider<LoginViewModel>.value(
-                value:
-                    LoginViewModel(authenticationService: Provider.of(context)),
-                child: Consumer<LoginViewModel>(
-                  builder: (context, model, child) => Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Form(
-                          key: _formKey,
-                          child: Column(
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    "assets/images/background/background_connexion_night.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          BaseWidget<LoginViewModel>(
+            model: LoginViewModel(
+                authenticationService:
+                    Provider.of<AuthenticationService>(context)),
+            builder: (_, model, __) => Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Image.asset(
+                        "assets/images/logo/logo_text_below.png",
+                        width: MediaQuery.of(context).size.width * 0.7,
+                      ),
+                      Column(
+                        children: [
+                          RoundedButton(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(SignUpView.route),
+                              color: ACCENT_COLOR,
+                              text: "Inscription",
+                              textColor: Colors.white),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          RoundedButton(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(SignInView.route),
+                            color: Colors.transparent,
+                            text: "Connexion",
+                            textColor: Colors.white,
+                            border: Border.all(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(model.isRegistration
-                                  ? "Inscription"
-                                  : "Connexion"),
-                              TextFormField(
-                                controller: _emailController,
-                                decoration: InputDecoration(labelText: "Email"),
-                                validator: (value) =>
-                                    model.emailValidator(value),
-                              ),
-                              TextFormField(
-                                obscureText: true,
-                                controller: _passwordController,
-                                decoration:
-                                    InputDecoration(labelText: "Mot de passe"),
-                                validator: (value) =>
-                                    model.passwordValidator(value),
-                              ),
-                              model.isRegistration
-                                  ? TextFormField(
-                                      obscureText: true,
-                                      controller: _confirmationController,
-                                      decoration: InputDecoration(
-                                          labelText: "Confirmation"),
-                                      validator: (value) =>
-                                          model.confirmationValidator(
-                                              _passwordController.text, value),
-                                    )
-                                  : Container(),
-                              model.busy
-                                  ? CircularProgressIndicator()
-                                  : ElevatedButton(
-                                      child: Text(model.isRegistration
-                                          ? 'S\'inscrire'
-                                          : 'Se connecter'),
-                                      onPressed: () async {
-                                        String email = _emailController.text;
-                                        String password =
-                                            _passwordController.text;
-                                        bool success = model.isRegistration
-                                            ? await model
-                                                .registrationWithEmailAndPassword(
-                                                    email, password)
-                                            : await model
-                                                .loginWithEmailAndPassword(
-                                                    email, password);
-                                        validate(context, success, model.error);
-                                      },
-                                    ),
-                              InkWell(
-                                onTap: () => model.isRegistration =
-                                    !model.isRegistration,
-                                child: Text(
-                                  model.isRegistration
-                                      ? "Vous avez déjà un compte? Connectez-vous"
-                                      : "Pas encore de compte? Inscrivez-vous",
-                                  style: TextStyle(color: Colors.blue),
-                                ),
-                              )
+                              RoundLogoButton(
+                                  color: Colors.white,
+                                  logo: 'assets/images/logo/google_logo.png',
+                                  size: 50.0,
+                                  onTap: () => model
+                                          .loginWithGoogle()
+                                          .then((bool success) {
+                                        if (success) {
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  Root.route, (route) => false);
+                                        } else {
+                                          Scaffold.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(model.error),
+                                          ));
+                                        }
+                                      })),
+                              SizedBox(width: 15.0,),
+                              RoundLogoButton(
+                                  color: Colors.white,
+                                  logo: 'assets/images/logo/linkedin_logo.png',
+                                  size: 50.0,
+                                  onTap: () => null)
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                              child: Text("Google"),
-                              onPressed: () async {
-                                bool success = await model.loginWithGoogle();
-                                validate(context, success, model.error);
-                              },
-                            ),
-                            ElevatedButton(
-                              child: Text("Linkedin"),
-                              onPressed: () => null,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
-            ));
-  }
-
-  void validate(BuildContext context, bool success, String error) {
-    if (success) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Root()));
-    } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(error),
-      ));
-    }
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

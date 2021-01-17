@@ -4,11 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
+import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/root.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
-
-import 'login_view.dart';
 
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = PRIMARY_COLOR;
@@ -20,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final splashDelay = 5;
+  final splashDelay = 2;
   String _image = "assets/images/logo/logo_text_below.png";
   PackageInfo _packageInfo = PackageInfo(
     version: 'Unknown',

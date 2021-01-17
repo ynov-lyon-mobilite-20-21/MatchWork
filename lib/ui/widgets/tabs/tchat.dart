@@ -39,7 +39,12 @@ class _TchatState extends State<Tchat> {
                             Navigator.of(context).pushNamed(
                                 ConversationView.route,
                                 arguments: user);
-                          } else {}
+                          } else {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Aucun utilisateur trouvé avec cette adresse mail"),
+                            ));
+                          }
                         },
                       ),
                 Expanded(
