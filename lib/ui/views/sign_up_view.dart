@@ -90,14 +90,12 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     )
                   : SingleChildScrollView(
-                      child: Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Column(
-                            children: [
-                              _formWidget(context: context, model: model)
-                            ],
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          children: [
+                            _formWidget(context: context, model: model)
+                          ],
                         ),
                       ),
                     ),
