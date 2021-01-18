@@ -24,7 +24,7 @@ class FormValidators {
 
   static String isSameValue(String value, String confirmation,
       [String message]) {
-    if (value == confirmation) {
+    if (value != confirmation) {
       return message == null ? 'Les valeurs ne correspondent pas' : message;
     }
     return null;

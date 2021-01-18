@@ -19,7 +19,10 @@ class SignUpViewModel extends BaseModel {
   Future<bool> signUp() async {
     busy = true;
     error = await _authenticationService.registrationWithEmailAndPassword(
-        emailController.text, passwordController.text);
+        email: emailController.text.toLowerCase(),
+        password: passwordController.text,
+        firstName: firstNameController.text.toLowerCase(),
+        name: nameController.text.toLowerCase());
     busy = false;
     return error == null;
   }

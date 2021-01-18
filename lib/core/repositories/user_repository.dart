@@ -50,13 +50,23 @@ class UserRepository {
         .where(mailReference, isEqualTo: mail)
         .limit(1)
         .get();
-    if (querySnapshot.size > 0) {
+    if (querySnapshot.docs.length > 0) {
       return User.fromSnapshot(querySnapshot.docs.first);
     }
     return null;
   }
 
   Future<bool> createUser(User user) async {
+    try {
+      await _usersCollection.doc(user.uid).set(user.toJson());
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> updateUser(User user) async {
     try {
       await _usersCollection.doc(user.uid).set(user.toJson());
       return true;

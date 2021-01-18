@@ -20,12 +20,15 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<SignUpViewModel>(
       model: SignUpViewModel(
           authenticationService: Provider.of<AuthenticationService>(context)),
       builder: (_, model, __) => Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: PRIMARY_COLOR,
         ),
@@ -60,7 +63,10 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                           Column(
                             children: [
-                              _formWidget(context: context, model: model),
+                              _formWidget(
+                                  context: context,
+                                  model: model,
+                                  scaffoldKey: _scaffoldKey),
                               Column(
                                 children: [
                                   SizedBox(
@@ -94,7 +100,10 @@ class _SignUpViewState extends State<SignUpView> {
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Column(
                           children: [
-                            _formWidget(context: context, model: model)
+                            _formWidget(
+                                context: context,
+                                model: model,
+                                scaffoldKey: _scaffoldKey)
                           ],
                         ),
                       ),
@@ -108,7 +117,9 @@ class _SignUpViewState extends State<SignUpView> {
 }
 
 Widget _formWidget(
-        {@required BuildContext context, @required SignUpViewModel model}) =>
+        {@required BuildContext context,
+        @required SignUpViewModel model,
+        @required GlobalKey<ScaffoldState> scaffoldKey}) =>
     Form(
       key: model.formKey,
       child: Column(
@@ -171,7 +182,7 @@ Widget _formWidget(
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               Root.route, (route) => false);
                         } else {
-                          Scaffold.of(context).showSnackBar(SnackBar(
+                          scaffoldKey.currentState.showSnackBar(SnackBar(
                             content: Text(model.error),
                           ));
                         }

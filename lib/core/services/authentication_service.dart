@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart' as Firebase;
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
@@ -59,11 +60,24 @@ class AuthenticationService {
   }
 
   Future<String> registrationWithEmailAndPassword(
-      String email, String password) async {
+      {@required String email,
+      @required String password,
+      @required String name,
+      @required String firstName}) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return null;
+      User userWithSameMail = await _userRepository.getUserByMail(email);
+      if (userWithSameMail != null) {
+        return 'Cet email est déjà utilisé.';
+      }
+      Firebase.UserCredential credentials = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      User user = User(
+          uid: credentials.user.uid,
+          mail: email,
+          firstName: firstName,
+          lastName: name);
+      await _userRepository.updateUser(user);
     } on Firebase.FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'Le mot de passe n\'est pas assez long.';
