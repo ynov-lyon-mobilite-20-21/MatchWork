@@ -123,6 +123,18 @@ class AuthenticationService {
     // Once signed in, return the UserCredential
     await _auth.signInWithCredential(credential);
 
+    String displayName = _auth.currentUser.displayName;
+    String firstName = displayName.split(' ').first.toLowerCase();
+    String lastName = displayName.substring(firstName.length + 1).toLowerCase();
+    User user = User(
+        uid: _auth.currentUser.uid,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: _auth.currentUser.phoneNumber,
+        mail: _auth.currentUser.email.toLowerCase(),
+        pictureUrl: _auth.currentUser.photoURL);
+    await _userRepository.updateUser(user);
+
     return _auth.currentUser != null ? null : 'Erreur';
   }
 

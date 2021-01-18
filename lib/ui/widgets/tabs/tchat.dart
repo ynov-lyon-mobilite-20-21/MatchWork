@@ -125,6 +125,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                   ),
                   ProfilePictureWidget(
                     radius: 35.0,
+                    path: widget.conversation.caller.pictureUrl,
                   ),
                   SizedBox(
                     width: 10.0,

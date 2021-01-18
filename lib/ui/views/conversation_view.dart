@@ -69,6 +69,7 @@ class _ConversationViewState extends State<ConversationView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 ProfilePictureWidget(
+                                  path: model.caller.pictureUrl,
                                   radius: 25.0,
                                   backgroundColor: Colors.white,
                                 ),
