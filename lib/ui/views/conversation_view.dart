@@ -110,7 +110,7 @@ class _ConversationViewState extends State<ConversationView> {
                                     ? .5
                                     : 1,
                             child: chatMessage(message,
-                                message.id == model.lastMessageRead.id),
+                                message.id == model.lastMessageRead?.id),
                           );
                         });
                   }

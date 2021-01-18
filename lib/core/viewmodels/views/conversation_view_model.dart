@@ -42,7 +42,7 @@ class ConversationViewModel extends BaseModel {
     return _conversationRepository
         .getConversationStream(conversationId: conversationId)
         .listen((Conversation conversation) {
-      if (!_conversationSubject.isClosed) {
+      if (conversation != null && !_conversationSubject.isClosed) {
         _inConversation(conversation);
         if (!conversation.isRead &&
             conversation.receiverUid == authenticatedUserUid) {

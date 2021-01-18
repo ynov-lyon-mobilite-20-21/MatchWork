@@ -49,8 +49,9 @@ class ConversationRepository {
   Stream<Conversation> getConversationStream(
       {@required String conversationId}) {
     return _conversationsCollection.doc(conversationId).snapshots().asyncMap(
-        (DocumentSnapshot snapshot) async =>
-            Conversation.fromSnapshot(snapshot));
+        (DocumentSnapshot snapshot) async => snapshot.data() != null
+            ? Conversation.fromSnapshot(snapshot)
+            : null);
   }
 
   Future<Conversation> getConversationById(String conversationId) async {

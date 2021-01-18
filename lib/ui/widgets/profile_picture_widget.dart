@@ -17,7 +17,7 @@ class ProfilePictureWidget extends StatelessWidget {
           ? Theme.of(context).indicatorColor
           : backgroundColor,
       child: CircleAvatar(
-        backgroundImage: path == null
+        backgroundImage: path == null || path.isEmpty
             ? AssetImage(IMAGES_PATH + '/unknown_user.png')
             : NetworkImage(path),
         backgroundColor: Colors.grey,
