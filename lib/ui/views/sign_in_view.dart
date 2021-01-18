@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_in_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
@@ -49,81 +50,101 @@ class _SignInViewState extends State<SignInView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Provider.of<ThemeProvider>(context).isDarkMode
-                          ? "assets/images/welcome_white.png"
-                          : "assets/images/welcome_blue.png",
-                      width: MediaQuery.of(context).size.width * 0.8,
+                    Visibility(
+                      visible: KeyboardUtils.isHidden(context),
+                      child: Image.asset(
+                        Provider.of<ThemeProvider>(context).isDarkMode
+                            ? "assets/images/welcome_white.png"
+                            : "assets/images/welcome_blue.png",
+                        width: MediaQuery.of(context).size.width * 0.8,
+                      ),
                     ),
-                    Form(
-                      key: model.formKey,
-                      child: Column(
-                        children: [
-                          TextFieldWidget(
-                            controller: model.emailController,
-                            color: Colors.white,
-                            label: 'Identifiant',
-                            inputType: TextInputType.emailAddress,
-                            validation: (value) => model.emailValidator(value),
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          TextFieldWidget(
-                            controller: model.passwordController,
-                            color: Colors.white,
-                            isObscureText: true,
-                            label: 'Mot de passe',
-                            validation: (value) =>
-                                model.passwordValidator(value),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          model.busy
-                              ? CircularProgressIndicator()
-                              : RoundedButton(
-                                  onTap: () {
-                                    if (model.formKey.currentState.validate()) {
-                                      model.signIn().then((bool success) {
-                                        if (success) {
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                                  Root.route, (route) => false);
-                                        } else {
-                                          Scaffold.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: Text(model.error),
-                                          ));
+                    Column(
+                      children: [
+                        Form(
+                          key: model.formKey,
+                          child: Column(
+                            children: [
+                              TextFieldWidget(
+                                controller: model.emailController,
+                                color: Colors.white,
+                                label: 'Identifiant',
+                                inputType: TextInputType.emailAddress,
+                                validation: (value) =>
+                                    model.emailValidator(value),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              TextFieldWidget(
+                                controller: model.passwordController,
+                                color: Colors.white,
+                                isObscureText: true,
+                                label: 'Mot de passe',
+                                validation: (value) =>
+                                    model.passwordValidator(value),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              model.busy
+                                  ? CircularProgressIndicator()
+                                  : RoundedButton(
+                                      onTap: () {
+                                        if (model.formKey.currentState
+                                            .validate()) {
+                                          model.signIn().then((bool success) {
+                                            if (success) {
+                                              Navigator.of(context)
+                                                  .pushNamedAndRemoveUntil(
+                                                      Root.route,
+                                                      (route) => false);
+                                            } else {
+                                              Scaffold.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(model.error),
+                                              ));
+                                            }
+                                          });
                                         }
-                                      });
-                                    }
-                                  },
-                                  color: Colors.transparent,
-                                  text: "Connexion",
-                                  textColor: Theme.of(context).indicatorColor,
-                                  border: Border.all(
+                                      },
+                                      color: Colors.transparent,
+                                      text: "Connexion",
+                                      textColor:
+                                          Theme.of(context).indicatorColor,
+                                      border: Border.all(
+                                          color:
+                                              Theme.of(context).indicatorColor),
+                                    ),
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: KeyboardUtils.isHidden(context),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                "Pas encore de compte?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16.0),
+                              ),
+                              InkWell(
+                                onTap: () => Navigator.of(context)
+                                    .pushReplacementNamed(SignUpView.route),
+                                child: Text(
+                                  "Inscrivez-vous",
+                                  style: TextStyle(
                                       color: Theme.of(context).indicatorColor),
                                 ),
-                          SizedBox(
-                            height: 10.0,
+                              )
+                            ],
                           ),
-                          Text(
-                            "Pas encore de compte?",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800, fontSize: 16.0),
-                          ),
-                          InkWell(
-                            onTap: () => Navigator.of(context)
-                                .pushReplacementNamed(SignUpView.route),
-                            child: Text(
-                              "Inscrivez-vous",
-                              style: TextStyle(
-                                  color: Theme.of(context).indicatorColor),
-                            ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     )
                   ],
                 ),
