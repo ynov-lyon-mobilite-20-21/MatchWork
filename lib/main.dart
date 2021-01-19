@@ -22,7 +22,26 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Image _splashscreenBackgroundImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _splashscreenBackgroundImage = Image.asset(AppBackgroundImages.SplashscreenBackground);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(_splashscreenBackgroundImage.image, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -33,7 +52,7 @@ class MyApp extends StatelessWidget {
               providers: providers,
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: LoginView(),
+                home: SplashScreen(),
                 onGenerateRoute: (RouteSettings settings) {
                   print('Generating route: ${settings.name}');
                   switch (settings.name) {
