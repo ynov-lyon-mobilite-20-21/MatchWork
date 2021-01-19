@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^0.14.3+1
   rxdart: ^0.25.0
   intl: ^0.16.1
+  flutter_linkedin: ^1.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_linkedin/linkedloginflutter.dart';
 import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/linkedin_utils.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
 import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -10,10 +12,27 @@ import 'package:match_work/ui/widgets/round_logo_button.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    LinkedInLogin.initialize(context,
+        clientId: LinkedInUtils.clientId,
+        clientSecret: LinkedInUtils.clientSecret,
+        redirectUri: LinkedInUtils.redirectUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: [
           Container(
@@ -71,26 +90,27 @@ class LoginView extends StatelessWidget {
                                   color: Colors.white,
                                   logo: 'assets/images/logo/google_logo.png',
                                   size: 50.0,
-                                  onTap: () => model
-                                          .loginWithGoogle()
-                                          .then((bool success) {
-                                        if (success) {
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                                  Root.route, (route) => false);
-                                        } else {
-                                          Scaffold.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: Text(model.error),
-                                          ));
-                                        }
-                                      })),
-                              SizedBox(width: 15.0,),
+                                  onTap: () => model.loginWithGoogle().then(
+                                      (bool success) =>
+                                          loginWithExternalService(
+                                              context: context,
+                                              scaffoldKey: _scaffoldKey,
+                                              success: success,
+                                              error: model.error))),
+                              SizedBox(
+                                width: 15.0,
+                              ),
                               RoundLogoButton(
                                   color: Colors.white,
                                   logo: 'assets/images/logo/linkedin_logo.png',
                                   size: 50.0,
-                                  onTap: () => null)
+                                  onTap: () => model.loginWithLinkedIn().then(
+                                      (bool success) =>
+                                          loginWithExternalService(
+                                              context: context,
+                                              scaffoldKey: _scaffoldKey,
+                                              success: success,
+                                              error: model.error)))
                             ],
                           ),
                         ],
@@ -104,5 +124,19 @@ class LoginView extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+void loginWithExternalService(
+    {@required BuildContext context,
+    @required GlobalKey<ScaffoldState> scaffoldKey,
+    @required bool success,
+    String error}) {
+  if (success) {
+    Navigator.of(context).pushNamedAndRemoveUntil(Root.route, (route) => false);
+  } else {
+    scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(error),
+    ));
   }
 }

@@ -143,49 +143,26 @@ class _ConversationViewState extends State<ConversationView> {
                       offset: Offset(0, 3), blurRadius: 5, color: Colors.grey)
                 ],
               ),
-              child: Row(
-                children: [
-                  IconButton(
-                      icon: Icon(
-                        Icons.face,
-                        color: Theme.of(context).indicatorColor,
-                      ),
-                      onPressed: () {}),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "Taper quelque chose...",
-                          hintStyle: TextStyle(
-                              color: Theme.of(context).indicatorColor),
-                          border: InputBorder.none),
-                      controller: controller,
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.photo_camera,
-                        color: Theme.of(context).indicatorColor),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.attach_file,
-                        color: Theme.of(context).indicatorColor),
-                    onPressed: () {},
-                  )
-                ],
+              child: Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16.0),
+                      hintText: "Message...",
+                      hintStyle:
+                          TextStyle(color: Theme.of(context).indicatorColor),
+                      border: InputBorder.none),
+                  controller: controller,
+                ),
               ),
             ),
           ),
           SizedBox(width: 15),
           InkWell(
             onTap: () => onTap(),
-            child: Container(
-              padding: const EdgeInsets.all(15.0),
-              decoration:
-                  BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
-              child: Icon(
-                Icons.send,
-                color: Colors.white,
-              ),
+            child: Icon(
+              Icons.send,
+              color: Theme.of(context).indicatorColor,
             ),
           )
         ],
