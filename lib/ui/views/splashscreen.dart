@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:match_work/core/constants/app_constants.dart';
-import 'package:match_work/core/services/image_loader.dart';
-import 'package:match_work/ui/views/home_view.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
-import 'package:match_work/ui/widgets/helpers/space.dart';
 import 'package:flutter/services.dart';
+import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/ui/views/home_view.dart';
+import 'package:match_work/ui/views/login_view.dart';
 import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = AppColors.PrimaryColor;
@@ -20,21 +20,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final splashDelay = 5;
-  double screenHeight;
-  double screenWidth;
-
+  final splashDelay = 3;
+  String _logo = AppImages.LogoMatchWorkText;
+  String _backgroundImage = AppImages.BackgroundSplashScreen;
+  String _topRightLogo = AppImages.LogoTuba;
   PackageInfo _packageInfo = PackageInfo(
     version: 'Unknown',
   );
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _preloadImages();
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
-  }
 
   @override
   void initState() {
@@ -52,66 +44,61 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  _preloadImages() {
-    ImageLoader loader = ImageLoader();
-    loader.loadImages(context);
-  }
-
   _loadWidget() async {
     var _duration = Duration(seconds: splashDelay);
     return Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
+  Future<void> navigationPage() async {
+    bool isAuthenticated =
+        await Provider.of<AuthenticationService>(context, listen: false)
+            .isUserLoggedIn();
     Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => TutorialView()));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) =>
+                isAuthenticated ? HomeView() : LoginView()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AppBackgroundImages.SplashscreenBackground),
-                fit: BoxFit.cover)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 2, right: 5),
-              alignment: Alignment.topRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Image.asset(
-                    AppLogoImages.TubaLogo,
-                    width: screenWidth / 6,
-                  ),
-                ],
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Image.asset(
+              _backgroundImage,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                _topRightLogo,
+                width: 60,
               ),
             ),
-            Space(size: screenHeight / 8),
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    AppLogoImages.LogoTextBelow,
-                    width: MediaQuery.of(context).size.width,
-                    height: screenHeight / 2,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                  ),
-                ],
-              ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+              _logo,
+              width: MediaQuery.of(context).size.width,
+              height: 300,
             ),
-            Space(size: screenHeight / 8),
-            Container(
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     "Loading...",
@@ -120,15 +107,18 @@ class _SplashScreenState extends State<SplashScreen> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "version : ${_packageInfo.version}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   )
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

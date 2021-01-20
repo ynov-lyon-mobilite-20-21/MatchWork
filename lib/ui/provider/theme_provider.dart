@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/storage_manager.dart';
+import 'package:match_work/core/viewmodels/base_model.dart';
 import 'package:match_work/ui/shared/themes/dark_theme.dart';
 import 'package:match_work/ui/shared/themes/light_theme.dart';
 
-class ThemeProvider with ChangeNotifier {
+class ThemeProvider extends BaseModel {
   final darkTheme = DarkThemeData;
   final lightTheme = LightThemeData;
 
@@ -11,15 +12,25 @@ class ThemeProvider with ChangeNotifier {
   bool isDarkMode = false;
   ThemeData getTheme() => _themeData;
 
+  set themeData(ThemeData value) {
+    if (value == darkTheme) {
+      isDarkMode = true;
+    } else {
+      isDarkMode = false;
+    }
+    _themeData = value;
+  }
+
   ThemeProvider() {
+    themeData = lightTheme;
     StorageManager.readData('themeMode').then((value) {
       print('value read from storage: ' + value.toString());
       var themeMode = value ?? 'light';
       if (themeMode == 'light') {
-        _themeData = lightTheme;
+        themeData = lightTheme;
       } else {
         print('setting dark theme');
-        _themeData = darkTheme;
+        themeData = darkTheme;
       }
       notifyListeners();
     });
@@ -28,12 +39,10 @@ class ThemeProvider with ChangeNotifier {
   void changeTheme(bool isDarkModeOn) async {
     String themePreference;
     if (isDarkModeOn) {
-      _themeData = darkTheme;
-      isDarkMode = true;
+      themeData = darkTheme;
       themePreference = "dark";
     } else {
-      _themeData = lightTheme;
-      isDarkMode = false;
+      themeData = lightTheme;
       themePreference = "light";
     }
 
@@ -42,13 +51,13 @@ class ThemeProvider with ChangeNotifier {
   }
 
   void setDarkMode() async {
-    _themeData = darkTheme;
+    themeData = darkTheme;
     StorageManager.saveData('themeMode', 'dark');
     notifyListeners();
   }
 
   void setLightMode() async {
-    _themeData = lightTheme;
+    themeData = lightTheme;
     StorageManager.saveData('themeMode', 'light');
     notifyListeners();
   }

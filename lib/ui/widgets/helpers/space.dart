@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
-
-class Space extends StatelessWidget {
+/*class Space extends StatelessWidget {
   final double size;
 
   Space({Key key, this.size}) : super(key: key);
@@ -11,4 +9,4 @@ class Space extends StatelessWidget {
       height: size,
     );
   }
-}
+}*/

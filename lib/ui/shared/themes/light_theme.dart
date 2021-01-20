@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 
+// ignore: non_constant_identifier_names
 final ThemeData LightThemeData = ThemeData(
-  scaffoldBackgroundColor: Color(0xffFFFFFF),
-  appBarTheme: AppBarTheme(
-    color: AppColors.AppBarColor,
-    iconTheme: IconThemeData(
-      color: const Color(0xFF006E7F ),
+    scaffoldBackgroundColor: AppColors.BackgroundLightColor,
+    appBarTheme: AppBarTheme(color: AppColors.AppBarColor),
+    textTheme: TextTheme(
+        headline1: TextStyle(
+          color: AppColors.AppBarColor,
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+        ),
+        bodyText1: TextStyle(
+          color: AppColors.AppBarColor,
+        ),
+        subtitle1: TextStyle(
+          color: Colors.black54,
+          fontSize: 18.0,
+        ),
+        caption: TextStyle(color: Colors.grey[400], fontSize: 12.0)),
+    cardTheme: CardTheme(
+      color: AppColors.AppBarColor,
     ),
-  ),
-  textTheme: TextTheme(
-    headline1: TextStyle(
-      color: Colors.black,
-      fontSize: 30.0,
-      fontWeight: FontWeight.bold,
-    ),
-    subtitle1: TextStyle(
-      color: Colors.black54,
-      fontSize: 18.0,
-    ),
-  ),
-  cardTheme: CardTheme(
-    color: const Color(0xff006E7F),
-  ),
-  primarySwatch: Colors.grey,
-  primaryColor: AppColors.PrimaryColor,
-  brightness: Brightness.light,
-  backgroundColor: const Color(0xFFE5E5E5),
-  accentColor: AppColors.AccentColor,
-  accentIconTheme: IconThemeData(color: Colors.white),
-  dividerColor: Colors.white54,
-);
+    primarySwatch: Colors.grey,
+    primaryColor: AppColors.PrimaryColor,
+    indicatorColor: AppColors.AppBarColor,
+    focusColor: Colors.white,
+    primaryColorLight: Colors.white,
+    primaryColorDark: AppColors.PrimaryColor,
+    brightness: Brightness.light,
+    backgroundColor: AppColors.BackgroundLightColor,
+    accentColor: AppColors.AccentColor,
+    accentIconTheme: IconThemeData(color: Colors.white),
+    dividerColor: Colors.white54,
+    bottomNavigationBarTheme:
+        BottomNavigationBarThemeData(backgroundColor: Colors.white));

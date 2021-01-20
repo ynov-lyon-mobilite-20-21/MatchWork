@@ -1,25 +1,86 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Firebase;
+import 'package:flutter/material.dart';
+import 'package:flutter_linkedin/linkedloginflutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/repositories/user_repository.dart';
+import 'package:match_work/core/utils/form_validators.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AuthenticationService {
-  StreamController<User> _userController = StreamController<User>();
-  Stream<User> get user => _userController.stream;
+  final Firebase.FirebaseAuth _auth = Firebase.FirebaseAuth.instance;
+  final UserRepository _userRepository = UserRepository();
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final CompositeSubscription _compositeSubscription = CompositeSubscription();
+
+  BehaviorSubject<User> _userSubject = BehaviorSubject<User>();
+  Function(User) get _inUser => _userSubject.sink.add;
+  Stream<User> get outUser => _userSubject.stream;
+  User get currentUser => _userSubject.value;
 
   AuthenticationService() {
-    _auth.authStateChanges().listen((User user) => _userController.add(user));
+    _listenOnAuthStateChanged();
+  }
+
+  void _listenOnAuthStateChanged() async {
+    _compositeSubscription.add(
+        _auth.authStateChanges().listen((Firebase.User firebaseUser) async {
+      if (firebaseUser == null) {
+        _onUserLogout();
+      } else {
+        _onUserLogin(firebaseUser: firebaseUser);
+      }
+    }));
+  }
+
+  void _onUserLogin({Firebase.User firebaseUser}) async {
+    _compositeSubscription.add(_userRepository
+        .userStream(firebaseUser: firebaseUser)
+        .where((User user) => user != null)
+        .listen((User user) {
+      if (!_userSubject.isClosed) {
+        _inUser(user);
+      }
+    }));
+  }
+
+  void _onUserLogout() {
+    _userSubject.value = null;
+    _inUser(null);
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    Firebase.User firebaseUser = _auth.currentUser;
+    if (firebaseUser != null) {
+      User user = await _userRepository.getUserByUid(firebaseUser.uid);
+      return user != null;
+    } else {
+      return false;
+    }
   }
 
   Future<String> registrationWithEmailAndPassword(
-      String email, String password) async {
+      {@required String email,
+      @required String password,
+      @required String name,
+      @required String firstName}) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return null;
-    } on FirebaseAuthException catch (e) {
+      User userWithSameMail = await _userRepository.getUserByMail(email);
+      if (userWithSameMail != null) {
+        return 'Cet email est déjà utilisé.';
+      }
+      Firebase.UserCredential credentials = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      User user = User(
+          uid: credentials.user.uid,
+          mail: email,
+          firstName: firstName,
+          lastName: name);
+      await _userRepository.updateUser(user);
+    } on Firebase.FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'Le mot de passe n\'est pas assez long.';
       } else if (e.code == 'email-already-in-use') {
@@ -36,7 +97,7 @@ class AuthenticationService {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
-    } on FirebaseAuthException catch (e) {
+    } on Firebase.FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return 'Aucun utilisateur trouvé avec cet email.';
       } else if (e.code == 'wrong-password') {
@@ -55,7 +116,8 @@ class AuthenticationService {
         await googleUser.authentication;
 
     // Create a new credential
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+    final Firebase.GoogleAuthCredential credential =
+        Firebase.GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
@@ -63,10 +125,89 @@ class AuthenticationService {
     // Once signed in, return the UserCredential
     await _auth.signInWithCredential(credential);
 
+    String displayName = _auth.currentUser.displayName;
+    String firstName = displayName.split(' ').first.toLowerCase();
+    String lastName = displayName.substring(firstName.length + 1).toLowerCase();
+    User user = User(
+        uid: _auth.currentUser.uid,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: _auth.currentUser.phoneNumber,
+        mail: _auth.currentUser.email.toLowerCase(),
+        pictureUrl: _auth.currentUser.photoURL);
+    await _userRepository.updateUser(user);
+
     return _auth.currentUser != null ? null : 'Erreur';
+  }
+
+  Future<String> signInWithLikedIn() async {
+    String _authError;
+    await LinkedInLogin.loginForAccessToken(
+        destroySession: true,
+        appBar: AppBar(
+          title: Text('MatchWork'),
+        )).then((accessToken) async {
+      await LinkedInLogin.getEmail(
+          destroySession: true,
+          forceLogin: true,
+          appBar: AppBar(
+            title: Text('MatchWork'),
+          )).then((email) async {
+        String mail = email.elements.first.elementHandle.emailAddress;
+        if (FormValidators.isEmail(mail) == null) {
+          User linkedinUser = User(mail: mail.toLowerCase());
+          await LinkedInLogin.getProfile(
+              destroySession: true,
+              forceLogin: true,
+              appBar: AppBar(
+                title: Text('MatchWork'),
+              )).then((profile) {
+            linkedinUser.firstName = profile.firstName.toString().toLowerCase();
+            linkedinUser.lastName = profile.lastName.toString().toLowerCase();
+            linkedinUser.pictureUrl = profile
+                .profilePicture
+                .profilePictureDisplayImage
+                .elements
+                .first
+                .identifiers
+                .first
+                .identifier;
+          }).catchError((error) {
+            _authError = error.errorDescription;
+          });
+
+          User user = await _userRepository.getUserByMail(linkedinUser.mail);
+          if (user == null) {
+            await _auth
+                .createUserWithEmailAndPassword(
+                    email: mail.toLowerCase(), password: accessToken)
+                .then((Firebase.UserCredential credential) async {
+              linkedinUser.uid = credential.user.uid;
+            });
+          } else {
+            linkedinUser.uid = user.uid;
+            await _auth.createUserWithEmailAndPassword(
+                email: linkedinUser.mail, password: accessToken);
+          }
+          await _userRepository.updateUser(linkedinUser);
+        } else {
+          _authError = "Erreur lors de la récupération de l'email";
+        }
+      }).catchError((error) {
+        _authError = error.errorDescription;
+      });
+    }).catchError((error) {
+      _authError = error.message;
+    });
+    return _authError;
   }
 
   Future signOut() async {
     await _auth.signOut();
+  }
+
+  void dispose() {
+    _userSubject.close();
+    _compositeSubscription.dispose();
   }
 }
