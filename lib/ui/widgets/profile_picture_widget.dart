@@ -18,7 +18,7 @@ class ProfilePictureWidget extends StatelessWidget {
           : backgroundColor,
       child: CircleAvatar(
         backgroundImage: path == null || path.isEmpty
-            ? AssetImage(IMAGES_PATH + '/unknown_user.png')
+            ? AssetImage(AppImages.UnknownUser)
             : NetworkImage(path),
         backgroundColor: Colors.grey,
         radius: radius - 5.0,

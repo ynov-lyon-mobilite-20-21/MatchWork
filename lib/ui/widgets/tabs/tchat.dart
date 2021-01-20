@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/utils/date_utils.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/views/base_widget.dart';
-import 'package:match_work/ui/views/conversation_view.dart';
 import 'package:match_work/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../profile_picture_widget.dart';
 
 class Tchat extends StatefulWidget {
-  static const route = '/tchat';
-
   @override
   _TchatState createState() => _TchatState();
 }
@@ -36,7 +34,7 @@ class _TchatState extends State<Tchat> {
                         search: () => model.search().then((User user) {
                           if (user != null) {
                             Navigator.of(context).pushNamed(
-                                ConversationView.route,
+                                RoutePath.Conversation,
                                 arguments: user);
                           } else {
                             Scaffold.of(context).showSnackBar(SnackBar(
@@ -99,7 +97,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
         widget.conversation.lastMessageCreatedAt.toDate();
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(ConversationView.route,
+        Navigator.of(context).pushNamed(RoutePath.Conversation,
             arguments: widget.conversation.caller);
       },
       child: Container(

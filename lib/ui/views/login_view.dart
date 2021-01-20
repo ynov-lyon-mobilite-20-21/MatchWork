@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkedin/linkedloginflutter.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/linkedin_utils.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/base_widget.dart';
-import 'package:match_work/ui/views/root.dart';
-import 'package:match_work/ui/views/sign_in_view.dart';
-import 'package:match_work/ui/views/sign_up_view.dart';
 import 'package:match_work/ui/widgets/round_logo_button.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +35,7 @@ class _LoginViewState extends State<LoginView> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                    "assets/images/background/background_connexion_night.png"),
+                image: AssetImage(AppImages.BackgroundLoginDark),
                 fit: BoxFit.cover,
               ),
             ),
@@ -58,15 +54,15 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Image.asset(
-                        "assets/images/logo/logo_text_below.png",
+                        AppImages.LogoMatchWorkText,
                         width: MediaQuery.of(context).size.width * 0.7,
                       ),
                       Column(
                         children: [
                           RoundedButton(
                               onTap: () => Navigator.of(context)
-                                  .pushNamed(SignUpView.route),
-                              color: ACCENT_COLOR,
+                                  .pushNamed(RoutePath.Register),
+                              color: const Color(0xff5FC0C2),
                               text: "Inscription",
                               textColor: Colors.white),
                           SizedBox(
@@ -74,7 +70,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           RoundedButton(
                             onTap: () => Navigator.of(context)
-                                .pushNamed(SignInView.route),
+                                .pushNamed(RoutePath.Login),
                             color: Colors.transparent,
                             text: "Connexion",
                             textColor: Colors.white,
@@ -88,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                             children: [
                               RoundLogoButton(
                                   color: Colors.white,
-                                  logo: 'assets/images/logo/google_logo.png',
+                                  logo: AppImages.LogoGoogle,
                                   size: 50.0,
                                   onTap: () => model.loginWithGoogle().then(
                                       (bool success) =>
@@ -102,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
                               ),
                               RoundLogoButton(
                                   color: Colors.white,
-                                  logo: 'assets/images/logo/linkedin_logo.png',
+                                  logo: AppImages.LogoLinkedIn,
                                   size: 50.0,
                                   onTap: () => model.loginWithLinkedIn().then(
                                       (bool success) =>
@@ -133,7 +129,8 @@ void loginWithExternalService(
     @required bool success,
     String error}) {
   if (success) {
-    Navigator.of(context).pushNamedAndRemoveUntil(Root.route, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(RoutePath.Home, (route) => false);
   } else {
     scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(error),

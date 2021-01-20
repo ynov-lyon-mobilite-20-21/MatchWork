@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/storage_manager.dart';
+import 'package:match_work/core/viewmodels/base_model.dart';
 import 'package:match_work/ui/shared/themes/dark_theme.dart';
 import 'package:match_work/ui/shared/themes/light_theme.dart';
 
-class ThemeProvider with ChangeNotifier {
+class ThemeProvider extends BaseModel {
   final darkTheme = DarkThemeData;
   final lightTheme = LightThemeData;
 
-  ThemeData _themeData;
-  bool isDarkMode;
+  ThemeData _themeData = LightThemeData;
+  bool isDarkMode = false;
   ThemeData getTheme() => _themeData;
 
   set themeData(ThemeData value) {

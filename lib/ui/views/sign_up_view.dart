@@ -1,20 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_up_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/base_widget.dart';
-import 'package:match_work/ui/views/root.dart';
-import 'package:match_work/ui/views/sign_in_view.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
 class SignUpView extends StatefulWidget {
-  static const route = 'signUp';
-
   @override
   _SignUpViewState createState() => _SignUpViewState();
 }
@@ -30,17 +26,17 @@ class _SignUpViewState extends State<SignUpView> {
       builder: (_, model, __) => Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          backgroundColor: PRIMARY_COLOR,
+          backgroundColor: AppColors.StatusBarColor,
         ),
         body: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(Provider.of<ThemeProvider>(context)
-                          .isDarkMode
-                      ? "assets/images/background/background_connexion_night.png"
-                      : "assets/images/background/background_connexion_day.png"),
+                  image: AssetImage(
+                      Provider.of<ThemeProvider>(context).isDarkMode
+                          ? AppImages.BackgroundLoginDark
+                          : AppImages.BackgroundLoginLight),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -76,11 +72,12 @@ class _SignUpViewState extends State<SignUpView> {
                                     "Déjà un compte?",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w800,
-                                        fontSize: 16.0),
+                                        fontSize: 16.0,
+                                        color: Colors.black54),
                                   ),
                                   InkWell(
                                     onTap: () => Navigator.of(context)
-                                        .pushReplacementNamed(SignInView.route),
+                                        .pushReplacementNamed(RoutePath.Login),
                                     child: Text(
                                       "Connectez-vous",
                                       style: TextStyle(
@@ -180,7 +177,7 @@ Widget _formWidget(
                       model.signUp().then((bool success) {
                         if (success) {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              Root.route, (route) => false);
+                              RoutePath.Home, (route) => false);
                         } else {
                           scaffoldKey.currentState.showSnackBar(SnackBar(
                             content: Text(model.error),
@@ -189,10 +186,9 @@ Widget _formWidget(
                       });
                     }
                   },
-                  color: ACCENT_COLOR,
+                  color: AppColors.AccentColor,
                   text: "Enregistrer",
                   textColor: Colors.white,
-                  border: Border.all(color: Theme.of(context).indicatorColor),
                 ),
         ],
       ),

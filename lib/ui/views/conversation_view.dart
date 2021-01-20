@@ -4,16 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/models/chat_message.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
-import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/conversation_view_model.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
 
 class ConversationView extends StatefulWidget {
-  static const route = '/conversation';
-
   final User caller;
 
   ConversationView({Key key, @required this.caller}) : super(key: key);
@@ -32,96 +28,93 @@ class _ConversationViewState extends State<ConversationView> {
         model.listenMessageStream();
         model.listenConversationStream();
       },
-      builder: (context, model, widget) => GestureDetector(
-        onTap: () => KeyboardUtils.closeKeyboard(context: context),
-        child: Scaffold(
-          body: Column(
-            children: [
-              Container(
-                color: PRIMARY_COLOR,
-                child: SafeArea(
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onTap: () => Navigator.of(context).pop(),
-                                child: Icon(
-                                  Platform.isIOS
-                                      ? Icons.arrow_back_ios
-                                      : Icons.arrow_back,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
+      builder: (context, model, widget) => Scaffold(
+        body: Column(
+          children: [
+            Container(
+              color: Theme.of(context).appBarTheme.color,
+              child: SafeArea(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: Icon(
+                                Platform.isIOS
+                                    ? Icons.arrow_back_ios
+                                    : Icons.arrow_back,
+                                color: Colors.white,
+                                size: 30.0,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ProfilePictureWidget(
-                                  path: model.caller.pictureUrl,
-                                  radius: 25.0,
-                                  backgroundColor: Colors.white,
-                                ),
-                                Text(
-                                  model.caller.firstName,
-                                  textScaleFactor: 1.2,
-                                  style: TextStyle(color: Colors.white),
-                                )
-                              ],
-                            ),
-                          )
+                          ),
                         ],
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ProfilePictureWidget(
+                                path: model.caller.pictureUrl,
+                                radius: 25.0,
+                                backgroundColor: Colors.white,
+                              ),
+                              Text(
+                                model.caller.firstName,
+                                textScaleFactor: 1.2,
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
-              Expanded(
-                  child: StreamBuilder(
-                stream: model.outMessages,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError)
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  if (snapshot.hasData) {
-                    List<ChatMessage> messages = [
-                      ...model.sendingMessages.reversed,
-                      ...snapshot.data
-                    ];
-                    return ListView.builder(
-                        padding: EdgeInsets.only(bottom: 16, top: 16),
-                        reverse: true,
-                        itemCount: messages.length,
-                        itemBuilder: (_, int index) {
-                          ChatMessage message = messages[index];
-                          return Opacity(
-                            opacity:
-                                index < messages.length - snapshot.data.length
-                                    ? .5
-                                    : 1,
-                            child: chatMessage(message,
-                                message.id == model.lastMessageRead?.id),
-                          );
-                        });
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              )),
-              chatBar(model.controller, () => model.sendMessage())
-            ],
-          ),
+            ),
+            Expanded(
+                child: StreamBuilder(
+              stream: model.outMessages,
+              builder: (context, snapshot) {
+                if (snapshot.hasError)
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                if (snapshot.hasData) {
+                  List<ChatMessage> messages = [
+                    ...model.sendingMessages.reversed,
+                    ...snapshot.data
+                  ];
+                  return ListView.builder(
+                      padding: EdgeInsets.only(bottom: 16, top: 16),
+                      reverse: true,
+                      itemCount: messages.length,
+                      itemBuilder: (_, int index) {
+                        ChatMessage message = messages[index];
+                        return Opacity(
+                          opacity:
+                              index < messages.length - snapshot.data.length
+                                  ? .5
+                                  : 1,
+                          child: chatMessage(
+                              message, message.id == model.lastMessageRead?.id),
+                        );
+                      });
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )),
+            chatBar(model.controller, () => model.sendMessage())
+          ],
         ),
       ),
     );
@@ -143,17 +136,15 @@ class _ConversationViewState extends State<ConversationView> {
                       offset: Offset(0, 3), blurRadius: 5, color: Colors.grey)
                 ],
               ),
-              child: Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16.0),
-                      hintText: "Message...",
-                      hintStyle:
-                          TextStyle(color: Theme.of(context).indicatorColor),
-                      border: InputBorder.none),
-                  controller: controller,
-                ),
+              child: TextField(
+                decoration: InputDecoration(
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 16.0),
+                    hintText: "Message...",
+                    hintStyle:
+                        TextStyle(color: Theme.of(context).indicatorColor),
+                    border: InputBorder.none),
+                controller: controller,
               ),
             ),
           ),
