@@ -2,14 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:match_work/provider_setup.dart';
-import 'package:match_work/ui/shared/app_colors.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
+import 'package:match_work/ui/views/tutorial_view.dart';
 import 'package:provider/provider.dart';
 
-import 'core/constants/app_constants.dart';
-import 'ui/provider/theme_provider.dart';
 import 'core/constants/app_constants.dart';
 
 void main() {
@@ -18,14 +16,32 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.white, // navigation bar color
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(// navigation bar color
     statusBarColor: AppColors.StatusBarColor, // status bar color
   ));
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Image _splashscreenBackgroundImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _splashscreenBackgroundImage = Image.asset(AppBackgroundImages.SplashscreenBackground);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(_splashscreenBackgroundImage.image, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

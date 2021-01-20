@@ -34,31 +34,31 @@ class _HomeViewState extends State<HomeView> {
               items: [
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage("${ImagesPath.IconsPath}profil_off.png"),
+                      image: AssetImage(AppIcons.InactiveProfile),
                       height: 30,
                     ),
                     activeIcon: Image(
-                      image: AssetImage("${ImagesPath.IconsPath}profil_on.png"),
+                      image: AssetImage(AppIcons.ActiveProfile),
                       height: 30,
                     ),
                     label: "Profile"),
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage("${ImagesPath.IconsPath}match_off.png"),
+                      image: AssetImage(AppIcons.InactiveSwipe),
                       height: 30,
                     ),
                     activeIcon: Image(
-                      image: AssetImage("${ImagesPath.IconsPath}match_on.png"),
+                      image: AssetImage(AppIcons.ActiveSwipe),
                       height: 30,
                     ),
                     label: "Swipe"),
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage("${ImagesPath.IconsPath}tchat_off.png"),
+                      image: AssetImage(AppIcons.InactiveChat),
                       height: 30,
                     ),
                     activeIcon: Image(
-                      image: AssetImage("${ImagesPath.IconsPath}tchat_on.png"),
+                      image: AssetImage(AppIcons.ActiveChat),
                       height: 30,
                     ),
                     label: "Tchat"),
