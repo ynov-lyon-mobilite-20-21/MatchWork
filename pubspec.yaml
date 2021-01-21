@@ -40,6 +40,9 @@ dependencies:
   rxdart: ^0.25.0
   intl: ^0.16.1
   flutter_linkedin: ^1.0.2
+  flutter_tindercard: ^0.2.0
+  flip_card: ^0.4.4
+  getwidget: ^1.2.4
 
 dev_dependencies:
   flutter_test:
