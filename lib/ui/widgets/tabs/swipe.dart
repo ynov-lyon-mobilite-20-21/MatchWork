@@ -4,7 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
+import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:provider/provider.dart';
 
 class Swipe extends StatefulWidget {
   @override
@@ -12,8 +14,11 @@ class Swipe extends StatefulWidget {
 }
 
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
+
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ThemeProvider>(context).getTheme();
+
     return BaseWidget<SwipeModel>(
         model: SwipeModel(),
         builder: (context, model, widget) => model.index == 1
@@ -33,6 +38,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       minWidth: MediaQuery.of(context).size.width * 0.9,
                       minHeight: MediaQuery.of(context).size.width * 1.2,
                       cardBuilder: (context, index) => Card(
+                        color: theme.primaryColorDark,
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
                           child: Column(
@@ -44,11 +50,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               ),
                               Text(
                                 model.tindername[index],
-                                style: TextStyle(
-                                    fontFamily: 'IranSansLight',
-                                    fontSize: 25.0),
+                                style: theme.textTheme.headline2,
                               ),
-                              Text(model.tinderage[index]),
+                              Text(model.tinderage[index], style:theme.textTheme.bodyText1),
                               Container(
                                 height:
                                     MediaQuery.of(context).size.width * 0.02,
@@ -59,7 +63,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 width: MediaQuery.of(context).size.width * 0.90,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.blue,
+                                    color: theme.accentColor,
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -71,6 +75,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                       onPressed: () {},
                                       text: model.tinderspe[index],
                                       shape: GFButtonShape.pills,
+                                      color: theme.primaryColor,
                                       size: GFSize.SMALL,
                                     ),
                                   ],
@@ -100,6 +105,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       minWidth: MediaQuery.of(context).size.width * 0.9,
                       minHeight: MediaQuery.of(context).size.width * 1.2,
                       cardBuilder: (context, index) => Card(
+                        color: theme.primaryColorDark,
                         child: SingleChildScrollView(
                           child: Padding(
                             padding: EdgeInsets.all(20.0),
@@ -110,11 +116,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                     decoration: InputDecoration(
                                       labelText: 'BIO',
                                       labelStyle: TextStyle(
-                                        color: Colors.blue,
+                                        color: theme.accentColor,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide:
-                                            new BorderSide(color: Colors.blue),
+                                            new BorderSide(color: theme.accentColor),
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
@@ -130,11 +136,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                     decoration: InputDecoration(
                                       labelText: 'Experience',
                                       labelStyle: TextStyle(
-                                        color: Colors.blue,
+                                        color: theme.accentColor,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide:
-                                            new BorderSide(color: Colors.blue),
+                                            new BorderSide(color: theme.accentColor),
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
@@ -150,11 +156,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                     decoration: InputDecoration(
                                       labelText: 'Parcours',
                                       labelStyle: TextStyle(
-                                        color: Colors.blue,
+                                        color: theme.accentColor,
                                       ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide:
-                                            new BorderSide(color: Colors.blue),
+                                            new BorderSide(color: theme.accentColor),
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),

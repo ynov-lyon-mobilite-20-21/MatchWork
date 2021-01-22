@@ -11,8 +11,12 @@ final ThemeData LightThemeData = ThemeData(
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
         ),
+        headline2: TextStyle(
+          color: AppColors.PrimaryColor,
+          fontSize: 25.0,
+        ),
         bodyText1: TextStyle(
-          color: AppColors.AppBarColor,
+          color: AppColors.PrimaryColor,
         ),
         subtitle1: TextStyle(
           color: Colors.black54,
@@ -27,7 +31,7 @@ final ThemeData LightThemeData = ThemeData(
     indicatorColor: AppColors.AppBarColor,
     focusColor: Colors.white,
     primaryColorLight: Colors.white,
-    primaryColorDark: AppColors.PrimaryColor,
+    primaryColorDark: Colors.white,
     brightness: Brightness.light,
     backgroundColor: AppColors.BackgroundLightColor,
     accentColor: AppColors.AccentColor,

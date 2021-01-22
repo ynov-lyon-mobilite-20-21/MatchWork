@@ -11,6 +11,10 @@ final ThemeData DarkThemeData = ThemeData(
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
         ),
+        headline2: TextStyle(
+          color: Colors.white,
+          fontSize: 25.0,
+        ),
         bodyText1: TextStyle(
           color: Colors.white,
         ),
