@@ -14,7 +14,6 @@ class Swipe extends StatefulWidget {
 }
 
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context).getTheme();
@@ -25,9 +24,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
             ? Center(
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.7,
-                  child: FlipCard(
-                    key: Key('_index'),
-                    front: TinderSwapCard(
+                  child: TinderSwapCard(
                       swipeDown: false,
                       swipeUp: false,
                       orientation: AmassOrientation.TOP,
@@ -37,7 +34,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       maxHeight: MediaQuery.of(context).size.width * 1.21,
                       minWidth: MediaQuery.of(context).size.width * 0.9,
                       minHeight: MediaQuery.of(context).size.width * 1.2,
-                      cardBuilder: (context, index) => Card(
+                      cardBuilder: (context, index) => FlipCard(
+                        direction: FlipDirection.HORIZONTAL,
+                        speed: 850,
+                        key: Key('flip$index'),
+                        front: Card(
                         color: theme.primaryColorDark,
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
@@ -52,7 +53,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 model.tindername[index],
                                 style: theme.textTheme.headline2,
                               ),
-                              Text(model.tinderage[index], style:theme.textTheme.bodyText1),
+                              Text(model.tinderage[index],
+                                  style: theme.textTheme.bodyText1),
                               Container(
                                 height:
                                     MediaQuery.of(context).size.width * 0.02,
@@ -68,7 +70,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 padding: EdgeInsets.only(left: 2.0),
-                                child: Column(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     GFButton(
@@ -78,6 +80,15 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                       color: theme.primaryColor,
                                       size: GFSize.SMALL,
                                     ),
+                                    if (model.tinderspe2[index] != "")
+                                      GFButton(
+                                          onPressed: () {},
+                                          text: model.tinderspe2[index],
+                                          shape: GFButtonShape.pills,
+                                          color: theme.primaryColor,
+                                          size: GFSize.SMALL,
+                                        ),
+
                                   ],
                                 ),
                               ),
@@ -86,101 +97,77 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                         ),
                         elevation: 10.0,
                       ),
-                      swipeUpdateCallback:
-                          (DragUpdateDetails details, Alignment align) {
-                        if (align.x < 0) {
-                        } else if (align.x > 0) {
-                          //Card is RIGHT swiping
-                        }
-                      },
-                    ),
-                    back: TinderSwapCard(
-                      swipeDown: false,
-                      swipeUp: false,
-                      orientation: AmassOrientation.TOP,
-                      totalNum: 5,
-                      stackNum: 3,
-                      maxWidth: MediaQuery.of(context).size.width * 0.91,
-                      maxHeight: MediaQuery.of(context).size.width * 1.21,
-                      minWidth: MediaQuery.of(context).size.width * 0.9,
-                      minHeight: MediaQuery.of(context).size.width * 1.2,
-                      cardBuilder: (context, index) => Card(
-                        color: theme.primaryColorDark,
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: 'BIO',
-                                      labelStyle: TextStyle(
-                                        color: theme.accentColor,
+                        back: Card(
+                          color: theme.primaryColorDark,
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: 'BIO',
+                                        labelStyle: TextStyle(
+                                          color: theme.accentColor,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: theme.accentColor),
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                        ),
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: theme.accentColor),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
+                                      child: Text(
+                                          "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quod ei celebrari vilitatem intempestivam urgenti, cum inpenderet inopia, gravius rationabili responderunt; et perissent ad unum."),
                                     ),
-                                    child: Text(
-                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quod ei celebrari vilitatem intempestivam urgenti, cum inpenderet inopia, gravius rationabili responderunt; et perissent ad unum."),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.width *
-                                        0.07,
-                                  ),
-                                  InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: 'Experience',
-                                      labelStyle: TextStyle(
-                                        color: theme.accentColor,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: theme.accentColor),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
+                                    Container(
+                                      height: MediaQuery.of(context).size.width *
+                                          0.07,
                                     ),
-                                    child: Text(
-                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, m urgenti, cum inpenderet inopia, gr"),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.width *
-                                        0.07,
-                                  ),
-                                  InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: 'Parcours',
-                                      labelStyle: TextStyle(
-                                        color: theme.accentColor,
+                                    InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: 'Experience',
+                                        labelStyle: TextStyle(
+                                          color: theme.accentColor,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: theme.accentColor),
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                        ),
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: theme.accentColor),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
+                                      child: Text(
+                                          "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, m urgenti, cum inpenderet inopia, gr"),
                                     ),
-                                    child: Text(""),
-                                  ),
-                                ],
+                                    Container(
+                                      height: MediaQuery.of(context).size.width *
+                                          0.07,
+                                    ),
+                                    InputDecorator(
+                                      decoration: InputDecoration(
+                                        labelText: 'Parcours',
+                                        labelStyle: TextStyle(
+                                          color: theme.accentColor,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: new BorderSide(
+                                              color: theme.accentColor),
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                        ),
+                                      ),
+                                      child: Text(""),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
+                          elevation: 10.0,
                         ),
-                        elevation: 10.0,
-                      ),
-                      swipeUpdateCallback:
-                          (DragUpdateDetails details, Alignment align) {
-                        if (align.x < 0) {
-                        } else if (align.x > 0) {
-                          //Card is RIGHT swiping
-                        }
-                      },
+
                     ),
                   ),
                 ),

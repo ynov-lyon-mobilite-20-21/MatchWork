@@ -31,4 +31,11 @@ class SwipeModel extends BaseModel {
     "Chef de Projet",
     "Dev Ops",
   ];
+  List<String> tinderspe2 = [
+    "PHP",
+    "DEV OPS",
+    "",
+    "Lead DEV",
+    "",
+  ];
 }
