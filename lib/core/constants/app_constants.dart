@@ -23,6 +23,18 @@ class AppColors {
   static const AccentColor = const Color(0xff5FC0C2);
   static const AppBarColor = const Color(0xff006E7F);
   static const StatusBarColor = const Color(0xff184246);
+  static const BackGroundColor = const Color(0xFFF7F7F7);
+  static const CircleAvatarBorderColor = const Color(0xff00C4C4);
+}
+
+class AppBackgroundImages {
+  static const appBackgroundImages = [SplashscreenBackground];
+  static const _baseUri = "assets/images/background/";
+
+  static const SplashscreenBackground = "${_baseUri}background_splashscreen.png";
+}
+
+class AppLogoImages {
 
   static const BackgroundLightColor = const Color(0xFFE5E5E5);
 

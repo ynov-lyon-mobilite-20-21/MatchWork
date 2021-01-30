@@ -34,14 +34,14 @@ class _ProfileState extends State<Profile> {
           Container(
               child: Column(children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 100, left: 5),
+                  padding: const EdgeInsets.only(top: 90, left: 5),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           CircleAvatar(
                             radius: 70,
-                            backgroundColor: Color(0xff00C4C4),
+                            backgroundColor: AppColors.CircleAvatarBorderColor,
                             child: CircleAvatar(
                               radius: 67,
                               backgroundImage: AssetImage(
@@ -49,7 +49,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 5, top: 20),
+                            padding: EdgeInsets.only(left: 30, top: 70),
                             child: Column(
                               children: [
                                 Text("Thomas Noel",
