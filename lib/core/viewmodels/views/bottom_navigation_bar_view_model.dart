@@ -6,7 +6,7 @@ import 'package:match_work/ui/widgets/tabs/tchat.dart';
 import '../base_model.dart';
 
 class BottomNavigationBarViewModel extends BaseModel {
-  int _currentTab = 1;
+  int _currentTab = 0;
 
   List<Widget> _screens = [Profile(), Swipe(), Tchat()];
   set currentTab(int tab) {
