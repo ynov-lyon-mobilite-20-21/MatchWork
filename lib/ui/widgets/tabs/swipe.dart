@@ -18,7 +18,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context).getTheme();
 
-
     return BaseWidget<SwipeModel>(
         model: SwipeModel(),
         builder: (context, model, widget) => model.index == 1
@@ -60,10 +59,12 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               Text(model.tinderage[index],
                                   style: theme.textTheme.bodyText1),
                               SizedBox(
-                                height: MediaQuery.of(context).size.width * 0.02,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.02,
                               ),
                               Container(
-                                height: MediaQuery.of(context).size.width * 0.18,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.18,
                                 width: MediaQuery.of(context).size.width * 0.90,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -71,24 +72,49 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                padding: EdgeInsets.only(left: 2.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                padding: EdgeInsets.all(5.0),
+                                child: GridView.count(
+                                  // Create a grid with 2 columns. If you change the scrollDirection to
+                                  // horizontal, this produces 2 rows.
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 10,
+                                  crossAxisCount: 3,
+                                  childAspectRatio: ( 0.2 / 0.1),
+                                  children: <Widget>[
                                     GFButton(
                                       onPressed: () {},
                                       text: model.tinderspe[index],
                                       shape: GFButtonShape.pills,
                                       color: theme.primaryColor,
                                       size: GFSize.SMALL,
+                                      fullWidthButton: true,
                                     ),
+
                                     if (model.tinderspe2[index] != "")
                                       GFButton(
                                         onPressed: () {},
                                         text: model.tinderspe2[index],
                                         shape: GFButtonShape.pills,
                                         color: theme.primaryColor,
-                                        size: GFSize.SMALL,
+                                        size: GFSize.MEDIUM,
+                                      ),
+
+                                    if (model.tinderspe2[index] != "")
+                                      GFButton(
+                                        onPressed: () {},
+                                        text: model.tinderspe2[index],
+                                        shape: GFButtonShape.pills,
+                                        color: theme.primaryColor,
+                                        size: GFSize.MEDIUM,
+                                      ),
+
+                                    if (model.tinderspe2[index] != "")
+                                      GFButton(
+                                        onPressed: () {},
+                                        text: model.tinderspe2[index],
+                                        shape: GFButtonShape.pills,
+                                        color: theme.primaryColor,
+                                        size: GFSize.MEDIUM,
                                       ),
                                   ],
                                 ),

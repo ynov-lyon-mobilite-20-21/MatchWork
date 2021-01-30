@@ -25,17 +25,17 @@ class SwipeModel extends BaseModel {
     "32",
   ];
   List<String> tinderspe = [
-    "Developpeur",
+    "Developper",
     "Full Stack",
     "Design",
     "Chef de Projet",
     "Dev Ops",
   ];
   List<String> tinderspe2 = [
-    "PHP",
-    "DEV OPS",
+    "Php",
+    "Dev Ops",
     "",
-    "Lead DEV",
+    "Lead Dev",
     "",
   ];
 }
