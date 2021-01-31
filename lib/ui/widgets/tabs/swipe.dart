@@ -64,7 +64,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               ),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.width * 0.18,
+                                    MediaQuery.of(context).size.width * 0.25,
                                 width: MediaQuery.of(context).size.width * 0.90,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -72,51 +72,116 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   ),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                padding: EdgeInsets.all(5.0),
-                                child: GridView.count(
-                                  // Create a grid with 2 columns. If you change the scrollDirection to
-                                  // horizontal, this produces 2 rows.
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 10,
-                                  crossAxisCount: 3,
-                                  childAspectRatio: ( 0.2 / 0.1),
-                                  children: <Widget>[
-                                    GFButton(
-                                      onPressed: () {},
-                                      text: model.tinderspe[index],
-                                      shape: GFButtonShape.pills,
-                                      color: theme.primaryColor,
-                                      size: GFSize.SMALL,
-                                      fullWidthButton: true,
-                                    ),
-
-                                    if (model.tinderspe2[index] != "")
-                                      GFButton(
-                                        onPressed: () {},
-                                        text: model.tinderspe2[index],
-                                        shape: GFButtonShape.pills,
-                                        color: theme.primaryColor,
-                                        size: GFSize.MEDIUM,
+                                padding: EdgeInsets.only(left: 2.0),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      ButtonTheme(
+                                        minWidth: 65.0,
+                                        child : RaisedButton(
+                                          shape: StadiumBorder(),
+                                          color: theme.primaryColor,
+                                          padding: EdgeInsets.all(8.0),
+                                          onPressed: () {},
+                                          child: Text(
+                                            model.tinderspe[index],
+                                            style: TextStyle(
+                                              fontSize: 11.0,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-
-                                    if (model.tinderspe2[index] != "")
-                                      GFButton(
-                                        onPressed: () {},
-                                        text: model.tinderspe2[index],
-                                        shape: GFButtonShape.pills,
-                                        color: theme.primaryColor,
-                                        size: GFSize.MEDIUM,
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.02,
                                       ),
+                                      if (model.tinderspe2[index] != "")
 
-                                    if (model.tinderspe2[index] != "")
-                                      GFButton(
-                                        onPressed: () {},
-                                        text: model.tinderspe2[index],
-                                        shape: GFButtonShape.pills,
-                                        color: theme.primaryColor,
-                                        size: GFSize.MEDIUM,
+                                      ButtonTheme(
+                                        minWidth: 65.0,
+                                        child : RaisedButton(
+                                          shape: StadiumBorder(),
+                                          color: theme.primaryColor,
+                                          padding: EdgeInsets.all(8.0),
+                                          onPressed: () {},
+                                          child: Text(
+                                            model.tinderspe2[index],
+                                            style: TextStyle(
+                                              fontSize: 11.0,
+                                            ),
+                                          ),
+                                        ),
+                                        ),
+                                      SizedBox(
+                                        width:
+                                        MediaQuery.of(context).size.width *
+                                            0.02,
                                       ),
-                                  ],
+                                      if (model.tinderspe2[index] != "")
+
+                                        ButtonTheme(
+                                          minWidth: 65.0,
+                                          child : RaisedButton(
+                                            shape: StadiumBorder(),
+                                            color: theme.primaryColor,
+                                            padding: EdgeInsets.all(8.0),
+                                            onPressed: () {},
+                                            child: Text(
+                                              model.tinderspe2[index],
+                                              style: TextStyle(
+                                                fontSize: 11.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      SizedBox(
+                                        width:
+                                        MediaQuery.of(context).size.width *
+                                            0.02,
+                                      ),
+                                      if (model.tinderspe2[index] != "")
+
+                                        ButtonTheme(
+                                          minWidth: 65.0,
+                                          child : RaisedButton(
+                                            shape: StadiumBorder(),
+                                            color: theme.primaryColor,
+                                            padding: EdgeInsets.all(8.0),
+                                            onPressed: () {},
+                                            child: Text(
+                                              model.tinderspe2[index],
+                                              style: TextStyle(
+                                                fontSize: 11.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      SizedBox(
+                                        width:
+                                        MediaQuery.of(context).size.width *
+                                            0.02,
+                                      ),
+                                      if (model.tinderspe2[index] != "")
+
+                                        ButtonTheme(
+                                          minWidth: 65.0,
+                                          child : RaisedButton(
+                                            shape: StadiumBorder(),
+                                            color: theme.primaryColor,
+                                            padding: EdgeInsets.all(8.0),
+                                            onPressed: () {},
+                                            child: Text(
+                                              model.tinderspe2[index],
+                                              style: TextStyle(
+                                                fontSize: 11.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

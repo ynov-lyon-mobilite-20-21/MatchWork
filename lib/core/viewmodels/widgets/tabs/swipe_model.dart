@@ -29,13 +29,13 @@ class SwipeModel extends BaseModel {
     "Full Stack",
     "Design",
     "Chef de Projet",
-    "Dev Ops",
+    "Réseaux et Cybersécurité",
   ];
   List<String> tinderspe2 = [
-    "Php",
-    "Dev Ops",
-    "",
+    "Php / Sql",
+    "BigData et Science",
+    "MessageLongPourLeTest",
     "Lead Dev",
-    "",
+    "C#",
   ];
 }
