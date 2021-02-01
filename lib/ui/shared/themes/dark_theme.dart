@@ -15,8 +15,17 @@ final ThemeData DarkThemeData = ThemeData(
           color: Colors.white,
           fontSize: 25.0,
         ),
+        headline4: TextStyle(
+          color: Colors.black,
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+        ),
         bodyText1: TextStyle(
           color: Colors.white,
+        ),
+        bodyText2: TextStyle(
+          color: Colors.black,
+          fontSize: 12.0,
         ),
         subtitle1: TextStyle(
           color: Colors.white70,
@@ -24,7 +33,7 @@ final ThemeData DarkThemeData = ThemeData(
         ),
         caption: TextStyle(color: Colors.white, fontSize: 12.0)),
     cardTheme: CardTheme(
-      color: AppColors.AppBarColor,
+      color: AppColors.BackgroundDarkColor,
     ),
     primarySwatch: Colors.grey,
     primaryColor: AppColors.PrimaryColor,
@@ -37,5 +46,8 @@ final ThemeData DarkThemeData = ThemeData(
     accentColor: AppColors.AccentColor,
     accentIconTheme: IconThemeData(color: Colors.black),
     dividerColor: Colors.black12,
+    cardColor: Colors.white,
+    buttonColor: AppColors.PrimaryColor,
     bottomNavigationBarTheme:
-        BottomNavigationBarThemeData(backgroundColor: AppColors.AppBarColor));
+        BottomNavigationBarThemeData(backgroundColor: AppColors.AppBarColor)
+);

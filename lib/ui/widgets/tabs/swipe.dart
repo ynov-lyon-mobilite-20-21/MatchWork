@@ -40,7 +40,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       speed: 750,
                       front: Container(
                         decoration: BoxDecoration(
-                          color: theme.primaryColorDark,
+                          color: theme.cardColor,
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         ),
                         child: Padding(
@@ -54,18 +54,18 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               ),
                               Text(
                                 model.tindername[index],
-                                style: theme.textTheme.headline2,
+                                style: theme.textTheme.headline4,
                               ),
                               Text(model.tinderage[index],
-                                  style: theme.textTheme.bodyText1),
+                                  style: theme.textTheme.bodyText2),
                               SizedBox(
                                 height:
                                     MediaQuery.of(context).size.width * 0.02,
                               ),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                width: MediaQuery.of(context).size.width * 0.90,
+                                    MediaQuery.of(context).size.width * 0.20,
+                                width: MediaQuery.of(context).size.width * 0.85,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: theme.accentColor,
@@ -77,109 +77,51 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   scrollDirection: Axis.vertical,
                                   child: Wrap(
                                     children: <Widget>[
-                                      ButtonTheme(
-                                        minWidth: 65.0,
-                                        child : RaisedButton(
-                                          shape: StadiumBorder(),
+                                      /// TODD : il faut faire une boucle ici
+                                      SkillButton(
                                           color: theme.primaryColor,
-                                          padding: EdgeInsets.all(8.0),
-                                          onPressed: () {},
-                                          child: Text(
-                                            model.tinderspe[index],
-                                            style: TextStyle(
-                                              fontSize: 11.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                          text: model.tinderspe2[index],
+                                          style: theme.textTheme.bodyText2),
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.02,
                                       ),
                                       if (model.tinderspe2[index] != "")
-
-                                      ButtonTheme(
-                                        minWidth: 65.0,
-                                        child : RaisedButton(
-                                          shape: StadiumBorder(),
-                                          color: theme.primaryColor,
-                                          padding: EdgeInsets.all(8.0),
-                                          onPressed: () {},
-                                          child: Text(
-                                            model.tinderspe2[index],
-                                            style: TextStyle(
-                                              fontSize: 11.0,
-                                            ),
-                                          ),
-                                        ),
-                                        ),
+                                        SkillButton(
+                                            color: theme.primaryColor,
+                                            text: model.tinderspe2[index],
+                                            style: theme.textTheme.bodyText2),
                                       SizedBox(
                                         width:
-                                        MediaQuery.of(context).size.width *
-                                            0.02,
+                                            MediaQuery.of(context).size.width *
+                                                0.02,
                                       ),
                                       if (model.tinderspe2[index] != "")
-
-                                        ButtonTheme(
-                                          minWidth: 65.0,
-                                          child : RaisedButton(
-                                            shape: StadiumBorder(),
+                                        SkillButton(
                                             color: theme.primaryColor,
-                                            padding: EdgeInsets.all(8.0),
-                                            onPressed: () {},
-                                            child: Text(
-                                              model.tinderspe2[index],
-                                              style: TextStyle(
-                                                fontSize: 11.0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                            text: model.tinderspe2[index],
+                                            style: theme.textTheme.bodyText2),
                                       SizedBox(
                                         width:
-                                        MediaQuery.of(context).size.width *
-                                            0.02,
+                                            MediaQuery.of(context).size.width *
+                                                0.02,
                                       ),
                                       if (model.tinderspe2[index] != "")
-
-                                        ButtonTheme(
-                                          minWidth: 65.0,
-                                          child : RaisedButton(
-                                            shape: StadiumBorder(),
+                                        SkillButton(
                                             color: theme.primaryColor,
-                                            padding: EdgeInsets.all(8.0),
-                                            onPressed: () {},
-                                            child: Text(
-                                              model.tinderspe2[index],
-                                              style: TextStyle(
-                                                fontSize: 11.0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                            text: model.tinderspe2[index],
+                                            style: theme.textTheme.bodyText2),
                                       SizedBox(
                                         width:
-                                        MediaQuery.of(context).size.width *
-                                            0.02,
+                                            MediaQuery.of(context).size.width *
+                                                0.02,
                                       ),
                                       if (model.tinderspe2[index] != "")
-
-                                        ButtonTheme(
-                                          minWidth: 65.0,
-                                          child : RaisedButton(
-                                            shape: StadiumBorder(),
+                                        SkillButton(
                                             color: theme.primaryColor,
-                                            padding: EdgeInsets.all(8.0),
-                                            onPressed: () {},
-                                            child: Text(
-                                              model.tinderspe2[index],
-                                              style: TextStyle(
-                                                fontSize: 11.0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                            text: model.tinderspe2[index],
+                                            style: theme.textTheme.bodyText2),
                                     ],
                                   ),
                                 ),
@@ -190,7 +132,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       ),
                       back: Container(
                         decoration: BoxDecoration(
-                          color: theme.primaryColorDark,
+                          color: theme.cardTheme.color,
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         ),
                         child: SingleChildScrollView(
@@ -213,7 +155,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                       ),
                                     ),
                                     child: Text(
-                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quod ei celebrari vilitatem intempestivam urgenti, cum inpenderet inopia, gravius rationabili responderunt; et perissent ad unum."),
+                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quod ei celebrari vilitatem intempestivam urgenti, cum inpenderet inopia, gravius rationabili responderunt; et perissent ad unum.",
+                                        style: theme.textTheme.bodyText2),
                                   ),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.width *
@@ -265,5 +208,42 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                 ),
               )
             : SizedBox.expand(child: FlutterLogo()));
+  }
+}
+
+class SkillButton extends StatefulWidget {
+  final color;
+  final String text;
+  final style;
+
+  const SkillButton(
+      {Key key,
+      @required this.color,
+      @required this.text,
+      @required this.style})
+      : super(key: key);
+
+  @override
+  _SkillButtonState createState() => _SkillButtonState();
+}
+
+class _SkillButtonState extends State<SkillButton> {
+  @override
+  Widget build(BuildContext context) {
+    return ButtonTheme(
+      minWidth: 65.0,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: BorderSide(color: Colors.white)),
+        color: widget.color,
+        padding: EdgeInsets.all(8.0),
+        onPressed: () {},
+        child: Text(
+          widget.text,
+          style: widget.style,
+        ),
+      ),
+    );
   }
 }

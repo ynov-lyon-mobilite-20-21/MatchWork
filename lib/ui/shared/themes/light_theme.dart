@@ -6,13 +6,18 @@ final ThemeData LightThemeData = ThemeData(
   appBarTheme: AppBarTheme(
     color: AppColors.AppBarColor,
     iconTheme: IconThemeData(
-      color: const Color(0xFF006E7F ),
+      color: const Color(0xFF006E7F),
     ),
   ),
   textTheme: TextTheme(
       headline1: TextStyle(
         color: Colors.black,
         fontSize: 30.0,
+        fontWeight: FontWeight.bold,
+      ),
+      headline4: TextStyle(
+        color: Colors.white,
+        fontSize: 14.0,
         fontWeight: FontWeight.bold,
       ),
       subtitle1: TextStyle(
@@ -22,10 +27,13 @@ final ThemeData LightThemeData = ThemeData(
       bodyText1: TextStyle(
         color: Colors.black,
         fontSize: 14.0,
-      )
-  ),
+      ),
+      bodyText2: TextStyle(
+        color: Colors.white,
+        fontSize: 12.0,
+      )),
   cardTheme: CardTheme(
-    color: const Color(0xff006E7F),
+    color: AppColors.PrimaryColor,
   ),
   primarySwatch: Colors.grey,
   primaryColor: AppColors.PrimaryColor,
@@ -34,4 +42,8 @@ final ThemeData LightThemeData = ThemeData(
   accentColor: AppColors.AccentColor,
   accentIconTheme: IconThemeData(color: Colors.white),
   dividerColor: Colors.white54,
+  cardColor: AppColors.PrimaryColor,
+  buttonColor: AppColors.SecondColor,
+    bottomNavigationBarTheme:
+    BottomNavigationBarThemeData(backgroundColor: AppColors.BackgroundLightColor)
 );

@@ -4,11 +4,7 @@ import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-
-
-class Profile extends StatefulWidget{
-
-
+class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -22,56 +18,54 @@ class _ProfileState extends State<Profile> {
         backgroundColor: theme.scaffoldBackgroundColor,
         body: SingleChildScrollView(
             child: Stack(children: <Widget>[
-              Container(
-                width: double.infinity,
-                height: 160,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            "assets/images/background/banniere_profil1.png"),
-                        fit: BoxFit.cover)),
-              ),
+          Container(
+            width: double.infinity,
+            height: 160,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(AppImages.ProfilBannere),
+                    fit: BoxFit.cover)),
+          ),
           Container(
               child: Column(children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 90, left: 5),
-                  child: Column(
+            Padding(
+              padding: const EdgeInsets.only(top: 90, left: 5),
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 70,
-                            backgroundColor: AppColors.CircleAvatarBorderColor,
-                            child: CircleAvatar(
-                              radius: 67,
-                              backgroundImage: AssetImage(
-                                  'assets/images/background/téléchargement.png'),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 30, top: 70),
-                            child: Column(
-                              children: [
-                                Text("Thomas Noel",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      color: theme.textTheme.bodyText1.color,
-                                      letterSpacing: 2.0,
-                                    )),
-                                Text("18 ans",
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: theme.textTheme.bodyText1.color,
-                                      letterSpacing: 2.0,
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ],
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundColor: AppColors.CircleAvatarBorderColor,
+                        child: CircleAvatar(
+                          radius: 67,
+                          backgroundImage: AssetImage(AppImages.UnknownUser),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30, top: 70),
+                        child: Column(
+                          children: [
+                            Text("Thomas Noel",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: theme.textTheme.bodyText1.color,
+                                  letterSpacing: 2.0,
+                                )),
+                            Text("18 ans",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: theme.textTheme.bodyText1.color,
+                                  letterSpacing: 2.0,
+                                )),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
+                ],
+              ),
+            ),
             SizedBox(
               height: 20,
             ),
@@ -164,7 +158,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                       child: Card(
-                        color: Color(0xFF006E81),
+                        color: theme.cardTheme.color,
                         shape: RoundedRectangleBorder(
                             side:
                                 new BorderSide(color: Colors.white, width: 2.0),

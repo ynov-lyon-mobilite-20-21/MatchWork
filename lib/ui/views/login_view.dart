@@ -54,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Image.asset(
-                        AppImages.LogoMatchWorkText,
+                        AppImages.LogoMatchWork,
                         width: MediaQuery.of(context).size.width * 0.7,
                       ),
                       Column(
