@@ -3,8 +3,6 @@ import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'ui/provider/theme_provider.dart';
-
 List<SingleChildWidget> providers = [
   ...independentServices,
   ...dependantServices,

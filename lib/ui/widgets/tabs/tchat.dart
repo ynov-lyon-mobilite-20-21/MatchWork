@@ -11,16 +11,16 @@ import 'package:provider/provider.dart';
 
 import '../profile_picture_widget.dart';
 
-class Chat extends StatefulWidget {
+class Tchat extends StatefulWidget {
   @override
-  _ChatState createState() => _ChatState();
+  _TchatState createState() => _TchatState();
 }
 
-class _ChatState extends State<Chat> {
+class _TchatState extends State<Tchat> {
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<ChatModel>(
-        model: ChatModel(authenticationService: Provider.of(context)),
+    return BaseWidget<TchatModel>(
+        model: TchatModel(authenticationService: Provider.of(context)),
         onModelReady: (model) => model.listenConversationsStream(),
         builder: (context, model, widget) => Column(
               children: [

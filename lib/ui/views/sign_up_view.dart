@@ -35,8 +35,8 @@ class _SignUpViewState extends State<SignUpView> {
                 image: DecorationImage(
                   image: AssetImage(
                       Provider.of<ThemeProvider>(context).isDarkMode
-                          ? AppBackgroundImages.ConnexionNightBackground
-                          : AppBackgroundImages.ConnexionDayBackground),
+                          ? AppImages.BackgroundLoginDark
+                          : AppImages.BackgroundLoginLight),
                   fit: BoxFit.cover,
                 ),
               ),

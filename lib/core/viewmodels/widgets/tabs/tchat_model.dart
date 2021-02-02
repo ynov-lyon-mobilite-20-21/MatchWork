@@ -9,7 +9,7 @@ import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/base_model.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ChatModel extends BaseModel {
+class TchatModel extends BaseModel {
   final AuthenticationService _authenticationService;
 
   final ConversationRepository _conversationRepository =
@@ -27,7 +27,7 @@ class ChatModel extends BaseModel {
   Stream<List<Conversation>> get outConversations =>
       _conversationsSubject.stream;
 
-  ChatModel({@required AuthenticationService authenticationService})
+  TchatModel({@required AuthenticationService authenticationService})
       : _authenticationService = authenticationService;
 
   StreamSubscription listenConversationsStream() {
