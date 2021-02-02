@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/provider_setup.dart';
 import 'package:match_work/ui/app_router.dart';
@@ -18,9 +19,9 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: AppColors.StatusBarColor, // status bar color
-  ));
+  DeviceBarUtils.changeStatusBarColor(AppColors.StatusBarColor);
+  DeviceBarUtils.showStatusBar(true);
+
   runApp(MyApp());
 }
 

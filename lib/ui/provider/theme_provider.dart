@@ -37,6 +37,8 @@ class ThemeProvider extends BaseModel {
   }
 
   void changeTheme(bool isDarkModeOn) async {
+    busy = true;
+
     String themePreference;
     if (isDarkModeOn) {
       themeData = darkTheme;
@@ -47,7 +49,7 @@ class ThemeProvider extends BaseModel {
     }
 
     StorageManager.saveData('themeMode', themePreference);
-    notifyListeners();
+    busy = true;
   }
 
   void setDarkMode() async {

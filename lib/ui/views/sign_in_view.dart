@@ -32,8 +32,8 @@ class _SignInViewState extends State<SignInView> {
                 image: DecorationImage(
                   image: AssetImage(
                       Provider.of<ThemeProvider>(context).isDarkMode
-                          ? AppImages.BackgroundLoginDark
-                          : AppImages.BackgroundLoginLight),
+                          ? AppBackgroundImages.BackgroundLoginDark
+                          : AppBackgroundImages.BackgroundLoginLight),
                   fit: BoxFit.cover,
                 ),
               ),

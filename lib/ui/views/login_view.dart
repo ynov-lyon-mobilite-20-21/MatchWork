@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkedin/linkedloginflutter.dart';
 import 'package:match_work/core/constants/app_constants.dart';
@@ -8,6 +9,8 @@ import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/round_logo_button.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'base_widget.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -35,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(AppImages.BackgroundLoginDark),
+                image: AssetImage(AppBackgroundImages.BackgroundLoginDark),
                 fit: BoxFit.cover,
               ),
             ),
@@ -54,8 +57,8 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Image.asset(
-                        AppImages.LogoMatchWork,
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        AppLogoImages.TransparentLogo,
+                        width: MediaQuery.of(context).size.width * 0.6,
                       ),
                       Column(
                         children: [
@@ -84,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                             children: [
                               RoundLogoButton(
                                   color: Colors.white,
-                                  logo: AppImages.LogoGoogle,
+                                  logo: AppLogoImages.LogoGoogle,
                                   size: 50.0,
                                   onTap: () => model.loginWithGoogle().then(
                                       (bool success) =>
@@ -98,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                               ),
                               RoundLogoButton(
                                   color: Colors.white,
-                                  logo: AppImages.LogoLinkedIn,
+                                  logo: AppLogoImages.LogoLinkedIn,
                                   size: 50.0,
                                   onTap: () => model.loginWithLinkedIn().then(
                                       (bool success) =>

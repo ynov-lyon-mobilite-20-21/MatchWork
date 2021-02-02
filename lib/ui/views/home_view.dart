@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,11 +11,14 @@ class HomeView extends StatefulWidget {
   @override
   _HomeViewState createState() => _HomeViewState();
 }
-enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class _HomeViewState extends State<HomeView> {
   var isDarkMode = false;
 
+  setUi(){
+    DeviceBarUtils.changeBottomBarColor(AppColors.StatusBarColor);
+    DeviceBarUtils.showStatusBar(true);
+  }
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BottomNavigationBarViewModel>(
@@ -27,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
             backgroundColor: theme.getTheme().backgroundColor,
             appBar: AppBar(
                 title: Center(
-                  child: Image.asset(AppImages.LogoMatchWork,
+                  child: Image.asset(AppLogoImages.LogoMatchWork,
                       fit: BoxFit.contain, height: 50),
                 ),
                 actionsIconTheme: theme.getTheme().iconTheme,

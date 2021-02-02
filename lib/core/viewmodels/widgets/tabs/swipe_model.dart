@@ -4,11 +4,11 @@ import 'package:match_work/core/viewmodels/base_model.dart';
 class SwipeModel extends BaseModel {
   int index = 1;
   List<String> tinderimages = [
-    AppImages.LogoMatchWorkBlue,
-    AppImages.LogoMatchWorkBlue,
-    AppImages.LogoMatchWorkBlue,
-    AppImages.LogoMatchWorkBlue,
-    AppImages.LogoMatchWorkBlue,
+    AppLogoImages.LogoMatchWorkBlue,
+    AppLogoImages.LogoMatchWorkBlue,
+    AppLogoImages.LogoMatchWorkBlue,
+    AppLogoImages.LogoMatchWorkBlue,
+    AppLogoImages.LogoMatchWorkBlue,
   ];
   List<String> tindername = [
     "Ihssane BELHOUT",
