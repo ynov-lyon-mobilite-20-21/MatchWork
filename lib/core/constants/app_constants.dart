@@ -61,7 +61,7 @@ class AppIcons {
     InactiveChat
   ];
 
-  static const _baseUri = "assets/images/icons/";
+
 
   static const ActiveSwipe = "${_baseUri}match_on.png";
   static const InactiveSwipe = "${_baseUri}match_off.png";

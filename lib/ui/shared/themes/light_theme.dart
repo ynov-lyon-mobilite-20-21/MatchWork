@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 
+// ignore: non_constant_identifier_names
 final ThemeData LightThemeData = ThemeData(
   scaffoldBackgroundColor: Color(0xffFFFFFF),
   appBarTheme: AppBarTheme(

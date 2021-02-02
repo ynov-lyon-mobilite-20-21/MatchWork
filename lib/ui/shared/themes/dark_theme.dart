@@ -35,6 +35,7 @@ final ThemeData DarkThemeData = ThemeData(
     cardTheme: CardTheme(
       color: AppColors.BackgroundDarkColor,
     ),
+    iconTheme: IconThemeData(color: Colors.white),
     primarySwatch: Colors.grey,
     primaryColor: AppColors.PrimaryColor,
     indicatorColor: Colors.white,
@@ -44,7 +45,7 @@ final ThemeData DarkThemeData = ThemeData(
     brightness: Brightness.dark,
     backgroundColor: AppColors.PrimaryColor,
     accentColor: AppColors.AccentColor,
-    accentIconTheme: IconThemeData(color: Colors.black),
+    accentIconTheme: IconThemeData(color: Colors.white),
     dividerColor: Colors.black12,
     cardColor: Colors.white,
     buttonColor: AppColors.PrimaryColor,
