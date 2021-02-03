@@ -17,11 +17,15 @@ class User {
       this.phoneNumber,
       this.pictureUrl});
 
-  String displayName() =>
-      this.lastName.toUpperCase() +
-      ' ' +
-      this.firstName[0].toUpperCase() +
-      this.firstName.substring(1).toLowerCase();
+  String displayName() {
+    String lastName =
+        this.lastName.isNotEmpty ? this.lastName.toUpperCase() : '';
+    String firstName = this.firstName.isNotEmpty
+        ? this.firstName[0].toUpperCase() +
+            this.firstName.substring(1).toLowerCase()
+        : '';
+    return lastName + (lastName.isNotEmpty ? ' ' : '') + firstName;
+  }
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : uid = snapshot.id,
