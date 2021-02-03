@@ -337,7 +337,7 @@ PODS:
   - nanopb/encode (1.30906.0)
   - package_info (0.0.1):
     - Flutter
-  - PromisesObjC (1.2.11)
+  - PromisesObjC (1.2.12)
   - shared_preferences (0.0.1):
     - Flutter
 
@@ -415,7 +415,7 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
-  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
