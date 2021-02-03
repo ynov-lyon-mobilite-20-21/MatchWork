@@ -49,9 +49,13 @@ class _TchatState extends State<Tchat> {
                     stream: model.outConversations,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        List<Conversation> conversations = [...snapshot.data];
+                        conversations.sort((Conversation a, Conversation b) => b
+                            .lastMessageCreatedAt
+                            .compareTo(a.lastMessageCreatedAt));
                         return ListView(
                           children: [
-                            ...snapshot.data
+                            ...conversations
                                 .where((element) =>
                                     element.isRead == false &&
                                     model.isConversationToDisplay(element))
@@ -59,7 +63,7 @@ class _TchatState extends State<Tchat> {
                                     ConversationWidget(
                                       conversation: conversation,
                                     )),
-                            ...snapshot.data
+                            ...conversations
                                 .where((element) =>
                                     element.isRead == true &&
                                     model.isConversationToDisplay(element))
