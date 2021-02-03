@@ -16,12 +16,15 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<SignInViewModel>(
       model: SignInViewModel(
           authenticationService: Provider.of<AuthenticationService>(context)),
       builder: (_, model, __) => Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: AppColors.StatusBarColor,
         ),
@@ -96,7 +99,7 @@ class _SignInViewState extends State<SignInView> {
                                                       RoutePath.Home,
                                                       (route) => false);
                                             } else {
-                                              Scaffold.of(context)
+                                              _scaffoldKey.currentState
                                                   .showSnackBar(SnackBar(
                                                 content: Text(model.error),
                                               ));

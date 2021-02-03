@@ -15,68 +15,65 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   var isDarkMode = false;
 
-  setUi(){
+  setUi() {
     DeviceBarUtils.changeBottomBarColor(AppColors.StatusBarColor);
     DeviceBarUtils.showStatusBar(true);
   }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BottomNavigationBarViewModel>(
       create: (context) => BottomNavigationBarViewModel(),
       child: Consumer2<BottomNavigationBarViewModel, ThemeProvider>(
-        builder: (context, model, theme, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: theme.getTheme(),
-          home: Scaffold(
-            backgroundColor: theme.getTheme().backgroundColor,
-            appBar: AppBar(
-                title: Center(
-                  child: Image.asset(AppLogoImages.LogoMatchWork,
-                      fit: BoxFit.contain, height: 50),
-                ),
-                actionsIconTheme: theme.getTheme().iconTheme,
-                backgroundColor: theme.getTheme().appBarTheme.color),
-            body: model.currentScreen,
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(
-                    icon: Image(
-                      image: AssetImage(AppIcons.InactiveProfile),
-                      height: 30,
-                    ),
-                    activeIcon: Image(
-                      image: AssetImage(AppIcons.ActiveProfile),
-                      height: 30,
-                    ),
-                    label: "Profile"),
-                BottomNavigationBarItem(
-                    icon: Image(
-                      image: AssetImage(AppIcons.InactiveSwipe),
-                      height: 30,
-                    ),
-                    activeIcon: Image(
-                      image: AssetImage(AppIcons.ActiveSwipe),
-                      height: 30,
-                    ),
-                    label: "Swipe"),
-                BottomNavigationBarItem(
-                    icon: Image(
-                      image: AssetImage(AppIcons.InactiveChat),
-                      height: 30,
-                    ),
-                    activeIcon: Image(
-                      image: AssetImage(AppIcons.ActiveChat),
-                      height: 30,
-                    ),
-                    label: "Tchat"),
-              ],
-              backgroundColor: theme.getTheme().bottomAppBarColor,
-              currentIndex: model.currentTab,
-              onTap: (int index) {
-                model.currentTab = index;
-              },
-            ),
+        builder: (context, model, theme, child) => Scaffold(
+          backgroundColor: theme.getTheme().backgroundColor,
+          appBar: AppBar(
+              title: Center(
+                child: Image.asset(AppLogoImages.LogoMatchWork,
+                    fit: BoxFit.contain, height: 50),
+              ),
+              actionsIconTheme: theme.getTheme().iconTheme,
+              backgroundColor: theme.getTheme().appBarTheme.color),
+          body: model.currentScreen,
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                  icon: Image(
+                    image: AssetImage(AppIcons.InactiveProfile),
+                    height: 30,
+                  ),
+                  activeIcon: Image(
+                    image: AssetImage(AppIcons.ActiveProfile),
+                    height: 30,
+                  ),
+                  label: "Profile"),
+              BottomNavigationBarItem(
+                  icon: Image(
+                    image: AssetImage(AppIcons.InactiveSwipe),
+                    height: 30,
+                  ),
+                  activeIcon: Image(
+                    image: AssetImage(AppIcons.ActiveSwipe),
+                    height: 30,
+                  ),
+                  label: "Swipe"),
+              BottomNavigationBarItem(
+                  icon: Image(
+                    image: AssetImage(AppIcons.InactiveChat),
+                    height: 30,
+                  ),
+                  activeIcon: Image(
+                    image: AssetImage(AppIcons.ActiveChat),
+                    height: 30,
+                  ),
+                  label: "Tchat"),
+            ],
+            backgroundColor: theme.getTheme().bottomAppBarColor,
+            currentIndex: model.currentTab,
+            onTap: (int index) {
+              model.currentTab = index;
+            },
           ),
         ),
       ),

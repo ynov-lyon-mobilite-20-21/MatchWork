@@ -99,16 +99,18 @@ class ConversationViewModel extends BaseModel {
   }
 
   void sendMessage() {
-    String authenticatedUserUid = _authenticationService.currentUser.uid;
-    ChatMessage message = ChatMessage(
-        content: controller.text,
-        createdAt: Timestamp.now(),
-        ownerId: authenticatedUserUid);
-    controller.clear();
-    sendingMessages.add(message);
-    notifyListeners();
-    _conversationRepository.sendMessage(
-        authenticatedUserUid, caller.uid, message);
+    if (controller.text.trim() != '') {
+      String authenticatedUserUid = _authenticationService.currentUser.uid;
+      ChatMessage message = ChatMessage(
+          content: controller.text,
+          createdAt: Timestamp.now(),
+          ownerId: authenticatedUserUid);
+      controller.clear();
+      sendingMessages.add(message);
+      notifyListeners();
+      _conversationRepository.sendMessage(
+          authenticatedUserUid, caller.uid, message);
+    }
   }
 
   @override
