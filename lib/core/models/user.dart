@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:match_work/core/models/skill.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
 
 class User {
@@ -8,6 +9,9 @@ class User {
   String pictureUrl;
   String phoneNumber;
   String mail;
+  int age;
+  String bio;
+  List<Skill> skills = [];
 
   User(
       {this.uid,
@@ -15,7 +19,9 @@ class User {
       this.lastName,
       this.mail,
       this.phoneNumber,
-      this.pictureUrl});
+      this.pictureUrl,
+      this.age,
+      this.bio});
 
   String displayName() {
     String lastName =
@@ -34,13 +40,17 @@ class User {
         mail = snapshot.data()[UserRepository.mailReference] ?? '',
         lastName = snapshot.data()[UserRepository.lastNameReference] ?? '',
         firstName = snapshot.data()[UserRepository.firstNameReference] ?? '',
-        pictureUrl = snapshot.data()[UserRepository.pictureUrlReference] ?? '';
+        pictureUrl = snapshot.data()[UserRepository.pictureUrlReference] ?? '',
+        age = snapshot.data()[UserRepository.ageReference],
+        bio = snapshot.data()[UserRepository.bioReference] ?? '';
 
   Map<String, dynamic> toJson() => {
         UserRepository.mailReference: mail ?? '',
         UserRepository.firstNameReference: firstName ?? '',
         UserRepository.lastNameReference: lastName ?? '',
         UserRepository.pictureUrlReference: pictureUrl ?? '',
-        UserRepository.phoneNumberReference: phoneNumber ?? ''
+        UserRepository.phoneNumberReference: phoneNumber ?? '',
+        UserRepository.ageReference: age,
+        UserRepository.bioReference: bio ?? ''
       };
 }

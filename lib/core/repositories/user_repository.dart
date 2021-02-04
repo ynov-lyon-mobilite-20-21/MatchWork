@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Firebase;
 import 'package:flutter/material.dart';
+import 'package:match_work/core/models/skill.dart';
 import 'package:match_work/core/models/user.dart';
 
 class UserRepository {
@@ -9,6 +10,11 @@ class UserRepository {
   static String phoneNumberReference = 'phoneNumber';
   static String mailReference = 'mail';
   static String pictureUrlReference = 'pictureUrl';
+  static String ageReference = 'age';
+  static String bioReference = 'bio';
+  static String skillsReference = 'skills';
+
+  static String skillLabelReference = 'label';
 
   final CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -74,5 +80,29 @@ class UserRepository {
       print(e);
       return false;
     }
+  }
+
+  Future<bool> createSkill({@required Skill skill, @required User user}) async {
+    try {
+      await _usersCollection
+          .doc(user.uid)
+          .collection(skillsReference)
+          .add(skill.toJson());
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<List<Skill>> getSkillsByUser(User user) async {
+    List<Skill> skills = [];
+
+    var snapshots =
+        await _usersCollection.doc(user.uid).collection(skillsReference).get();
+    snapshots.docs
+        .forEach((snapshot) => skills.add(Skill.fromSnapshot(snapshot)));
+
+    return skills;
   }
 }
