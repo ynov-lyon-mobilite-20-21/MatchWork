@@ -50,6 +50,8 @@ class TchatModel extends BaseModel {
   Future<User> search() async {
     busy = true;
     User user = await _userRepository.getUserByMail(searchController.text);
+    searchController.clear();
+    searchText = searchController.text;
     busy = false;
     return user;
   }
