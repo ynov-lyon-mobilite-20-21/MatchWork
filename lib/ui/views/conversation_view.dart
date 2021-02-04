@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/chat_message.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/linkedin_utils.dart';
 import 'package:match_work/core/viewmodels/views/conversation_view_model.dart';
+import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,8 @@ class ConversationView extends StatefulWidget {
 class _ConversationViewState extends State<ConversationView> {
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ThemeProvider>(context).getTheme();
+
     return BaseWidget<ConversationViewModel>(
       model: ConversationViewModel(
           authenticationService: Provider.of(context), caller: widget.caller),
@@ -32,7 +37,7 @@ class _ConversationViewState extends State<ConversationView> {
         body: Column(
           children: [
             Container(
-              color: Theme.of(context).appBarTheme.color,
+              color: theme.appBarTheme.color,
               child: SafeArea(
                 child: Stack(
                   children: [
@@ -82,45 +87,52 @@ class _ConversationViewState extends State<ConversationView> {
               ),
             ),
             Expanded(
-                child: StreamBuilder(
-              stream: model.outMessages,
-              builder: (context, snapshot) {
-                if (snapshot.hasError)
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                if (snapshot.hasData) {
-                  List<ChatMessage> messages = [
-                    ...model.sendingMessages.reversed,
-                    ...snapshot.data
-                  ];
-                  return ListView.builder(
-                      padding: EdgeInsets.only(bottom: 16, top: 16),
-                      reverse: true,
-                      itemCount: messages.length,
-                      itemBuilder: (_, int index) {
-                        ChatMessage message = messages[index];
-                        return Opacity(
-                          opacity:
-                              index < messages.length - snapshot.data.length
-                                  ? .5
-                                  : 1,
-                          child: chatMessage(
-                              message, message.id == model.lastMessageRead?.id),
-                        );
-                      });
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                child: Container(
+              color: theme.backgroundColor,
+              child: StreamBuilder(
+                stream: model.outMessages,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError)
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  if (snapshot.hasData) {
+                    List<ChatMessage> messages = [
+                      ...model.sendingMessages.reversed,
+                      ...snapshot.data
+                    ];
+                    return ListView.builder(
+                        padding: EdgeInsets.only(bottom: 16, top: 16),
+                        reverse: true,
+                        itemCount: messages.length,
+                        itemBuilder: (_, int index) {
+                          ChatMessage message = messages[index];
+                          return Opacity(
+                            opacity:
+                                index < messages.length - snapshot.data.length
+                                    ? .5
+                                    : 1,
+                            child: chatMessage(message,
+                                message.id == model.lastMessageRead?.id, theme),
+                          );
+                        });
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             )),
-            chatBar(model.controller, () => model.sendMessage())
+            Container(
+                color: theme.scaffoldBackgroundColor,
+                child:
+                    chatBar(model.controller, () => model.sendMessage(), theme))
           ],
         ),
       ),
     );
   }
 
-  Widget chatBar(TextEditingController controller, Function onTap) {
+  Widget chatBar(
+      TextEditingController controller, Function onTap, ThemeData theme) {
     return Container(
       margin: EdgeInsets.all(15.0),
       height: 61,
@@ -129,20 +141,15 @@ class _ConversationViewState extends State<ConversationView> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).focusColor,
+                color: theme.cardColor,
                 borderRadius: BorderRadius.circular(35.0),
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 3), blurRadius: 5, color: Colors.grey)
-                ],
               ),
               child: TextField(
                 decoration: InputDecoration(
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 16.0),
                     hintText: "Message...",
-                    hintStyle:
-                        TextStyle(color: Theme.of(context).indicatorColor),
+                    hintStyle: TextStyle(color: theme.textTheme.caption.color),
                     border: InputBorder.none),
                 controller: controller,
               ),
@@ -153,7 +160,7 @@ class _ConversationViewState extends State<ConversationView> {
             onTap: () => onTap(),
             child: Icon(
               Icons.send,
-              color: Theme.of(context).indicatorColor,
+              color: theme.textTheme.caption.color,
             ),
           )
         ],
@@ -161,7 +168,8 @@ class _ConversationViewState extends State<ConversationView> {
     );
   }
 
-  Widget chatMessage(ChatMessage message, bool isLastMessageRead) {
+  Widget chatMessage(
+      ChatMessage message, bool isLastMessageRead, ThemeData theme) {
     bool isMe = Provider.of<AuthenticationService>(context).currentUser.uid ==
         message.ownerId;
     double widthScreen = MediaQuery.of(context).size.width;
@@ -184,8 +192,8 @@ class _ConversationViewState extends State<ConversationView> {
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                     color: isMe
-                        ? Theme.of(context).primaryColorDark
-                        : Theme.of(context).primaryColorLight,
+                        ? theme.appBarTheme.color
+                        : theme.primaryColorLight,
                     borderRadius: BorderRadius.circular(10.0),
                     border: isMe ? null : Border.all(color: Colors.white)),
                 child: Text(
@@ -193,13 +201,13 @@ class _ConversationViewState extends State<ConversationView> {
                   style: TextStyle(
                       color: isMe
                           ? Colors.white
-                          : Theme.of(context).indicatorColor),
+                          : theme.textTheme.bodyText1.color),
                 ),
               ),
               isLastMessageRead
                   ? Icon(
                       Icons.check,
-                      color: Theme.of(context).indicatorColor,
+                      color: theme.indicatorColor,
                       size: 15.0,
                     )
                   : Container()

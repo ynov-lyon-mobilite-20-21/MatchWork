@@ -10,6 +10,7 @@ final ThemeData DarkThemeData = ThemeData(
       size: 20.0
     ),
     canvasColor: AppColors.AppBarColor,
+    focusColor: AppColors.AppBarColor,
     textTheme: TextTheme(
         headline1: TextStyle(
           color: Colors.white,
@@ -52,7 +53,6 @@ final ThemeData DarkThemeData = ThemeData(
     primarySwatch: Colors.grey,
     primaryColor: AppColors.PrimaryColor,
     indicatorColor: Colors.white,
-    focusColor: AppColors.AppBarColor,
     primaryColorLight: AppColors.PrimaryColor,
     primaryColorDark: AppColors.AppBarColor,
     brightness: Brightness.dark,

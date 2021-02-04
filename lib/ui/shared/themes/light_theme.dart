@@ -13,6 +13,7 @@ final ThemeData lightThemeData = ThemeData(
         color: Colors.transparent,
       ),
     ),
+    focusColor: Colors.white,
     canvasColor: Colors.white,
     textTheme: TextTheme(
         headline1: TextStyle(
@@ -55,6 +56,7 @@ final ThemeData lightThemeData = ThemeData(
       color: AppColors.PrimaryColor,
     ),
     primarySwatch: Colors.grey,
+    primaryColorLight: Color(0xffFFFFFF),
     primaryColor: AppColors.PrimaryColor,
     brightness: Brightness.light,
     backgroundColor: const Color(0xFFE5E5E5),
@@ -62,6 +64,7 @@ final ThemeData lightThemeData = ThemeData(
     accentIconTheme: IconThemeData(color: Colors.white),
     dividerColor: Colors.white54,
     cardColor: Colors.white,
+    indicatorColor: Colors.white,
     buttonColor: AppColors.SecondColor,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.BackgroundLightColor));
