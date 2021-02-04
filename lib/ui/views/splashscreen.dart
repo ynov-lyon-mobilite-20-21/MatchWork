@@ -8,12 +8,9 @@ import 'package:match_work/core/services/image_loader.dart';
 import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:match_work/ui/views/home_view.dart';
-import 'package:flutter/services.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
-import 'login_view.dart';
 
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = AppColors.PrimaryColor;

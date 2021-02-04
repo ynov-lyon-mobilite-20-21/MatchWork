@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
@@ -22,5 +24,11 @@ class LoginViewModel extends BaseModel {
     error = await _authenticationService.signInWithLikedIn();
     busy = false;
     return error == null;
+  }
+
+  Future signOut() async {
+    busy = true;
+    await _authenticationService.signOut();
+    busy = false;
   }
 }

@@ -2,7 +2,6 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -59,7 +58,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 style: theme.textTheme.headline4,
                               ),
                               Text(model.tinderage[index],
-                                  style: theme.textTheme.bodyText2),
+                                  style: theme.textTheme.caption),
                               SizedBox(
                                 height:
                                     MediaQuery.of(context).size.width * 0.02,
@@ -79,7 +78,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   scrollDirection: Axis.vertical,
                                   child: Wrap(
                                     children: <Widget>[
-                                      /// TODD : il faut faire une boucle ici
+                                      /// TODO : il faut faire une boucle ici
                                       SkillButton(
                                           color: theme.primaryColor,
                                           text: model.tinderspe2[index],
@@ -134,7 +133,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                       ),
                       back: Container(
                         decoration: BoxDecoration(
-                          color: theme.cardTheme.color,
+                          color: theme.cardColor,
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         ),
                         child: SingleChildScrollView(
@@ -158,7 +157,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                     ),
                                     child: Text(
                                         "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quod ei celebrari vilitatem intempestivam urgenti, cum inpenderet inopia, gravius rationabili responderunt; et perissent ad unum.",
-                                        style: theme.textTheme.bodyText2),
+                                        style: theme.textTheme.subtitle2),
                                   ),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.width *
@@ -178,7 +177,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                       ),
                                     ),
                                     child: Text(
-                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, m urgenti, cum inpenderet inopia, gr"),
+                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, m urgenti, cum inpenderet inopia, gr", style: theme.textTheme.subtitle2,),
                                   ),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.width *
@@ -197,7 +196,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                             BorderRadius.circular(10.0),
                                       ),
                                     ),
-                                    child: Text(""),
+                                    child: Text("", style: theme.textTheme.subtitle2),
                                   ),
                                 ],
                               ),

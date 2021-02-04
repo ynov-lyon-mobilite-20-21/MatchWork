@@ -5,6 +5,11 @@ import 'package:match_work/core/constants/app_constants.dart';
 final ThemeData DarkThemeData = ThemeData(
     scaffoldBackgroundColor: AppColors.PrimaryColor,
     appBarTheme: AppBarTheme(color: AppColors.AppBarColor),
+    iconTheme: IconThemeData (
+      color: Colors.white,
+      size: 20.0
+    ),
+    canvasColor: AppColors.AppBarColor,
     textTheme: TextTheme(
         headline1: TextStyle(
           color: Colors.white,
@@ -15,21 +20,30 @@ final ThemeData DarkThemeData = ThemeData(
           color: Colors.white,
           fontSize: 25.0,
         ),
+        headline3: TextStyle(
+          color: AppColors.AccentColor,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
         headline4: TextStyle(
-          color: Colors.black,
-          fontSize: 18.0,
+          color: Colors.white,
+          fontSize: 14.0,
           fontWeight: FontWeight.bold,
         ),
         bodyText1: TextStyle(
           color: Colors.white,
         ),
         bodyText2: TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontSize: 12.0,
         ),
         subtitle1: TextStyle(
           color: Colors.white70,
           fontSize: 18.0,
+        ),
+        subtitle2: TextStyle(
+          color: Colors.white,
+          fontSize: 12.0,
         ),
         caption: TextStyle(color: Colors.white, fontSize: 12.0)),
     cardTheme: CardTheme(
@@ -46,8 +60,8 @@ final ThemeData DarkThemeData = ThemeData(
     accentColor: AppColors.AccentColor,
     accentIconTheme: IconThemeData(color: Colors.black),
     dividerColor: Colors.black12,
-    cardColor: Colors.white,
+    cardColor: AppColors.AppBarColor,
     buttonColor: AppColors.PrimaryColor,
     bottomNavigationBarTheme:
-        BottomNavigationBarThemeData(backgroundColor: AppColors.AppBarColor)
+        BottomNavigationBarThemeData(backgroundColor: AppColors.BackgroundDarkColor)
 );

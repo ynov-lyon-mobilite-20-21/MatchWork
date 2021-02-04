@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
+import 'package:match_work/ui/widgets/app_drawer_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants/app_constants.dart';
@@ -15,11 +16,10 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   var isDarkMode = false;
 
-  setUi() {
+  setUi(){
     DeviceBarUtils.changeBottomBarColor(AppColors.StatusBarColor);
     DeviceBarUtils.showStatusBar(true);
   }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BottomNavigationBarViewModel>(
@@ -28,13 +28,20 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, model, theme, child) => Scaffold(
           backgroundColor: theme.getTheme().backgroundColor,
           appBar: AppBar(
+              iconTheme: theme.getTheme().iconTheme,
               title: Center(
-                child: Image.asset(AppLogoImages.LogoMatchWork,
-                    fit: BoxFit.contain, height: 50),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 50),
+                  child: Image.asset(AppLogoImages.TransparentLogo,
+                      fit: BoxFit.contain, height: 40),
+                ),
               ),
+              textTheme: theme.getTheme().textTheme,
               actionsIconTheme: theme.getTheme().iconTheme,
               backgroundColor: theme.getTheme().appBarTheme.color),
           body: model.currentScreen,
+          drawer: AppDrawerWidget(theme: theme),
+          drawerEdgeDragWidth: 0,
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             items: [
@@ -69,8 +76,10 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   label: "Tchat"),
             ],
-            backgroundColor: theme.getTheme().bottomAppBarColor,
+            backgroundColor: theme.getTheme().bottomNavigationBarTheme.backgroundColor,
             currentIndex: model.currentTab,
+            selectedItemColor: theme.getTheme().accentColor,
+            unselectedItemColor: theme.getTheme().textTheme.bodyText1.color,
             onTap: (int index) {
               model.currentTab = index;
             },

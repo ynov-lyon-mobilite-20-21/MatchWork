@@ -7,12 +7,13 @@ import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:provider/provider.dart';
 
-
 final List<String> imgList = AppCarouselImage.carouselImages;
 
 class TutorialView extends StatefulWidget {
+
   @override
   _TutorialViewState createState() => _TutorialViewState();
+
 }
 
 class _TutorialViewState extends State<TutorialView> {

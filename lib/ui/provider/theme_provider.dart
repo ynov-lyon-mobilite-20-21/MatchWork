@@ -6,9 +6,9 @@ import 'package:match_work/ui/shared/themes/light_theme.dart';
 
 class ThemeProvider extends BaseModel {
   final darkTheme = DarkThemeData;
-  final lightTheme = LightThemeData;
+  final lightTheme = lightThemeData;
 
-  ThemeData _themeData = LightThemeData;
+  ThemeData _themeData = lightThemeData;
   bool isDarkMode = false;
   ThemeData getTheme() => _themeData;
 
@@ -49,7 +49,7 @@ class ThemeProvider extends BaseModel {
     }
 
     StorageManager.saveData('themeMode', themePreference);
-    busy = true;
+    busy = false;
   }
 
   void setDarkMode() async {

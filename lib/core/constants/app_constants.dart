@@ -85,15 +85,25 @@ class AppIcons {
     ActiveProfile,
     InactiveProfile,
     ActiveChat,
-    InactiveChat
+    InactiveChat,
+    Logout,
+    BrightnessMode,
+    EditProfile,
+    Tutorial,
+    Settings
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
   static const InactiveSwipe = "${ImagesPath.IconsPath}match_off.png";
   static const ActiveProfile = "${ImagesPath.IconsPath}profil_on.png";
   static const InactiveProfile = "${ImagesPath.IconsPath}profil_off.png";
-  static const ActiveChat = "${ImagesPath.IconsPath}tchat_on.png";
-  static const InactiveChat = "${ImagesPath.IconsPath}tchat_off.png";
+  static const ActiveChat = "${ImagesPath.IconsPath}chat_on.png";
+  static const InactiveChat = "${ImagesPath.IconsPath}chat_off.png";
+  static const Logout = "${ImagesPath.IconsPath}icon_deco.png";
+  static const BrightnessMode = "${ImagesPath.IconsPath}icon_mode.png";
+  static const EditProfile = "${ImagesPath.IconsPath}icon_modif.png";
+  static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
+  static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
 }
 
 class AppCarouselImage {
