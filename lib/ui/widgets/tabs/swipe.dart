@@ -30,10 +30,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                     totalNum: 5,
                     stackNum: 3,
                     swipeEdge: 5.0,
-                    maxWidth: MediaQuery.of(context).size.width * 0.91,
-                    maxHeight: MediaQuery.of(context).size.width * 1.21,
-                    minWidth: MediaQuery.of(context).size.width * 0.9,
-                    minHeight: MediaQuery.of(context).size.width * 1.2,
+                    maxWidth: MediaQuery.of(context).size.width * 0.92,
+                    maxHeight: MediaQuery.of(context).size.width * 1.22,
+                    minWidth: MediaQuery.of(context).size.width * 0.91,
+                    minHeight: MediaQuery.of(context).size.width * 1.21,
                     cardBuilder: (context, index) => FlipCard(
                       direction: FlipDirection.HORIZONTAL,
                       speed: 750,
@@ -43,7 +43,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: EdgeInsets.all(16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -79,7 +79,6 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   scrollDirection: Axis.vertical,
                                   child: Wrap(
                                     children: <Widget>[
-                                      /// TODO : il faut faire une boucle ici
                                       SkillButton(
                                           color: theme.primaryColor,
                                           text: model.tinderspe2[index],
