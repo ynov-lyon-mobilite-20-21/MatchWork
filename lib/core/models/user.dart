@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:match_work/core/models/skill.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
 
+import 'experience.dart';
+import 'formation.dart';
+
 class User {
   String uid;
   String firstName;
@@ -12,6 +15,8 @@ class User {
   int age;
   String bio;
   List<Skill> skills = [];
+  List<Formation> formations = [];
+  List<Experience> experiences = [];
 
   User(
       {this.uid,
@@ -32,6 +37,7 @@ class User {
         : '';
     return lastName + (lastName.isNotEmpty ? ' ' : '') + firstName;
   }
+
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : uid = snapshot.id,
