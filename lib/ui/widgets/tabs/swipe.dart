@@ -51,7 +51,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             alignment: Alignment.center,
                               child : Image.asset(
                                 model.tinderimages[index],
-                                height: MediaQuery.of(context).size.height * 0.43
+                                height: MediaQuery.of(context).size.height * 0.40
                                 ,
                               )),
                               Text(
@@ -66,7 +66,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                               ),
                               Container(
                                 height:
-                                    MediaQuery.of(context).size.width * 0.20,
+                                    MediaQuery.of(context).size.width * 0.17,
                                 width: MediaQuery.of(context).size.width * 0.85,
                                 decoration: BoxDecoration(
                                   border: Border.all(
