@@ -5,9 +5,13 @@ class ProfilePictureWidget extends StatelessWidget {
   final double radius;
   final String path;
   final Color backgroundColor;
+  final double borderThickness;
 
   ProfilePictureWidget(
-      {@required this.radius, this.path, this.backgroundColor});
+      {@required this.radius,
+      this.path,
+      this.backgroundColor,
+      this.borderThickness = 0.0});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class ProfilePictureWidget extends StatelessWidget {
             ? AssetImage(AppImages.UnknownUser)
             : NetworkImage(path),
         backgroundColor: Colors.grey,
-        radius: radius - 5.0,
+        radius: radius - borderThickness,
       ),
     );
   }

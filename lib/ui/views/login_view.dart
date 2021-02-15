@@ -54,18 +54,18 @@ class _LoginViewState extends State<LoginView> {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                        AppLogoImages.TransparentLogo,
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        AppLogoImages.LogoMatchWorkText,
+                        width: MediaQuery.of(context).size.width * 0.7,
                       ),
                       Column(
                         children: [
                           RoundedButton(
                               onTap: () => Navigator.of(context)
                                   .pushNamed(RoutePath.Register),
-                              color: const Color(0xff5FC0C2),
+                              color: AppColors.CircleAvatarBorderColor,
                               text: "Inscription",
                               textColor: Colors.white),
                           SizedBox(

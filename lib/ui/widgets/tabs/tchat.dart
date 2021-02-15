@@ -184,7 +184,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                                 widget.conversation.caller.uid
                         ? CircleAvatar(
                             radius: 5.0,
-                            backgroundColor: AppColors.AccentColor,
+                            backgroundColor: Theme.of(context).indicatorColor,
                           )
                         : Container(
                             width: 10.0,
@@ -195,6 +195,8 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                     ProfilePictureWidget(
                       radius: 35.0,
                       path: widget.conversation.caller.pictureUrl,
+                      borderThickness: 5.0,
+                      backgroundColor: Theme.of(context).indicatorColor,
                     ),
                     SizedBox(
                       width: 10.0,
@@ -206,14 +208,16 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                           Text(widget.conversation.caller.displayName(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: widget.theme.textTheme.bodyText1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4
+                                  .copyWith(fontWeight: FontWeight.normal),
                               textScaleFactor: 1.3),
                           Text(
                             widget.conversation.lastMessageContent,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: widget.theme.textTheme.bodyText1
-                                .copyWith(fontSize: 15.0),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ],
                       ),
@@ -222,15 +226,11 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                       DateUtils.isToday(dateLastMessage)
                           ? DateUtils.getHourFormat(dateLastMessage)
                           : DateUtils.getDateFormat(dateLastMessage),
-                      style: widget.theme.textTheme.caption,
+                      style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
                 ),
               ),
-              Container(
-                color: Colors.grey[400],
-                height: 1.0,
-              )
             ],
           ),
         ),
