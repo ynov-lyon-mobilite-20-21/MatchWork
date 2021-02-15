@@ -114,4 +114,11 @@ class ConversationRepository {
           .update({conversationIsReadReference: true})
           .then((value) => true)
           .catchError((error) => false);
+
+  Future<bool> removeConversation({@required String conversationId}) async =>
+      await _conversationsCollection
+          .doc(conversationId)
+          .delete()
+          .then((value) => true)
+          .catchError((error) => false);
 }

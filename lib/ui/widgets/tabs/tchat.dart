@@ -19,11 +19,9 @@ class Tchat extends StatefulWidget {
 }
 
 class _TchatState extends State<Tchat> {
-
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -48,8 +46,8 @@ class _TchatState extends State<Tchat> {
                           } else {
                             Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text(
-                                  "Aucun utilisateur trouvé avec cette adresse mail", style: theme.textTheme.caption
-                              ),
+                                  "Aucun utilisateur trouvé avec cette adresse mail",
+                                  style: theme.textTheme.caption),
                             ));
                           }
                         }),
@@ -73,6 +71,17 @@ class _TchatState extends State<Tchat> {
                                     ConversationWidget(
                                       conversation: conversation,
                                       theme: theme,
+                                      onDelete: (direction) async {
+                                        String message =
+                                            await model.removeConversation(
+                                                conversationId:
+                                                    conversation.id);
+                                        Scaffold.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(message,
+                                              style: theme.textTheme.caption),
+                                        ));
+                                      },
                                     )),
                             ...conversations
                                 .where((element) =>
@@ -82,6 +91,17 @@ class _TchatState extends State<Tchat> {
                                     ConversationWidget(
                                       conversation: conversation,
                                       theme: theme,
+                                      onDelete: (direction) async {
+                                        String message =
+                                            await model.removeConversation(
+                                                conversationId:
+                                                    conversation.id);
+                                        Scaffold.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(message,
+                                              style: theme.textTheme.caption),
+                                        ));
+                                      },
                                     )),
                           ],
                         );
@@ -97,10 +117,16 @@ class _TchatState extends State<Tchat> {
 
 class ConversationWidget extends StatefulWidget {
   final Conversation conversation;
+
+  final Function(DismissDirection direction) onDelete;
   final theme;
 
-  const ConversationWidget({Key key, this.conversation, this.theme}) : super(key: key);
-
+  const ConversationWidget(
+      {Key key,
+      @required this.conversation,
+      @required this.onDelete,
+      this.theme})
+      : super(key: key);
 
   @override
   _ConversationWidgetState createState() => _ConversationWidgetState();
@@ -111,74 +137,99 @@ class _ConversationWidgetState extends State<ConversationWidget> {
   Widget build(BuildContext context) {
     DateTime dateLastMessage =
         widget.conversation.lastMessageCreatedAt.toDate();
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(RoutePath.Conversation,
-            arguments: widget.conversation.caller);
+    return Dismissible(
+      key: Key(widget.conversation.id),
+      background: Container(color: Colors.red),
+      direction: DismissDirection.horizontal,
+      confirmDismiss: (direction) async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Confirmation"),
+              content: const Text(
+                  "Voulez-vous vraiment supprimer cette conversation?"),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text("Supprimer")),
+                FlatButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text("Annuler"),
+                ),
+              ],
+            );
+          },
+        );
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  !widget.conversation.isRead &&
-                          widget.conversation.senderUid ==
-                              widget.conversation.caller.uid
-                      ? CircleAvatar(
-                          radius: 5.0,
-                          backgroundColor: AppColors.AccentColor,
-                        )
-                      : Container(
-                          width: 10.0,
-                        ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  ProfilePictureWidget(
-                    radius: 35.0,
-                    path: widget.conversation.caller.pictureUrl,
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.conversation.caller.displayName(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: widget.theme.textTheme.bodyText1,
-                            textScaleFactor: 1.3),
-                        Text(
-                          widget.conversation.lastMessageContent,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: widget.theme
-                              .textTheme
-                              .bodyText1
-                              .copyWith(fontSize: 15.0),
-                        ),
-                      ],
+      onDismissed: widget.onDelete,
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(RoutePath.Conversation,
+              arguments: widget.conversation.caller);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    !widget.conversation.isRead &&
+                            widget.conversation.senderUid ==
+                                widget.conversation.caller.uid
+                        ? CircleAvatar(
+                            radius: 5.0,
+                            backgroundColor: AppColors.AccentColor,
+                          )
+                        : Container(
+                            width: 10.0,
+                          ),
+                    SizedBox(
+                      width: 10.0,
                     ),
-                  ),
-                  Text(
-                    DateUtils.isToday(dateLastMessage)
-                        ? DateUtils.getHourFormat(dateLastMessage)
-                        : DateUtils.getDateFormat(dateLastMessage),
-                    style: widget.theme.textTheme.caption,
-                  )
-                ],
+                    ProfilePictureWidget(
+                      radius: 35.0,
+                      path: widget.conversation.caller.pictureUrl,
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.conversation.caller.displayName(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: widget.theme.textTheme.bodyText1,
+                              textScaleFactor: 1.3),
+                          Text(
+                            widget.conversation.lastMessageContent,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: widget.theme.textTheme.bodyText1
+                                .copyWith(fontSize: 15.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      DateUtils.isToday(dateLastMessage)
+                          ? DateUtils.getHourFormat(dateLastMessage)
+                          : DateUtils.getDateFormat(dateLastMessage),
+                      style: widget.theme.textTheme.caption,
+                    )
+                  ],
+                ),
               ),
-            ),
-            Container(
-              color: Colors.grey[400],
-              height: 1.0,
-            )
-          ],
+              Container(
+                color: Colors.grey[400],
+                height: 1.0,
+              )
+            ],
+          ),
         ),
       ),
     );

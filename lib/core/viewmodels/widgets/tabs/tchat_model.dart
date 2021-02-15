@@ -66,6 +66,16 @@ class TchatModel extends BaseModel {
     return true;
   }
 
+  Future<String> removeConversation({@required String conversationId}) async {
+    bool success = await _conversationRepository.removeConversation(
+        conversationId: conversationId);
+    if (success) {
+      return "Conversation supprimée";
+    } else {
+      return "Une erreur s'est produite";
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
