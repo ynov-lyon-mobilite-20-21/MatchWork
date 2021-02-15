@@ -2,9 +2,10 @@ name: Build & Publish Release APK
 
 on:
   push:
-    tags:
-      - '*'
-
+    branches:    
+      - main
+    tags:        
+      - v*    
 jobs:
   Gradle:
     runs-on: ubuntu-latest
