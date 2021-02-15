@@ -1,45 +1,26 @@
+name: Build & Publish Release APK
+
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
-name: Build and Release Apps
 jobs:
-  build:
-    name: Build Apps
-    runs-on: macos-latest
+  Gradle:
+    runs-on: ubuntu-latest
     steps:
-      - name: Export Release Timestamp
-        run: echo "APP_VERSION=release_$(date +'%Y-%m-%d_%H-%m-%S')" >> $GITHUB_ENV
-      - name: Checkout repository
-        uses: actions/checkout@v1
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-      - name: Install pub Dependencies
-        run: flutter pub get
-      #- name: Run Tests
-        #run: flutter test
-      - name: Build Android App
-        run: flutter build apk --split-per-abi
-      - name: Build iOS App
-        run: |
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
-          zip -r app.ipa Payload
-      - name: Release Apps
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ env.APP_VERSION }}
-          name: ${{ env.APP_VERSION }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "build/app/outputs/apk/release/*.apk,build/ios/iphoneos/app.ipa"
+    - name: checkout code
+      uses: actions/checkout@v2
+    - name: setup jdk
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Make Gradle executable
+      run: chmod +x ./gradlew
+    - name: Build Release APK
+      run: ./gradlew assembleRelease
+    - name: Releasing using Hub
+      uses: kyze8439690/action-release-releaseapk@master
+      env:
+       GITHUB_TOKEN: ${{ secrets.TOKEN }}
+       APP_FOLDER: app
