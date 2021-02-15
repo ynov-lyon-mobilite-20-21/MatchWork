@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/services/authentication_service.dart';
@@ -22,6 +20,13 @@ class LoginViewModel extends BaseModel {
   Future<bool> loginWithLinkedIn() async {
     busy = true;
     error = await _authenticationService.signInWithLikedIn();
+    busy = false;
+    return error == null;
+  }
+
+  Future<bool> loginWithApple() async {
+    busy = true;
+    error = await _authenticationService.signInWithApple();
     busy = false;
     return error == null;
   }

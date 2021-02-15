@@ -45,6 +45,8 @@ dependencies:
   flip_card: ^0.4.4
   getwidget: ^1.2.4
   flutter_switch: ^0.2.0
+  sign_in_with_apple: ^2.5.2
+  crypto: ^2.1.5
 
 dev_dependencies:
   flutter_test:
