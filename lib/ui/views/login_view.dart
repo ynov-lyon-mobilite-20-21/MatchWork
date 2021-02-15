@@ -102,9 +102,9 @@ class _LoginViewState extends State<LoginView> {
                               ),
                               RoundLogoButton(
                                   color: Colors.white,
-                                  logo: AppLogoImages.LogoLinkedIn,
+                                  logo: AppLogoImages.LogoApple,
                                   size: 50.0,
-                                  onTap: () => model.loginWithLinkedIn().then(
+                                  onTap: () => model.loginWithApple().then(
                                       (bool success) =>
                                           loginWithExternalService(
                                               context: context,
