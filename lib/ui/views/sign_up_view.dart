@@ -28,10 +28,8 @@ class _SignUpViewState extends State<SignUpView> {
           authenticationService: Provider.of<AuthenticationService>(context)),
       builder: (_, model, __) => Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: AppColors.StatusBarColor,
-        ),
-        body:  Stack(
+        appBar: AppBar(),
+        body: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
@@ -44,72 +42,79 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: KeyboardUtils.isHidden(context)
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Inscription",
-                            style: TextStyle(
-                                color: Theme.of(context).indicatorColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 40.0),
-                          ),
-                          Column(
+            Center(
+              child: SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: KeyboardUtils.isHidden(context)
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20.0,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              _formWidget(
-                                  context: context,
-                                  model: model,
-                                  scaffoldKey: _scaffoldKey),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20.0),
+                                child: Text(
+                                  "Inscription",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                              ),
                               Column(
                                 children: [
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Text(
-                                    "Déjà un compte?",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 16.0,
-                                        color: Colors.black54),
-                                  ),
-                                  InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushReplacementNamed(RoutePath.Login),
-                                    child: Text(
-                                      "Connectez-vous",
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).indicatorColor),
-                                    ),
+                                  _formWidget(
+                                      context: context,
+                                      model: model,
+                                      scaffoldKey: _scaffoldKey),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        "Déjà un compte?",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
+                                      InkWell(
+                                        onTap: () => Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                RoutePath.Login),
+                                        child: Text(
+                                          "Connectez-vous",
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .accentColor),
+                                        ),
+                                      )
+                                    ],
                                   )
                                 ],
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    )
-                  : SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Column(
-                          children: [
-                            _formWidget(
-                                context: context,
-                                model: model,
-                                scaffoldKey: _scaffoldKey)
-                          ],
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.15),
+                          child: Column(
+                            children: [
+                              _formWidget(
+                                  context: context,
+                                  model: model,
+                                  scaffoldKey: _scaffoldKey)
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-            ),
-             model.busy ? LoaderWidget() : Container()
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -127,48 +132,56 @@ Widget _formWidget(
         children: [
           TextFieldWidget(
             controller: model.nameController,
-            color: Colors.white,
             label: 'Nom',
             validation: (value) => model.nameValidator(value),
           ),
-          SizedBox(
-            height: 10.0,
-          ),
           TextFieldWidget(
             controller: model.firstNameController,
-            color: Colors.white,
             label: 'Prénom',
             validation: (value) => model.nameValidator(value),
           ),
-          SizedBox(
-            height: 10.0,
-          ),
           TextFieldWidget(
             controller: model.emailController,
-            color: Colors.white,
             label: 'Email',
             inputType: TextInputType.emailAddress,
             validation: (value) => model.emailValidator(value),
           ),
-          SizedBox(
-            height: 10.0,
-          ),
           TextFieldWidget(
             controller: model.passwordController,
-            color: Colors.white,
             isObscureText: true,
             label: 'Mot de passe',
             validation: (value) => model.passwordValidator(value),
           ),
-          SizedBox(
-            height: 10.0,
-          ),
           TextFieldWidget(
             controller: model.confirmationController,
-            color: Colors.white,
             isObscureText: true,
             label: 'Confirmation du mot de passe',
             validation: (value) => model.confirmationValidator(value),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Row(
+            children: [
+              Checkbox(
+                value: model.isAccepted,
+                onChanged: model.acceptTerms,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                      text: "J'accepte les ",
+                      style: TextStyle(color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: "conditions générales d'utilisation ",
+                            style: TextStyle(
+                                color: Theme.of(context).accentColor)),
+                        TextSpan(text: "de l'application")
+                      ]),
+                ),
+              )
+            ],
           ),
           SizedBox(
             height: 20.0,
@@ -190,7 +203,7 @@ Widget _formWidget(
                       });
                     }
                   },
-                  color: AppColors.AccentColor,
+                  color: AppColors.CircleAvatarBorderColor,
                   text: "Enregistrer",
                   textColor: Colors.white,
                 ),

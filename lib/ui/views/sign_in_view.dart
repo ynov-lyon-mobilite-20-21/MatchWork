@@ -28,9 +28,7 @@ class _SignInViewState extends State<SignInView> {
           authenticationService: Provider.of<AuthenticationService>(context)),
       builder: (_, model, __) => Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: AppColors.StatusBarColor,
-        ),
+        appBar: AppBar(),
         body: Stack(
           children: [
             Stack(
