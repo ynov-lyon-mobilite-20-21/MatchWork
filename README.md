@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/ynov-lyon-mobilite-20-21/MatchWork/blob/dev/lib/images/logo/blue_logo.jpg" alt="Match Work logo" width="500" height="500">
+<img src="https://github.com/ynov-lyon-mobilite-20-21/MatchWork/blob/main/assets/images/logo/splash.png" alt="Match Work logo" width="400" height="400">
 </p>
 
 # Match Work :iphone:
