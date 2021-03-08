@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               textTheme: theme.getTheme().textTheme,
-              actionsIconTheme: theme.getTheme().iconTheme,
+              actionsIconTheme: Theme.of(context).iconTheme,
               backgroundColor: theme.getTheme().appBarTheme.color),
           body: model.currentScreen,
           drawer: AppDrawerWidget(theme: theme),

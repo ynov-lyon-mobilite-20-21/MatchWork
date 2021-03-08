@@ -45,6 +45,7 @@ dependencies:
   flip_card: ^0.4.4
   getwidget: ^1.2.4
   flutter_switch: ^0.2.0
+  flutter_overlay_loader: ^0.0.2
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
     - assets/images/logo/
     - assets/images/background/
     - assets/images/tuto/
+    - assets/gifs/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

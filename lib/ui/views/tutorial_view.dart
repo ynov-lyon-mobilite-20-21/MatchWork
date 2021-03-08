@@ -7,6 +7,8 @@ import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:provider/provider.dart';
 
+import 'home_view.dart';
+
 final List<String> imgList = AppCarouselImage.carouselImages;
 
 class TutorialView extends StatefulWidget {
@@ -93,9 +95,14 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
                       context,
                       listen: false)
                   .isUserLoggedIn();
-
-              Navigator.pushNamed(
-                  context, isAuthenticated ? RoutePath.Home : RoutePath.Start);
+              if(isAuthenticated) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => HomeView()));
+              } else {
+                Navigator.pushNamed(context, RoutePath.Start);
+              }
             },
             child: Text("Continuer",
                 style: TextStyle(fontSize: 20, color: Colors.white))),

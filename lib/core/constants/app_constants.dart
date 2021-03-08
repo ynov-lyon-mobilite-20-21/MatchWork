@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 class ImagesPath {
   static const String RootPath = "assets/images/";
+  static const String GifRootPath = "assets/gifs/";
+
   static const String IconsPath = "${RootPath}icons/";
   static const String BackgroundsPath = "${RootPath}background/";
   static const String LogosPath = "${RootPath}logo/";
@@ -120,4 +122,15 @@ class AppCarouselImage {
   static const ThirdTutoImage = "${ImagesPath.CarouselPath}tuto_3.png";
   static const FourTutoImage = "${ImagesPath.CarouselPath}tuto_4.png";
   static const FiveTutoImage = "${ImagesPath.CarouselPath}tuto_5.png";
+}
+
+class AppAnimations {
+  static const Loader = "${ImagesPath.GifRootPath}loading.gif";
+  static const SplashLogo = "${ImagesPath.GifRootPath}splashLogo.gif";
+}
+
+
+class GlobalKeys {
+  static final scaffoldKey = const Key('__SCAFFOLD__');
+  static final loadingKey =const Key('__LOADING__');
 }
