@@ -4,12 +4,12 @@ import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class Profile extends StatefulWidget {
+class ProfileView extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfileViewState createState() => _ProfileViewState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context).getTheme();

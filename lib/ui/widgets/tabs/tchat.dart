@@ -7,6 +7,7 @@ import 'package:match_work/core/utils/date_utils.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -34,9 +35,7 @@ class _TchatState extends State<Tchat> {
         onModelReady: (model) => model.listenConversationsStream(),
         builder: (context, model, widget) => Column(
               children: [
-                model.busy
-                    ? CircularProgressIndicator()
-                    : SearchBarWidget(
+                SearchBarWidget(
                         primaryColor: theme.focusColor,
                         secondColor: theme.textTheme.caption.color,
                         controller: model.searchController,
@@ -87,9 +86,7 @@ class _TchatState extends State<Tchat> {
                           ],
                         );
                       }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return LoaderWidget(opacity: 0.0);
                     },
                   ),
                 ),

@@ -6,9 +6,12 @@ import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_up_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'home_view.dart';
 
 class SignUpView extends StatefulWidget {
   @override
@@ -28,7 +31,7 @@ class _SignUpViewState extends State<SignUpView> {
         appBar: AppBar(
           backgroundColor: AppColors.StatusBarColor,
         ),
-        body: Stack(
+        body:  Stack(
           children: [
             Container(
               decoration: BoxDecoration(
@@ -105,7 +108,8 @@ class _SignUpViewState extends State<SignUpView> {
                         ),
                       ),
                     ),
-            )
+            ),
+             model.busy ? LoaderWidget() : Container()
           ],
         ),
       ),
@@ -169,15 +173,15 @@ Widget _formWidget(
           SizedBox(
             height: 20.0,
           ),
-          model.busy
-              ? CircularProgressIndicator()
-              : RoundedButton(
+           RoundedButton(
                   onTap: () {
                     if (model.formKey.currentState.validate()) {
                       model.signUp().then((bool success) {
                         if (success) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              RoutePath.Home, (route) => false);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => HomeView()));
                         } else {
                           scaffoldKey.currentState.showSnackBar(SnackBar(
                             content: Text(model.error),

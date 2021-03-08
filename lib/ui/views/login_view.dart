@@ -11,6 +11,7 @@ import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
+import 'home_view.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -132,8 +133,10 @@ void loginWithExternalService(
     @required bool success,
     String error}) {
   if (success) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(RoutePath.Home, (route) => false);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => HomeView()));
   } else {
     scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(error),
