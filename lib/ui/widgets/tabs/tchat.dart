@@ -74,8 +74,7 @@ class _TchatState extends State<Tchat> {
                                       onDelete: (direction) async {
                                         String message =
                                             await model.removeConversation(
-                                                conversationId:
-                                                    conversation.id);
+                                                conversation: conversation);
                                         Scaffold.of(context)
                                             .showSnackBar(SnackBar(
                                           content: Text(message,
@@ -94,8 +93,7 @@ class _TchatState extends State<Tchat> {
                                       onDelete: (direction) async {
                                         String message =
                                             await model.removeConversation(
-                                                conversationId:
-                                                    conversation.id);
+                                                conversation: conversation);
                                         Scaffold.of(context)
                                             .showSnackBar(SnackBar(
                                           content: Text(message,
