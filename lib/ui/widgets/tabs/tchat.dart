@@ -19,9 +19,11 @@ class Tchat extends StatefulWidget {
 }
 
 class _TchatState extends State<Tchat> {
+
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -33,6 +35,8 @@ class _TchatState extends State<Tchat> {
         onModelReady: (model) => model.listenConversationsStream(),
         builder: (context, model, widget) => Column(
               children: [
+                AppBarWidget.showAppBar(context, "Tchat", theme.iconTheme.color,
+                    theme.textTheme.headline2.color),
                 SearchBarWidget(
                         primaryColor: theme.focusColor,
                         secondColor: theme.textTheme.caption.color,
@@ -115,8 +119,6 @@ class _TchatState extends State<Tchat> {
 
 class ConversationWidget extends StatefulWidget {
   final Conversation conversation;
-
-  final Function(DismissDirection direction) onDelete;
   final theme;
 
   const ConversationWidget(

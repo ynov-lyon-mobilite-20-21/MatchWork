@@ -16,9 +16,15 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   var isDarkMode = false;
 
-  setUi() {
-    DeviceBarUtils.changeBottomBarColor(AppColors.StatusBarColor);
+  setUi(){
+
     DeviceBarUtils.showStatusBar(true);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUi();
   }
 
   @override
@@ -27,18 +33,8 @@ class _HomeViewState extends State<HomeView> {
       create: (context) => BottomNavigationBarViewModel(),
       child: Consumer2<BottomNavigationBarViewModel, ThemeProvider>(
         builder: (context, model, theme, child) => Scaffold(
-          appBar: AppBar(
-              iconTheme: theme.getTheme().iconTheme,
-              title: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 50),
-                  child: Image.asset(AppLogoImages.TransparentLogo,
-                      fit: BoxFit.contain, height: 40),
-                ),
-              ),
-              textTheme: theme.getTheme().textTheme,
-              actionsIconTheme: Theme.of(context).iconTheme,
-              backgroundColor: theme.getTheme().appBarTheme.color),
+          backgroundColor: theme.getTheme().backgroundColor,
+
           body: model.currentScreen,
           drawer: AppDrawerWidget(theme: theme),
           drawerEdgeDragWidth: 0,

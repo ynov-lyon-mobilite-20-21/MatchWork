@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 
 final ThemeData lightThemeData = ThemeData(
-    scaffoldBackgroundColor: Color(0xFFE5E5E5),
-    iconTheme: IconThemeData(color: AppColors.AccentColor, size: 20.0),
+    fontFamily: "Raleway",
+    scaffoldBackgroundColor: Color(0xffFFFFFF),
+    iconTheme: IconThemeData (
+        color: AppColors.BackgroundDarkColor,
+        size: 50.0
+    ),
     appBarTheme: AppBarTheme(
-        color: Colors.white,
-        iconTheme: IconThemeData(color: AppColors.PrimaryColor)),
+      color: AppColors.PrimaryColor,
+      iconTheme: IconThemeData(
+        color: Colors.transparent,
+      ),
+    ),
     focusColor: Colors.white,
     canvasColor: Colors.white,
     textTheme: TextTheme(
@@ -17,8 +24,7 @@ final ThemeData lightThemeData = ThemeData(
         ),
         headline2: TextStyle(
           color: AppColors.PrimaryColor,
-          fontSize: 35.0,
-          fontWeight: FontWeight.w600,
+          fontSize: 25.0,
         ),
         headline3: TextStyle(
           color: AppColors.AccentColor,
@@ -30,10 +36,9 @@ final ThemeData lightThemeData = ThemeData(
           fontSize: 14.0,
           fontWeight: FontWeight.bold,
         ),
-        headline5: TextStyle(color: AppColors.PrimaryColor, fontSize: 12.0),
         subtitle1: TextStyle(
           color: Colors.black54,
-          fontSize: 15.0,
+          fontSize: 18.0,
         ),
         subtitle2: TextStyle(
           color: Colors.black54,
@@ -53,7 +58,6 @@ final ThemeData lightThemeData = ThemeData(
     ),
     primarySwatch: Colors.grey,
     primaryColorLight: Color(0xffFFFFFF),
-    primaryColorDark: AppColors.PrimaryColor,
     primaryColor: AppColors.PrimaryColor,
     brightness: Brightness.light,
     backgroundColor: const Color(0xFFE5E5E5),
