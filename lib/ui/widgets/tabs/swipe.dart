@@ -19,6 +19,7 @@ class Swipe extends StatefulWidget {
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    CardController controller;
     var theme = Provider.of<ThemeProvider>(context).getTheme();
 
     return BaseWidget<SwipeModel>(
@@ -27,7 +28,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
         builder: (context, model, widget) =>
         model.users.length > 1
             ? Center(
-          child: Container(
+          child: Column(
+              children : [
+                Container(
             height: MediaQuery
                 .of(context)
                 .size
@@ -37,7 +40,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
               swipeUp: false,
               orientation: AmassOrientation.TOP,
               totalNum: model.users.length,
-              stackNum: model.users.length,
+              stackNum: 2,
               swipeEdge: 5.0,
               maxWidth: MediaQuery
                   .of(context)
@@ -241,7 +244,9 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
+
                             );
+
                           }
                           return Center(child: CircularProgressIndicator(),);
                         }
@@ -254,7 +259,42 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
               },
             ),
           ),
-        )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    RawMaterialButton(
+                      onPressed: () {
+                        controller.triggerLeft();
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.white,
+                      child: Image.asset(
+                        AppIcons.Croix,
+                        width: 25,
+                        height: 25,
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                    RawMaterialButton(
+                      onPressed: () {
+                        controller.triggerRight();
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.white,
+                      child: Image.asset(
+                        AppIcons.Coeur,
+                        width: 25,
+                        height: 25,
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    )
+                  ],
+                )
+        ]),
+    )
+        
             : SizedBox.expand(child: FlutterLogo()));
   }
 }

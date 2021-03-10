@@ -53,7 +53,8 @@ class AppLogoImages {
     LogoMatchWorkText,
     LogoGoogle,
     LogoLinkedIn,
-    LogoMatchWorkBlue
+    LogoMatchWorkBlue,
+
   ];
 
   static const LogoTextBeside = "${ImagesPath.LogosPath}logo_text_beside.png";
@@ -66,6 +67,7 @@ class AppLogoImages {
   static const LogoGoogle = "${ImagesPath.LogosPath}google_logo.png";
   static const LogoLinkedIn = "${ImagesPath.LogosPath}linkedin_logo.png";
   static const LogoMatchWorkBlue = "${ImagesPath.LogosPath}blue_logo.jpg";
+
 }
 
 class AppImages {
@@ -85,7 +87,9 @@ class AppIcons {
     ActiveProfile,
     InactiveProfile,
     ActiveChat,
-    InactiveChat
+    InactiveChat,
+    Coeur,
+    Croix
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -94,6 +98,8 @@ class AppIcons {
   static const InactiveProfile = "${ImagesPath.IconsPath}profil_off.png";
   static const ActiveChat = "${ImagesPath.IconsPath}tchat_on.png";
   static const InactiveChat = "${ImagesPath.IconsPath}tchat_off.png";
+  static const Coeur = "${ImagesPath.IconsPath}coeur.png";
+  static const Croix = "${ImagesPath.IconsPath}croix.png";
 }
 
 class AppCarouselImage {
