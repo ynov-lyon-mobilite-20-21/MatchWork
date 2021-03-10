@@ -100,23 +100,20 @@ class _LoginViewState extends State<LoginView> {
                                               error: model.error))),
                               Visibility(
                                 visible: Platform.isIOS,
-                                child: SizedBox(
-                                  width: 15.0,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: RoundLogoButton(
+                                      color: Colors.white,
+                                      logo: AppLogoImages.LogoApple,
+                                      size: 50.0,
+                                      onTap: () => model.loginWithApple().then(
+                                          (bool success) =>
+                                              loginWithExternalService(
+                                                  context: context,
+                                                  scaffoldKey: _scaffoldKey,
+                                                  success: success,
+                                                  error: model.error))),
                                 ),
-                              ),
-                              Visibility(
-                                visible: Platform.isIOS,
-                                child: RoundLogoButton(
-                                    color: Colors.white,
-                                    logo: AppLogoImages.LogoApple,
-                                    size: 50.0,
-                                    onTap: () => model.loginWithApple().then(
-                                        (bool success) =>
-                                            loginWithExternalService(
-                                                context: context,
-                                                scaffoldKey: _scaffoldKey,
-                                                success: success,
-                                                error: model.error))),
                               )
                             ],
                           ),

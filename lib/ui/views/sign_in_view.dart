@@ -70,6 +70,24 @@ class _SignInViewState extends State<SignInView> {
                             key: model.formKey,
                             child: Column(
                               children: [
+                                Visibility(
+                                  visible: model.error != null,
+                                  child: Center(
+                                      child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.red),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        model.error ?? '',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 15.0),
+                                      ),
+                                    ),
+                                  )),
+                                ),
                                 TextFieldWidget(
                                   controller: model.emailController,
                                   label: 'Identifiant',
@@ -102,11 +120,6 @@ class _SignInViewState extends State<SignInView> {
                                                     .pushNamedAndRemoveUntil(
                                                         RoutePath.Home,
                                                         (route) => false);
-                                              } else {
-                                                _scaffoldKey.currentState
-                                                    .showSnackBar(SnackBar(
-                                                  content: Text(model.error),
-                                                ));
                                               }
                                             });
                                           }
