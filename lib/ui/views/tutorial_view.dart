@@ -15,7 +15,6 @@ class TutorialView extends StatefulWidget {
 
   @override
   _TutorialViewState createState() => _TutorialViewState();
-
 }
 
 class _TutorialViewState extends State<TutorialView> {
