@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     DeviceBarUtils.showStatusBar(false);
-    _loadWidget();
+     _loadWidget();
     _initPackageInfo();
   }
 
@@ -99,35 +99,20 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(
-                  top: screenHeight * 0.0025, right: screenHeight * 0.006),
-              alignment: Alignment.topRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Image.asset(
-                    AppLogoImages.LogoTuba,
-                    width: screenWidth / 6,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: screenHeight * 0.018),
+              padding: EdgeInsets.only(top: screenHeight * 0.15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
                     AppAnimations.SplashLogo,
-                    width: 500,
-                    height: 100,
-
-                  ),
+                    width: MediaQuery.of(context).size.width,
+                    height: screenHeight / 2,
+                  )
                 ],
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: screenHeight * 0.28),
+              padding: EdgeInsets.only(top: screenHeight * 0.15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
