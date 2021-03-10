@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkedin/linkedloginflutter.dart';
@@ -39,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(AppBackgroundImages.BackgroundLoginDark),
+                image: AssetImage(AppBackgroundImages.BackgroundHomeDark),
                 fit: BoxFit.cover,
               ),
             ),
@@ -58,7 +60,7 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                        AppLogoImages.LogoMatchWorkText,
+                        AppLogoImages.LogoMatchWorkTextTuba,
                         width: MediaQuery.of(context).size.width * 0.7,
                       ),
                       Column(
@@ -97,20 +99,26 @@ class _LoginViewState extends State<LoginView> {
                                               scaffoldKey: _scaffoldKey,
                                               success: success,
                                               error: model.error))),
-                              SizedBox(
-                                width: 15.0,
+                              Visibility(
+                                visible: Platform.isIOS,
+                                child: SizedBox(
+                                  width: 15.0,
+                                ),
                               ),
-                              RoundLogoButton(
-                                  color: Colors.white,
-                                  logo: AppLogoImages.LogoApple,
-                                  size: 50.0,
-                                  onTap: () => model.loginWithApple().then(
-                                      (bool success) =>
-                                          loginWithExternalService(
-                                              context: context,
-                                              scaffoldKey: _scaffoldKey,
-                                              success: success,
-                                              error: model.error)))
+                              Visibility(
+                                visible: Platform.isIOS,
+                                child: RoundLogoButton(
+                                    color: Colors.white,
+                                    logo: AppLogoImages.LogoApple,
+                                    size: 50.0,
+                                    onTap: () => model.loginWithApple().then(
+                                        (bool success) =>
+                                            loginWithExternalService(
+                                                context: context,
+                                                scaffoldKey: _scaffoldKey,
+                                                success: success,
+                                                error: model.error))),
+                              )
                             ],
                           ),
                         ],
