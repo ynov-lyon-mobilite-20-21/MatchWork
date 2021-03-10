@@ -35,7 +35,8 @@ class AppBackgroundImages {
   static const appBackgroundImages = [
     BackgroundSplashScreen,
     BackgroundLoginLight,
-    BackgroundLoginDark
+    BackgroundLoginDark,
+    BackgroundHomeDark
   ];
 
   static const BackgroundSplashScreen =
@@ -44,6 +45,8 @@ class AppBackgroundImages {
       "${ImagesPath.BackgroundsPath}background_connexion_day.png";
   static const BackgroundLoginDark =
       "${ImagesPath.BackgroundsPath}background_connexion_night.png";
+  static const BackgroundHomeDark =
+      "${ImagesPath.BackgroundsPath}fond_home.png";
 }
 
 class AppLogoImages {
@@ -54,6 +57,7 @@ class AppLogoImages {
     LogoTuba,
     LogoMatchWork,
     LogoMatchWorkText,
+    LogoMatchWorkTextTuba,
     LogoGoogle,
     LogoLinkedIn,
     LogoApple,
@@ -67,6 +71,8 @@ class AppLogoImages {
   static const LogoTuba = "${ImagesPath.LogosPath}logo_tuba.png";
   static const LogoMatchWork = "${ImagesPath.LogosPath}splash.png";
   static const LogoMatchWorkText = "${ImagesPath.LogosPath}logo_text_below.png";
+  static const LogoMatchWorkTextTuba =
+      "${ImagesPath.LogosPath}logo_assembler.png";
   static const LogoGoogle = "${ImagesPath.LogosPath}google_logo.png";
   static const LogoLinkedIn = "${ImagesPath.LogosPath}linkedin_logo.png";
   static const LogoApple = "${ImagesPath.LogosPath}apple_logo.png";
