@@ -3,9 +3,12 @@ import 'package:match_work/core/constants/app_constants.dart';
 
 // ignore: non_constant_identifier_names
 final ThemeData DarkThemeData = ThemeData(
-    scaffoldBackgroundColor: AppColors.SecondColor,
+    scaffoldBackgroundColor: AppColors.PrimaryColor,
     appBarTheme: AppBarTheme(color: AppColors.AppBarColor),
-    iconTheme: IconThemeData(color: Colors.white, size: 20.0),
+    iconTheme: IconThemeData (
+      color: Colors.white,
+      size: 50.0
+    ),
     canvasColor: AppColors.AppBarColor,
     focusColor: AppColors.AppBarColor,
     textTheme: TextTheme(
@@ -16,8 +19,7 @@ final ThemeData DarkThemeData = ThemeData(
         ),
         headline2: TextStyle(
           color: Colors.white,
-          fontSize: 35.0,
-          fontWeight: FontWeight.w600,
+          fontSize: 25.0,
         ),
         headline3: TextStyle(
           color: AppColors.AccentColor,
@@ -29,7 +31,6 @@ final ThemeData DarkThemeData = ThemeData(
           fontSize: 14.0,
           fontWeight: FontWeight.bold,
         ),
-        headline5: TextStyle(color: Colors.white, fontSize: 12.0),
         bodyText1: TextStyle(
           color: Colors.white,
         ),
@@ -39,7 +40,7 @@ final ThemeData DarkThemeData = ThemeData(
         ),
         subtitle1: TextStyle(
           color: Colors.white70,
-          fontSize: 15.0,
+          fontSize: 18.0,
         ),
         subtitle2: TextStyle(
           color: Colors.white,
@@ -52,8 +53,8 @@ final ThemeData DarkThemeData = ThemeData(
     primarySwatch: Colors.grey,
     primaryColor: AppColors.PrimaryColor,
     indicatorColor: Colors.white,
-    primaryColorLight: AppColors.AppBarColor,
-    primaryColorDark: AppColors.AccentColor,
+    primaryColorLight: AppColors.PrimaryColor,
+    primaryColorDark: AppColors.AppBarColor,
     brightness: Brightness.dark,
     backgroundColor: AppColors.PrimaryColor,
     accentColor: AppColors.AccentColor,

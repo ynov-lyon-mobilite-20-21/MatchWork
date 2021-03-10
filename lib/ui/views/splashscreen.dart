@@ -21,7 +21,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final splashDelay = 5;
+  final splashDelay = 6;
   double screenHeight;
   double screenWidth;
 
@@ -112,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: screenHeight * 0.15),
+              padding: EdgeInsets.only(top: screenHeight * 0.23),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
