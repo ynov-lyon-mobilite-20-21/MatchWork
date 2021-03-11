@@ -6,12 +6,9 @@ import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_in_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
-import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'home_view.dart';
 
 class SignInView extends StatefulWidget {
   @override
@@ -23,76 +20,102 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ThemeProvider>(context).getTheme();
+
     return BaseWidget<SignInViewModel>(
       model: SignInViewModel(
           authenticationService: Provider.of<AuthenticationService>(context)),
-      builder: (_, model, __) => Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: AppColors.StatusBarColor,
-        ),
-        body: Stack(
-          children: [
-            Stack(
+      builder: (_, model, __) => Theme(
+        data: theme,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(),
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        Provider.of<ThemeProvider>(context).isDarkMode
+                            ? AppBackgroundImages.BackgroundLoginDark
+                            : AppBackgroundImages.BackgroundLoginLight),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                Provider.of<ThemeProvider>(context).isDarkMode
-                                    ? AppBackgroundImages.BackgroundLoginDark
-                                    : AppBackgroundImages.BackgroundLoginLight),
-                            fit: BoxFit.cover,
+                      Visibility(
+                        visible: KeyboardUtils.isHidden(context),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).size.height * 0.2),
+                          child: Image.asset(
+                            Provider.of<ThemeProvider>(context).isDarkMode
+                                ? AppImages.WelcomeWhite
+                                : AppImages.WelcomeBlue,
+                            width: MediaQuery.of(context).size.width * 0.8,
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Visibility(
-                                visible: KeyboardUtils.isHidden(context),
-                                child: Image.asset(
-                                  Provider.of<ThemeProvider>(context).isDarkMode
-                                      ? AppImages.WelcomeWhite
-                                      : AppImages.WelcomeBlue,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                ),
-                              ),
-                              Column(
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.15),
+                            child: Form(
+                              key: model.formKey,
+                              child: Column(
                                 children: [
-                                  Form(
-                                    key: model.formKey,
-                                    child: Column(
-                                      children: [
-                                        TextFieldWidget(
-                                          controller: model.emailController,
-                                          color: Colors.white,
-                                          label: 'Identifiant',
-                                          inputType: TextInputType.emailAddress,
-                                          validation: (value) =>
-                                              model.emailValidator(value),
+                                  Visibility(
+                                    visible: model.error != null,
+                                    child: Center(
+                                        child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.red),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          model.error ?? '',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 15.0),
                                         ),
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        TextFieldWidget(
-                                          controller: model.passwordController,
-                                          color: Colors.white,
-                                          isObscureText: true,
-                                          label: 'Mot de passe',
-                                          validation: (value) =>
-                                              model.passwordValidator(value),
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        RoundedButton(
+                                      ),
+                                    )),
+                                  ),
+                                  TextFieldWidget(
+                                    controller: model.emailController,
+                                    label: 'Identifiant',
+                                    inputType: TextInputType.emailAddress,
+                                    validation: (value) =>
+                                        model.emailValidator(value),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  TextFieldWidget(
+                                    controller: model.passwordController,
+                                    isObscureText: true,
+                                    label: 'Mot de passe',
+                                    validation: (value) =>
+                                        model.passwordValidator(value),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  model.busy
+                                      ? CircularProgressIndicator()
+                                      : RoundedButton(
                                           onTap: () {
                                             if (model.formKey.currentState
                                                 .validate()) {
@@ -100,68 +123,53 @@ class _SignInViewState extends State<SignInView> {
                                                   .signIn()
                                                   .then((bool success) {
                                                 if (success) {
-                                                  Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (BuildContext context) => HomeView()));
-                                                } else {
-                                                  _scaffoldKey.currentState
-                                                      .showSnackBar(SnackBar(
-                                                    content: Text(model.error),
-                                                  ));
+                                                  Navigator.of(context)
+                                                      .pushNamedAndRemoveUntil(
+                                                          RoutePath.Home,
+                                                          (route) => false);
                                                 }
                                               });
                                             }
                                           },
-                                          color: Theme.of(context).buttonColor,
+                                          color:
+                                              AppColors.CircleAvatarBorderColor,
                                           text: "Connexion",
-                                          textColor:
-                                              Theme.of(context).indicatorColor,
-                                          border: Border.all(
-                                              color: Theme.of(context)
-                                                  .indicatorColor),
+                                          textColor: Colors.white,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Visibility(
-                                    visible: KeyboardUtils.isHidden(context),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Text(
-                                          "Pas encore de compte?",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 16.0,
-                                              color: Colors.black54),
-                                        ),
-                                        InkWell(
-                                          onTap: () => Navigator.of(context)
-                                              .pushReplacementNamed(
-                                                  RoutePath.Register),
-                                          child: Text(
-                                            "Inscrivez-vous",
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .indicatorColor),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
                                 ],
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
+                          Visibility(
+                            visible: KeyboardUtils.isHidden(context),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Text(
+                                  "Pas encore de compte?",
+                                  style: theme.textTheme.subtitle1,
+                                ),
+                                InkWell(
+                                  onTap: () => Navigator.of(context)
+                                      .pushReplacementNamed(RoutePath.Register),
+                                  child: Text(
+                                    "Inscrivez-vous",
+                                    style: TextStyle(color: theme.accentColor),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       )
                     ],
                   ),
-            model.busy ? LoaderWidget() : Container()
-          ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

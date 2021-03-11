@@ -33,11 +33,11 @@ class RoundedButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: _padding),
           decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(height / 2),
+              borderRadius: BorderRadius.circular(5.0),
               border: border),
           child: Text(
             text,
-            textScaleFactor: 1.3,
+            textScaleFactor: 1.5,
             style: TextStyle(
               color: textColor,
             ),

@@ -16,17 +16,18 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   var isDarkMode = false;
 
-  setUi(){
+  setUi() {
     DeviceBarUtils.changeBottomBarColor(AppColors.StatusBarColor);
     DeviceBarUtils.showStatusBar(true);
   }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BottomNavigationBarViewModel>(
       create: (context) => BottomNavigationBarViewModel(),
       child: Consumer2<BottomNavigationBarViewModel, ThemeProvider>(
         builder: (context, model, theme, child) => Scaffold(
-          backgroundColor: theme.getTheme().backgroundColor,
+          backgroundColor: theme.getTheme().scaffoldBackgroundColor,
           appBar: AppBar(
               iconTheme: theme.getTheme().iconTheme,
               title: Center(
@@ -37,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               textTheme: theme.getTheme().textTheme,
-              actionsIconTheme: Theme.of(context).iconTheme,
+              actionsIconTheme: theme.getTheme().iconTheme,
               backgroundColor: theme.getTheme().appBarTheme.color),
           body: model.currentScreen,
           drawer: AppDrawerWidget(theme: theme),
@@ -76,7 +77,8 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   label: "Tchat"),
             ],
-            backgroundColor: theme.getTheme().bottomNavigationBarTheme.backgroundColor,
+            backgroundColor:
+                theme.getTheme().bottomNavigationBarTheme.backgroundColor,
             currentIndex: model.currentTab,
             selectedItemColor: theme.getTheme().accentColor,
             unselectedItemColor: theme.getTheme().textTheme.bodyText1.color,

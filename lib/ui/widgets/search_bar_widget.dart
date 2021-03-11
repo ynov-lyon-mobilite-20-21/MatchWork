@@ -52,29 +52,32 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 onChanged: (value) => widget.onChanged(value),
                 controller: widget.controller,
                 decoration: InputDecoration(
-                  hintText: 'Rechercher...',
-                  hintStyle: TextStyle(color: widget.secondColor),
-                  filled: true,
-                  fillColor: widget.primaryColor,
-                  border: border,
-                  focusedBorder: border,
-                  enabledBorder: border,
-                  errorBorder: border,
-                  disabledBorder: border,
-                  contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                ),
+                    hintText: 'Rechercher...',
+                    hintStyle: TextStyle(color: widget.secondColor),
+                    filled: true,
+                    fillColor: widget.primaryColor,
+                    border: border,
+                    focusedBorder: border,
+                    enabledBorder: border,
+                    errorBorder: border,
+                    disabledBorder: border,
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: widget.secondColor,
+                      size: 25.0,
+                    )),
               ),
             ),
           ),
           InkWell(
-            onTap: widget.search,
-            child: Icon(
-              Icons.search,
-              color: widget.secondColor,
-              size: 25.0,
-            ),
-          )
+              onTap: widget.search,
+              child: Icon(
+                Icons.search,
+                color: widget.secondColor,
+                size: 25.0,
+              )),
         ],
       ),
     );
