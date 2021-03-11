@@ -17,13 +17,6 @@ class LoginViewModel extends BaseModel {
     return error == null;
   }
 
-  Future<bool> loginWithLinkedIn() async {
-    busy = true;
-    error = await _authenticationService.signInWithLikedIn();
-    busy = false;
-    return error == null;
-  }
-
   Future<bool> loginWithApple() async {
     busy = true;
     error = await _authenticationService.signInWithApple();

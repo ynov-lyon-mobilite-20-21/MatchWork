@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkedin/linkedloginflutter.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/services/authentication_service.dart';
-import 'package:match_work/core/utils/linkedin_utils.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/round_logo_button.dart';
@@ -22,15 +20,6 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    LinkedInLogin.initialize(context,
-        clientId: LinkedInUtils.clientId,
-        clientSecret: LinkedInUtils.clientSecret,
-        redirectUri: LinkedInUtils.redirectUrl);
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -5,11 +5,9 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Firebase;
 import 'package:flutter/material.dart';
-import 'package:flutter_linkedin/linkedloginflutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
-import 'package:match_work/core/utils/form_validators.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -132,68 +130,6 @@ class AuthenticationService {
     await updateUserByAuth();
 
     return _auth.currentUser != null ? null : 'Erreur';
-  }
-
-  Future<String> signInWithLikedIn() async {
-    String _authError;
-    await LinkedInLogin.loginForAccessToken(
-        destroySession: true,
-        appBar: AppBar(
-          title: Text('MatchWork'),
-        )).then((accessToken) async {
-      await LinkedInLogin.getEmail(
-          destroySession: true,
-          forceLogin: true,
-          appBar: AppBar(
-            title: Text('MatchWork'),
-          )).then((email) async {
-        String mail = email.elements.first.elementHandle.emailAddress;
-        if (FormValidators.isEmail(mail) == null) {
-          User linkedinUser = User(mail: mail.toLowerCase());
-          await LinkedInLogin.getProfile(
-              destroySession: true,
-              forceLogin: true,
-              appBar: AppBar(
-                title: Text('MatchWork'),
-              )).then((profile) {
-            linkedinUser.firstName = profile.firstName.toString().toLowerCase();
-            linkedinUser.lastName = profile.lastName.toString().toLowerCase();
-            linkedinUser.pictureUrl = profile
-                .profilePicture
-                .profilePictureDisplayImage
-                .elements
-                .first
-                .identifiers
-                .first
-                .identifier;
-          }).catchError((error) {
-            _authError = error.errorDescription;
-          });
-
-          User user = await _userRepository.getUserByMail(linkedinUser.mail);
-          if (user == null) {
-            await _auth
-                .createUserWithEmailAndPassword(
-                    email: mail.toLowerCase(), password: accessToken)
-                .then((Firebase.UserCredential credential) async {
-              linkedinUser.uid = credential.user.uid;
-            });
-          } else {
-            linkedinUser.uid = user.uid;
-            await _auth.createUserWithEmailAndPassword(
-                email: linkedinUser.mail, password: accessToken);
-          }
-          await _userRepository.updateUser(linkedinUser);
-        } else {
-          _authError = "Erreur lors de la récupération de l'email";
-        }
-      }).catchError((error) {
-        _authError = error.errorDescription;
-      });
-    }).catchError((error) {
-      _authError = error.message;
-    });
-    return _authError;
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
