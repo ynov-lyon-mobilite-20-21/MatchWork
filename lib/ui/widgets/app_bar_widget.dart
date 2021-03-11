@@ -10,7 +10,9 @@ class AppBarWidget {
     assert(textColor != null);
 
     return Padding(
-        padding: EdgeInsets.only(left: MediaQuery.of(context).size.height / 50, top: MediaQuery.of(context).size.height / 50),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.height / 50,
+            top: MediaQuery.of(context).size.height / 50),
         child: InkWell(
             onTap: () {
               Scaffold.of(context).openDrawer();
@@ -19,8 +21,11 @@ class AppBarWidget {
               children: [
                 Icon(
                   Icons.menu,
-                  size: Theme.of(context).iconTheme.size,
-                  color: Theme.of(context).iconTheme.copyWith(color: iconColor).color,
+                  size: Theme.of(context).iconTheme.copyWith(size: 35).size,
+                  color: Theme.of(context)
+                      .iconTheme
+                      .copyWith(color: iconColor)
+                      .color,
                 ),
                 Padding(
                     padding: EdgeInsets.only(

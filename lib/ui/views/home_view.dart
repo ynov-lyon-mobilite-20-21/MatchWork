@@ -16,9 +16,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   var isDarkMode = false;
 
-  setUi(){
-
-    DeviceBarUtils.showStatusBar(true);
+  setUi() {
+    DeviceBarUtils.showStatusBar(false);
   }
 
   @override
@@ -34,7 +33,6 @@ class _HomeViewState extends State<HomeView> {
       child: Consumer2<BottomNavigationBarViewModel, ThemeProvider>(
         builder: (context, model, theme, child) => Scaffold(
           backgroundColor: theme.getTheme().backgroundColor,
-
           body: model.currentScreen,
           drawer: AppDrawerWidget(theme: theme),
           drawerEdgeDragWidth: 0,
