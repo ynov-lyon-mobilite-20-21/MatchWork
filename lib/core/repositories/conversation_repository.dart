@@ -19,6 +19,11 @@ class ConversationRepository {
   static String conversationLastMessageCreatedAtReference =
       'lastMessageCreatedAt';
   static String conversationIsReadReference = 'isRead';
+  static String conversationParticipantInfoReference = 'participantInfo';
+  static String conversationParticipantInfoUserUidReference = 'userUid';
+  static String conversationParticipantInfoIsDeletedReference = 'isDeleted';
+  static String conversationParticipantInfoDeletionDateReference =
+      'deletionDate';
 
   final CollectionReference _conversationsCollection =
       FirebaseFirestore.instance.collection('conversations');
@@ -89,7 +94,8 @@ class ConversationRepository {
                 conversationReceiverUidReference: callerUid,
                 conversationLastMessageContentReference: message.content,
                 conversationLastMessageCreatedAtReference: message.createdAt,
-                conversationIsReadReference: false
+                conversationIsReadReference: false,
+                conversationParticipantInfoReference: null
               }, SetOptions(merge: true)));
       return true;
     } catch (e) {
@@ -114,4 +120,18 @@ class ConversationRepository {
           .update({conversationIsReadReference: true})
           .then((value) => true)
           .catchError((error) => false);
+
+  Future<bool> removeConversation(
+      {@required String currentUserUid,
+      @required Conversation conversation}) async {
+    List participantInfoList = conversation.isDeletedList ?? [];
+    participantInfoList
+        .add(ParticipantInfoConversation(currentUserUid).toJson());
+
+    return await _conversationsCollection
+        .doc(conversation.id)
+        .update({conversationParticipantInfoReference: participantInfoList})
+        .then((value) => true)
+        .catchError((error) => false);
+  }
 }

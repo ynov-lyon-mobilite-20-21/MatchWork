@@ -5,6 +5,7 @@ import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:provider/provider.dart';
 
 class Swipe extends StatefulWidget {
@@ -208,7 +209,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                   ),
                 ),
               )
-            : SizedBox.expand(child: FlutterLogo()));
+            : SizedBox.expand(child: LoaderWidget(opacity: 0.0)));
   }
 }
 

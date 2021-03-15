@@ -10,6 +10,7 @@ class Conversation {
   String lastMessageContent;
   Timestamp lastMessageCreatedAt;
   bool isRead;
+  List isDeletedList = [];
 
   User caller;
 
@@ -32,7 +33,9 @@ class Conversation {
         lastMessageCreatedAt = snapshot.data()[
             ConversationRepository.conversationLastMessageCreatedAtReference],
         isRead =
-            snapshot.data()[ConversationRepository.conversationIsReadReference];
+            snapshot.data()[ConversationRepository.conversationIsReadReference],
+        isDeletedList = snapshot.data()[
+            ConversationRepository.conversationParticipantInfoReference];
 
   Map<String, dynamic> toJson() => {
         ConversationRepository.conversationSenderUidReference: senderUid,
@@ -41,6 +44,33 @@ class Conversation {
             lastMessageContent,
         ConversationRepository.conversationLastMessageCreatedAtReference:
             lastMessageCreatedAt,
-        ConversationRepository.conversationIsReadReference: isRead
+        ConversationRepository.conversationIsReadReference: isRead,
+        ConversationRepository.conversationParticipantInfoReference:
+            isDeletedList
+      };
+}
+
+class ParticipantInfoConversation {
+  String userUid;
+  bool isDeleted = true;
+  Timestamp deletionDate = Timestamp.now();
+
+  ParticipantInfoConversation(this.userUid);
+
+  ParticipantInfoConversation.fromJson(Map<String, dynamic> json)
+      : userUid = json[
+            ConversationRepository.conversationParticipantInfoUserUidReference],
+        isDeleted = json[ConversationRepository
+            .conversationParticipantInfoIsDeletedReference],
+        deletionDate = json[ConversationRepository
+            .conversationParticipantInfoDeletionDateReference];
+
+  Map<String, dynamic> toJson() => {
+        ConversationRepository.conversationParticipantInfoUserUidReference:
+            userUid,
+        ConversationRepository.conversationParticipantInfoIsDeletedReference:
+            isDeleted,
+        ConversationRepository.conversationParticipantInfoDeletionDateReference:
+            deletionDate
       };
 }

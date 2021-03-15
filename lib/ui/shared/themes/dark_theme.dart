@@ -7,7 +7,7 @@ final ThemeData DarkThemeData = ThemeData(
     appBarTheme: AppBarTheme(color: AppColors.AppBarColor),
     iconTheme: IconThemeData (
       color: Colors.white,
-      size: 20.0
+      size: 50.0
     ),
     canvasColor: AppColors.AppBarColor,
     focusColor: AppColors.AppBarColor,
@@ -63,5 +63,10 @@ final ThemeData DarkThemeData = ThemeData(
     cardColor: AppColors.AppBarColor,
     buttonColor: AppColors.PrimaryColor,
     bottomNavigationBarTheme:
-        BottomNavigationBarThemeData(backgroundColor: AppColors.BackgroundDarkColor)
-);
+        BottomNavigationBarThemeData(backgroundColor: AppColors.AppBarColor),
+    inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.white),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+        enabledBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.white))));

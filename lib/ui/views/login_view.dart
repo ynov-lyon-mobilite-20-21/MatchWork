@@ -1,9 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkedin/linkedloginflutter.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/services/authentication_service.dart';
-import 'package:match_work/core/utils/linkedin_utils.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/round_logo_button.dart';
@@ -11,6 +11,7 @@ import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
+import 'home_view.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -21,15 +22,6 @@ class _LoginViewState extends State<LoginView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
-  void initState() {
-    super.initState();
-    LinkedInLogin.initialize(context,
-        clientId: LinkedInUtils.clientId,
-        clientSecret: LinkedInUtils.clientSecret,
-        redirectUri: LinkedInUtils.redirectUrl);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -38,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(AppBackgroundImages.BackgroundLoginDark),
+                image: AssetImage(AppBackgroundImages.BackgroundHomeDark),
                 fit: BoxFit.cover,
               ),
             ),
@@ -54,18 +46,18 @@ class _LoginViewState extends State<LoginView> {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                        AppLogoImages.TransparentLogo,
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        AppLogoImages.LogoMatchWorkTextTuba,
+                        width: MediaQuery.of(context).size.width * 0.7,
                       ),
                       Column(
                         children: [
                           RoundedButton(
                               onTap: () => Navigator.of(context)
                                   .pushNamed(RoutePath.Register),
-                              color: const Color(0xff5FC0C2),
+                              color: AppColors.CircleAvatarBorderColor,
                               text: "Inscription",
                               textColor: Colors.white),
                           SizedBox(
@@ -96,20 +88,23 @@ class _LoginViewState extends State<LoginView> {
                                               scaffoldKey: _scaffoldKey,
                                               success: success,
                                               error: model.error))),
-                              SizedBox(
-                                width: 15.0,
-                              ),
-                              RoundLogoButton(
-                                  color: Colors.white,
-                                  logo: AppLogoImages.LogoLinkedIn,
-                                  size: 50.0,
-                                  onTap: () => model.loginWithLinkedIn().then(
-                                      (bool success) =>
-                                          loginWithExternalService(
-                                              context: context,
-                                              scaffoldKey: _scaffoldKey,
-                                              success: success,
-                                              error: model.error)))
+                              Visibility(
+                                visible: Platform.isIOS,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: RoundLogoButton(
+                                      color: Colors.white,
+                                      logo: AppLogoImages.LogoApple,
+                                      size: 50.0,
+                                      onTap: () => model.loginWithApple().then(
+                                          (bool success) =>
+                                              loginWithExternalService(
+                                                  context: context,
+                                                  scaffoldKey: _scaffoldKey,
+                                                  success: success,
+                                                  error: model.error))),
+                                ),
+                              )
                             ],
                           ),
                         ],
@@ -132,8 +127,10 @@ void loginWithExternalService(
     @required bool success,
     String error}) {
   if (success) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(RoutePath.Home, (route) => false);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => HomeView()));
   } else {
     scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(error),

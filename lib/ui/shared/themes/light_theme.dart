@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 
 final ThemeData lightThemeData = ThemeData(
+    fontFamily: "Raleway",
     scaffoldBackgroundColor: Color(0xffFFFFFF),
     iconTheme: IconThemeData (
-        color: AppColors.AccentColor,
-        size: 20.0
+        color: AppColors.BackgroundDarkColor,
+        size: 50.0
     ),
     appBarTheme: AppBarTheme(
       color: AppColors.PrimaryColor,
@@ -64,7 +65,13 @@ final ThemeData lightThemeData = ThemeData(
     accentIconTheme: IconThemeData(color: Colors.white),
     dividerColor: Colors.white54,
     cardColor: Colors.white,
-    indicatorColor: Colors.white,
+    indicatorColor: AppColors.PrimaryColor,
     buttonColor: AppColors.SecondColor,
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: AppColors.BackgroundLightColor));
+    bottomNavigationBarTheme:
+        BottomNavigationBarThemeData(backgroundColor: Colors.white),
+    inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(color: AppColors.PrimaryColor),
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColors.PrimaryColor)),
+        enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColors.PrimaryColor))));

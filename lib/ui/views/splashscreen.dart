@@ -11,7 +11,6 @@ import 'package:match_work/ui/views/home_view.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
-
 class SplashScreen extends StatefulWidget {
   final Color backgroundColor = AppColors.PrimaryColor;
   final TextStyle styleTextUnderTheLoader = TextStyle(
@@ -22,7 +21,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final splashDelay = 3;
+  final splashDelay = 6;
   double screenHeight;
   double screenWidth;
 
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     DeviceBarUtils.showStatusBar(false);
-    _loadWidget();
+     _loadWidget();
     _initPackageInfo();
   }
 
@@ -71,7 +70,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     StorageManager.readData("isFirstLaunch").then((isFirstLaunch) => {
           if (isFirstLaunch == null)
-            {Navigator.pushReplacementNamed(context, RoutePath.Tutorial)}
+            {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  RoutePath.Tutorial, (Route<dynamic> route) => false)
+            }
           else if (isAuthenticated)
             {
               Navigator.pushReplacement(
@@ -87,6 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.PrimaryColor,
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -96,34 +99,20 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(
-                  top: screenHeight * 0.0025, right: screenHeight * 0.006),
-              alignment: Alignment.topRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Image.asset(
-                    AppLogoImages.LogoTuba,
-                    width: screenWidth / 6,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: screenHeight * 0.018),
+              padding: EdgeInsets.only(top: screenHeight * 0.15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    AppLogoImages.LogoMatchWorkText,
+                    AppAnimations.SplashLogo,
                     width: MediaQuery.of(context).size.width,
                     height: screenHeight / 2,
-                  ),
+                  )
                 ],
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: screenHeight * 0.28),
+              padding: EdgeInsets.only(top: screenHeight * 0.23),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -145,5 +134,11 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Never called
+    super.dispose();
   }
 }

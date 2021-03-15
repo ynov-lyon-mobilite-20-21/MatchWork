@@ -12,18 +12,24 @@ class SignUpViewModel extends BaseModel {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmationController = TextEditingController();
+  bool isAccepted = false;
 
   SignUpViewModel({@required AuthenticationService authenticationService})
       : _authenticationService = authenticationService;
 
   Future<bool> signUp() async {
-    busy = true;
-    error = await _authenticationService.registrationWithEmailAndPassword(
-        email: emailController.text.toLowerCase(),
-        password: passwordController.text,
-        firstName: firstNameController.text.toLowerCase(),
-        name: nameController.text.toLowerCase());
-    busy = false;
+    if (isAccepted) {
+      busy = true;
+      error = await _authenticationService.registrationWithEmailAndPassword(
+          email: emailController.text.toLowerCase(),
+          password: passwordController.text,
+          firstName: firstNameController.text.toLowerCase(),
+          name: nameController.text.toLowerCase());
+      busy = false;
+    } else {
+      error = "Veuillez accepter les conditions générales d'utilisations";
+    }
+
     return error == null;
   }
 
@@ -48,5 +54,10 @@ class SignUpViewModel extends BaseModel {
     return errorMessage != null
         ? errorMessage
         : FormValidators.isSameValue(passwordController.text, confirmation);
+  }
+
+  void acceptTerms(bool value) {
+    isAccepted = value;
+    notifyListeners();
   }
 }

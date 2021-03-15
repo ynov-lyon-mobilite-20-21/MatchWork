@@ -38,9 +38,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
   Widget build(BuildContext context) {
     final Map<int, DrawerOptions> _drawerOption = {
       TUTORIAL: DrawerOptions(
-          iconPath: AppIcons.Tutorial,
-          title: TutorialTitle,
-          iconSize: 25),
+          iconPath: AppIcons.Tutorial, title: TutorialTitle, iconSize: 25),
       SETTINGS:
           DrawerOptions(iconPath: AppIcons.Settings, title: SettingsTitle),
       EDIT_PROFILE: DrawerOptions(

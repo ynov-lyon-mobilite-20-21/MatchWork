@@ -57,6 +57,18 @@ class TchatModel extends BaseModel {
   }
 
   bool isConversationToDisplay(Conversation conversation) {
+    bool isDeleted = false;
+    conversation.isDeletedList?.forEach((element) {
+      ParticipantInfoConversation participantInfo =
+          ParticipantInfoConversation.fromJson(element);
+      if (participantInfo.userUid == _authenticationService.currentUser.uid) {
+        isDeleted = true;
+      }
+    });
+
+    if (isDeleted) {
+      return false;
+    }
     if (searchText.isNotEmpty) {
       return conversation.caller
           .displayName()
@@ -64,6 +76,18 @@ class TchatModel extends BaseModel {
           .contains(searchText.toUpperCase());
     }
     return true;
+  }
+
+  Future<String> removeConversation(
+      {@required Conversation conversation}) async {
+    bool success = await _conversationRepository.removeConversation(
+        conversation: conversation,
+        currentUserUid: _authenticationService.currentUser.uid);
+    if (success) {
+      return "Conversation supprimée";
+    } else {
+      return "Une erreur s'est produite";
+    }
   }
 
   @override

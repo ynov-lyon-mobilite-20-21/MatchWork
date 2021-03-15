@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 
 class ImagesPath {
   static const String RootPath = "assets/images/";
+  static const String AnimationsRootPath = "assets/animations/";
+
   static const String IconsPath = "${RootPath}icons/";
   static const String BackgroundsPath = "${RootPath}background/";
   static const String LogosPath = "${RootPath}logo/";
   static const String CarouselPath = "${RootPath}tuto/";
+  static const String GifAnimationPath = "${AnimationsRootPath}gifs/";
+  static const String JsonAnimationPath = "${AnimationsRootPath}jsons/";
 }
 
 class RoutePath {
@@ -32,7 +36,12 @@ class AppColors {
 }
 
 class AppBackgroundImages {
-  static const appBackgroundImages = [BackgroundSplashScreen, BackgroundLoginLight, BackgroundLoginDark];
+  static const appBackgroundImages = [
+    BackgroundSplashScreen,
+    BackgroundLoginLight,
+    BackgroundLoginDark,
+    BackgroundHomeDark
+  ];
 
   static const BackgroundSplashScreen =
       "${ImagesPath.BackgroundsPath}background_splashscreen.png";
@@ -40,7 +49,8 @@ class AppBackgroundImages {
       "${ImagesPath.BackgroundsPath}background_connexion_day.png";
   static const BackgroundLoginDark =
       "${ImagesPath.BackgroundsPath}background_connexion_night.png";
-
+  static const BackgroundHomeDark =
+      "${ImagesPath.BackgroundsPath}fond_home.png";
 }
 
 class AppLogoImages {
@@ -51,8 +61,9 @@ class AppLogoImages {
     LogoTuba,
     LogoMatchWork,
     LogoMatchWorkText,
+    LogoMatchWorkTextTuba,
     LogoGoogle,
-    LogoLinkedIn,
+    LogoApple,
     LogoMatchWorkBlue
   ];
 
@@ -63,13 +74,20 @@ class AppLogoImages {
   static const LogoTuba = "${ImagesPath.LogosPath}logo_tuba.png";
   static const LogoMatchWork = "${ImagesPath.LogosPath}splash.png";
   static const LogoMatchWorkText = "${ImagesPath.LogosPath}logo_text_below.png";
+  static const LogoMatchWorkTextTuba =
+      "${ImagesPath.LogosPath}logo_assembler.png";
   static const LogoGoogle = "${ImagesPath.LogosPath}google_logo.png";
-  static const LogoLinkedIn = "${ImagesPath.LogosPath}linkedin_logo.png";
+  static const LogoApple = "${ImagesPath.LogosPath}apple_logo.png";
   static const LogoMatchWorkBlue = "${ImagesPath.LogosPath}blue_logo.jpg";
 }
 
 class AppImages {
-  static const appImages = [UnknownUser, WelcomeWhite, WelcomeBlue, ProfilBannere];
+  static const appImages = [
+    UnknownUser,
+    WelcomeWhite,
+    WelcomeBlue,
+    ProfilBannere
+  ];
 
   static const ProfilBannere =
       "${ImagesPath.BackgroundsPath}banniere_profil1.png";
@@ -120,4 +138,10 @@ class AppCarouselImage {
   static const ThirdTutoImage = "${ImagesPath.CarouselPath}tuto_3.png";
   static const FourTutoImage = "${ImagesPath.CarouselPath}tuto_4.png";
   static const FiveTutoImage = "${ImagesPath.CarouselPath}tuto_5.png";
+}
+
+class AppAnimations {
+  static const Loader = "${ImagesPath.GifAnimationPath}loading.gif";
+  static const SplashLogo = "${ImagesPath.GifAnimationPath}splashLogo.gif";
+  static const SplashJsonLogo = "${ImagesPath.JsonAnimationPath}splash.json";
 }
