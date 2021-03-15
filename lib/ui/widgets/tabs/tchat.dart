@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/user.dart';
@@ -34,24 +34,23 @@ class _TchatState extends State<Tchat> {
         builder: (context, model, widget) => Column(
               children: [
                 SearchBarWidget(
-                        primaryColor: theme.focusColor,
-                        secondColor: theme.textTheme.caption.color,
-                        controller: model.searchController,
-                        onChanged: (value) => model.onChangeSearch(),
-                        search: () => model.search().then((User user) {
-                          if (user != null) {
-                            Navigator.of(context).pushNamed(
-                                RoutePath.Conversation,
-                                arguments: user);
-                          } else {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  "Aucun utilisateur trouvé avec cette adresse mail",
-                                  style: theme.textTheme.caption),
-                            ));
-                          }
-                        }),
-                      ),
+                  primaryColor: theme.focusColor,
+                  secondColor: theme.textTheme.caption.color,
+                  controller: model.searchController,
+                  onChanged: (value) => model.onChangeSearch(),
+                  search: () => model.search().then((User user) {
+                    if (user != null) {
+                      Navigator.of(context)
+                          .pushNamed(RoutePath.Conversation, arguments: user);
+                    } else {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            "Aucun utilisateur trouvé avec cette adresse mail",
+                            style: theme.textTheme.caption),
+                      ));
+                    }
+                  }),
+                ),
                 Expanded(
                   child: StreamBuilder<List<Conversation>>(
                     stream: model.outConversations,
