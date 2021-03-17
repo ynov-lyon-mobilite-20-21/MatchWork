@@ -20,8 +20,6 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context).getTheme();
-
     return BaseWidget<SignInViewModel>(
       model: SignInViewModel(
           authenticationService: Provider.of<AuthenticationService>(context)),
@@ -138,38 +136,32 @@ class _SignInViewState extends State<SignInView> {
                                         ),
                                 ],
                               ),
-                            ),
+                              Text(
+                                "Pas encore de compte?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16.0,
+                                    color: Colors.black54),
+                              ),
+                              InkWell(
+                                onTap: () => Navigator.of(context)
+                                    .pushReplacementNamed(RoutePath.Register),
+                                child: Text(
+                                  "Inscrivez-vous",
+                                  style: TextStyle(
+                                      color: Theme.of(context).indicatorColor),
+                                ),
+                              )
+                            ],
                           ),
-                          Visibility(
-                            visible: KeyboardUtils.isHidden(context),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  "Pas encore de compte?",
-                                  style: theme.textTheme.subtitle1,
-                                ),
-                                InkWell(
-                                  onTap: () => Navigator.of(context)
-                                      .pushReplacementNamed(RoutePath.Register),
-                                  child: Text(
-                                    "Inscrivez-vous",
-                                    style: TextStyle(color: theme.accentColor),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

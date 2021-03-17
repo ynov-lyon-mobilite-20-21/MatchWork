@@ -19,9 +19,11 @@ class Tchat extends StatefulWidget {
 }
 
 class _TchatState extends State<Tchat> {
+
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -114,8 +116,6 @@ class _TchatState extends State<Tchat> {
 
 class ConversationWidget extends StatefulWidget {
   final Conversation conversation;
-
-  final Function(DismissDirection direction) onDelete;
   final theme;
 
   const ConversationWidget(
@@ -223,8 +223,12 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Container(
+              color: Colors.grey[400],
+              height: 1.0,
+            )
+          ],
         ),
       ),
     );

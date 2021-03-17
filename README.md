@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/ynov-lyon-mobilite-20-21/MatchWork/blob/dev/lib/images/logo/blue_logo.jpg" alt="Match Work logo" width="500" height="500">
+<img src="https://github.com/ynov-lyon-mobilite-20-21/MatchWork/blob/main/assets/images/logo/splash.png" alt="Match Work logo" width="400" height="400">
 </p>
 
 # Match Work :iphone:
@@ -10,6 +10,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.4-7910E2?style=for-the-badge&logo=appveyor)](https://kotlinlang.org/releases.html) 
 [![Swift](https://img.shields.io/badge/Swift-10.2-F0F0F0?style=for-the-badge&logo=appveyor)](https://developer.apple.com/documentation/xcode-release-notes/swift-5-release-notes-for-xcode-10_2) 
 [![Firebase](https://img.shields.io/badge/Firebase-26.0.0-FA9831?style=for-the-badge&logo=appveyor)](https://firebase.google.com/support/releases) 
+![Build and Release Apps](https://github.com/ynov-lyon-mobilite-20-21/MatchWork/workflows/Build%20and%20Release%20Apps/badge.svg)
 
 
 ## Table of contents

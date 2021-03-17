@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/chat_message.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/linkedin_utils.dart';
 import 'package:match_work/core/viewmodels/views/conversation_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -29,69 +33,64 @@ class _ConversationViewState extends State<ConversationView> {
         model.listenMessageStream();
         model.listenConversationStream();
       },
-      builder: (context, model, widget) => Theme(
-        data: theme,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Row(
-              children: [
-                ProfilePictureWidget(
-                  path: model.caller.pictureUrl,
-                  radius: 15.0,
-                  backgroundColor: Colors.grey,
-                  borderThickness: 1.5,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  model.caller.displayName(),
-                  style: theme.textTheme.headline4,
-                )
-              ],
-            ),
-          ),
-          body: Column(
+      builder: (context, model, widget) => Scaffold(
+        appBar: AppBar(
+          title: Row(
             children: [
-              Expanded(
-                  child: Container(
-                child: StreamBuilder(
-                  stream: model.outMessages,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError)
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    if (snapshot.hasData) {
-                      List<ChatMessage> messages = [
-                        ...model.sendingMessages.reversed,
-                        ...snapshot.data
-                      ];
-                      return ListView.builder(
-                          padding: EdgeInsets.only(bottom: 16, top: 16),
-                          reverse: true,
-                          itemCount: messages.length,
-                          itemBuilder: (_, int index) {
-                            ChatMessage message = messages[index];
-                            return Opacity(
-                              opacity:
-                                  index < messages.length - snapshot.data.length
-                                      ? .5
-                                      : 1,
-                              child: chatMessage(
-                                  message,
-                                  message.id == model.lastMessageRead?.id,
-                                  theme),
-                            );
-                          });
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                ),
-              )),
-              chatBar(model.controller, () => model.sendMessage(), theme)
+              ProfilePictureWidget(
+                path: model.caller.pictureUrl,
+                radius: 15.0,
+                backgroundColor: Colors.grey,
+                borderThickness: 1.5,
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                model.caller.displayName(),
+                style: Theme.of(context).textTheme.headline4,
+              )
             ],
           ),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+                child: Container(
+              child: StreamBuilder(
+                stream: model.outMessages,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError)
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  if (snapshot.hasData) {
+                    List<ChatMessage> messages = [
+                      ...model.sendingMessages.reversed,
+                      ...snapshot.data
+                    ];
+                    return ListView.builder(
+                        padding: EdgeInsets.only(bottom: 16, top: 16),
+                        reverse: true,
+                        itemCount: messages.length,
+                        itemBuilder: (_, int index) {
+                          ChatMessage message = messages[index];
+                          return Opacity(
+                            opacity:
+                                index < messages.length - snapshot.data.length
+                                    ? .5
+                                    : 1,
+                            child: chatMessage(message,
+                                message.id == model.lastMessageRead?.id, theme),
+                          );
+                        });
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            )),
+            chatBar(model.controller, () => model.sendMessage(), theme)
+          ],
         ),
       ),
     );
