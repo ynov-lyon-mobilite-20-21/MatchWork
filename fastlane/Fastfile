@@ -1,0 +1,20 @@
+fastlane_version '2.53.1'
+
+platform :ios do
+	desc 'Build the prod iOS application.'
+	lane :prod do |options|
+		match(type: 'appstore')
+		update_code_signing_settings(
+	        use_automatic_signing: false,
+	        path: "./ios/Runner.xcodeproj"
+		)
+		build_app(
+			workspace: "./ios/Runner.xcworkspace",
+			scheme: "Runner",
+			clean: true,
+			export_method: "app-store"
+        )
+		pilot(skip_waiting_for_build_processing:true)
+	end
+end
+
