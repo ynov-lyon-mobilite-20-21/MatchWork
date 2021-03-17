@@ -3,8 +3,8 @@ import 'package:match_work/core/models/chat_message.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/views/conversation_view_model.dart';
-import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class ConversationView extends StatefulWidget {
 class _ConversationViewState extends State<ConversationView> {
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context).getTheme();
+    var theme = Theme.of(context);
 
     return BaseWidget<ConversationViewModel>(
       model: ConversationViewModel(
@@ -84,7 +84,9 @@ class _ConversationViewState extends State<ConversationView> {
                           });
                     }
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: LoaderWidget(
+                        opacity: 0.1,
+                      ),
                     );
                   },
                 ),

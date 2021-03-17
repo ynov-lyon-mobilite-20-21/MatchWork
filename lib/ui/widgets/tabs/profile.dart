@@ -17,8 +17,12 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context).getTheme();
 
-    //var textstyle = TextStyle(color : theme.text)
     return Scaffold(
+        appBar: AppBarWidget.showAppBar(
+            context: context,
+            isVisible: true,
+            iconColor: theme.iconTheme.color,
+            color: theme.textTheme.headline2.color),
         backgroundColor: theme.scaffoldBackgroundColor,
         body: SingleChildScrollView(
             child: Stack(children: <Widget>[
@@ -30,8 +34,6 @@ class _ProfileViewState extends State<ProfileView> {
                     image: AssetImage(AppImages.ProfilBannere),
                     fit: BoxFit.cover)),
           ),
-          AppBarWidget.showAppBar(context, "Profil", theme.iconTheme.color,
-              theme.textTheme.headline2.color),
           Container(
               child: Column(children: <Widget>[
             Padding(

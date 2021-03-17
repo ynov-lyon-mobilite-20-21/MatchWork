@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     DeviceBarUtils.showStatusBar(false);
-     _loadWidget();
+    _loadWidget();
     _initPackageInfo();
   }
 

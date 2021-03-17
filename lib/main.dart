@@ -20,7 +20,6 @@ void main() async {
   ]);
 
   DeviceBarUtils.changeStatusBarColor(AppColors.StatusBarColor);
-  DeviceBarUtils.showStatusBar(true);
 
   runApp(MyApp());
 }

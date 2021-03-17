@@ -7,6 +7,7 @@ import 'package:match_work/core/utils/date_utils.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/app_bar_widget.dart';
 import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
@@ -29,86 +30,86 @@ class _TchatState extends State<Tchat> {
     var theme = Provider.of<ThemeProvider>(context).getTheme();
 
     return BaseWidget<TchatModel>(
-        model: TchatModel(authenticationService: Provider.of(context)),
-        onModelReady: (model) => model.listenConversationsStream(),
-        builder: (context, model, widget) => Column(
-              children: [
-                SearchBarWidget(
-                  primaryColor: theme.focusColor,
-                  secondColor: theme.textTheme.caption.color,
-                  controller: model.searchController,
-                  onChanged: (value) => model.onChangeSearch(),
-                  search: () => model.search().then((User user) {
-                    if (user != null) {
-                      Navigator.of(context)
-                          .pushNamed(RoutePath.Conversation, arguments: user);
-                    } else {
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            "Aucun utilisateur trouvé avec cette adresse mail",
-                            style: theme.textTheme.caption),
-                      ));
-                    }
-                  }),
-                ),
-                Expanded(
-                  child: StreamBuilder<List<Conversation>>(
-                    stream: model.outConversations,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<Conversation> conversations = [...snapshot.data];
-                        conversations.sort((Conversation a, Conversation b) => b
-                            .lastMessageCreatedAt
-                            .compareTo(a.lastMessageCreatedAt));
-                        return ListView(
-                          children: [
-                            ...conversations
-                                .where((element) =>
-                                    element.isRead == false &&
-                                    model.isConversationToDisplay(element))
-                                .map((Conversation conversation) =>
-                                    ConversationWidget(
-                                      conversation: conversation,
-                                      theme: theme,
-                                      onDelete: (direction) async {
-                                        String message =
-                                            await model.removeConversation(
-                                                conversation: conversation);
-                                        Scaffold.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(message,
-                                              style: theme.textTheme.caption),
-                                        ));
-                                      },
-                                    )),
-                            ...conversations
-                                .where((element) =>
-                                    element.isRead == true &&
-                                    model.isConversationToDisplay(element))
-                                .map((Conversation conversation) =>
-                                    ConversationWidget(
-                                      conversation: conversation,
-                                      theme: theme,
-                                      onDelete: (direction) async {
-                                        String message =
-                                            await model.removeConversation(
-                                                conversation: conversation);
-                                        Scaffold.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(message,
-                                              style: theme.textTheme.caption),
-                                        ));
-                                      },
-                                    )),
-                          ],
-                        );
-                      }
-                      return LoaderWidget(opacity: 0.0);
-                    },
-                  ),
-                ),
-              ],
-            ));
+      model: TchatModel(authenticationService: Provider.of(context)),
+      onModelReady: (model) => model.listenConversationsStream(),
+      builder: (context, model, widget) => Column(
+        children: [
+          AppBarWidget.showAppBar(
+              context: context, isVisible: false, color: theme.backgroundColor),
+          SearchBarWidget(
+            primaryColor: theme.focusColor,
+            secondColor: theme.textTheme.caption.color,
+            controller: model.searchController,
+            onChanged: (value) => model.onChangeSearch(),
+            search: () => model.search().then((User user) {
+              if (user != null) {
+                Navigator.of(context)
+                    .pushNamed(RoutePath.Conversation, arguments: user);
+              } else {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      "Aucun utilisateur trouvé avec cette adresse mail",
+                      style: theme.textTheme.caption),
+                ));
+              }
+            }),
+          ),
+          Expanded(
+            child: StreamBuilder<List<Conversation>>(
+              stream: model.outConversations,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Conversation> conversations = [...snapshot.data];
+                  conversations.sort((Conversation a, Conversation b) =>
+                      b.lastMessageCreatedAt.compareTo(a.lastMessageCreatedAt));
+                  return ListView(
+                    children: [
+                      ...conversations
+                          .where((element) =>
+                              element.isRead == false &&
+                              model.isConversationToDisplay(element))
+                          .map((Conversation conversation) =>
+                              ConversationWidget(
+                                conversation: conversation,
+                                theme: theme,
+                                onDelete: (direction) async {
+                                  String message =
+                                      await model.removeConversation(
+                                          conversation: conversation);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(message,
+                                        style: theme.textTheme.caption),
+                                  ));
+                                },
+                              )),
+                      ...conversations
+                          .where((element) =>
+                              element.isRead == true &&
+                              model.isConversationToDisplay(element))
+                          .map((Conversation conversation) =>
+                              ConversationWidget(
+                                conversation: conversation,
+                                theme: theme,
+                                onDelete: (direction) async {
+                                  String message =
+                                      await model.removeConversation(
+                                          conversation: conversation);
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(message,
+                                        style: theme.textTheme.caption),
+                                  ));
+                                },
+                              )),
+                    ],
+                  );
+                }
+                return LoaderWidget(opacity: 0.0);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
