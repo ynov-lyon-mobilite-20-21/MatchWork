@@ -203,27 +203,25 @@ Widget _formWidget(
           SizedBox(
             height: 20.0,
           ),
-          model.busy
-              ? CircularProgressIndicator()
-              : RoundedButton(
-                  onTap: () {
-                    if (model.formKey.currentState.validate()) {
-                      model.signUp().then((bool success) {
-                        if (success) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              RoutePath.Home, (route) => false);
-                        } else {
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content: Text(model.error),
-                          ));
-                        }
-                      });
-                    }
-                  },
-                  color: AppColors.CircleAvatarBorderColor,
-                  text: "Enregistrer",
-                  textColor: Colors.white,
-                ),
+          RoundedButton(
+            onTap: () {
+              if (model.formKey.currentState.validate()) {
+                model.signUp().then((bool success) {
+                  if (success) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        RoutePath.Home, (route) => false);
+                  } else {
+                    scaffoldKey.currentState.showSnackBar(SnackBar(
+                      content: Text(model.error),
+                    ));
+                  }
+                });
+              }
+            },
+            color: AppColors.CircleAvatarBorderColor,
+            text: "Enregistrer",
+            textColor: Colors.white,
+          ),
         ],
       ),
     );

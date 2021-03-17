@@ -6,9 +6,12 @@ import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_in_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'home_view.dart';
 
 class SignInView extends StatefulWidget {
   @override
@@ -20,6 +23,8 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ThemeProvider>(context).getTheme();
+
     return BaseWidget<SignInViewModel>(
       model: SignInViewModel(
           authenticationService: Provider.of<AuthenticationService>(context)),
@@ -111,57 +116,61 @@ class _SignInViewState extends State<SignInView> {
                                   SizedBox(
                                     height: 20.0,
                                   ),
-                                  model.busy
-                                      ? CircularProgressIndicator()
-                                      : RoundedButton(
-                                          onTap: () {
-                                            if (model.formKey.currentState
-                                                .validate()) {
-                                              model
-                                                  .signIn()
-                                                  .then((bool success) {
-                                                if (success) {
-                                                  Navigator.of(context)
-                                                      .pushNamedAndRemoveUntil(
-                                                          RoutePath.Home,
-                                                          (route) => false);
-                                                }
-                                              });
-                                            }
-                                          },
-                                          color:
-                                              AppColors.CircleAvatarBorderColor,
-                                          text: "Connexion",
-                                          textColor: Colors.white,
-                                        ),
+                                  RoundedButton(
+                                    onTap: () {
+                                      if (model.formKey.currentState
+                                          .validate()) {
+                                        model.signIn().then((bool success) {
+                                          if (success) {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        HomeView()));
+                                          }
+                                        });
+                                      }
+                                    },
+                                    color: AppColors.CircleAvatarBorderColor,
+                                    text: "Connexion",
+                                    textColor: Colors.white,
+                                  ),
                                 ],
                               ),
-                              Text(
-                                "Pas encore de compte?",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 16.0,
-                                    color: Colors.black54),
-                              ),
-                              InkWell(
-                                onTap: () => Navigator.of(context)
-                                    .pushReplacementNamed(RoutePath.Register),
-                                child: Text(
-                                  "Inscrivez-vous",
-                                  style: TextStyle(
-                                      color: Theme.of(context).indicatorColor),
-                                ),
-                              )
-                            ],
+                            ),
                           ),
-                        )
-                      ],
-                    )
-                  ],
+                          Visibility(
+                            visible: KeyboardUtils.isHidden(context),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Text(
+                                  "Pas encore de compte?",
+                                  style: theme.textTheme.subtitle1,
+                                ),
+                                InkWell(
+                                  onTap: () => Navigator.of(context)
+                                      .pushReplacementNamed(RoutePath.Register),
+                                  child: Text(
+                                    "Inscrivez-vous",
+                                    style: TextStyle(color: theme.accentColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            )
-          ],
+              model.busy ? LoaderWidget() : Container()
+            ],
+          ),
         ),
       ),
     );

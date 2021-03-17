@@ -12,19 +12,16 @@ import 'home_view.dart';
 final List<String> imgList = AppCarouselImage.carouselImages;
 
 class TutorialView extends StatefulWidget {
-
   @override
   _TutorialViewState createState() => _TutorialViewState();
 }
 
 class _TutorialViewState extends State<TutorialView> {
-
   @override
   Widget build(BuildContext context) {
-  DeviceBarUtils.changeStatusBarColor(Colors.transparent);
+    DeviceBarUtils.changeStatusBarColor(Colors.transparent);
 
     final double height = MediaQuery.of(context).size.height;
-    int _current = 0;
 
     return Container(
       child: Stack(
@@ -36,9 +33,7 @@ class _TutorialViewState extends State<TutorialView> {
                 enableInfiniteScroll: true,
                 enlargeCenterPage: false,
                 onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
+                  setState(() {});
                 }),
             items: imgList
                 .map((image) => Container(
@@ -94,7 +89,7 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
                       context,
                       listen: false)
                   .isUserLoggedIn();
-              if(isAuthenticated) {
+              if (isAuthenticated) {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

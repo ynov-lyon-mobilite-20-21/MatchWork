@@ -7,7 +7,6 @@ import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/sign_in_view.dart';
 import 'package:match_work/ui/views/sign_up_view.dart';
 import 'package:match_work/ui/views/tutorial_view.dart';
-import 'package:match_work/ui/widgets/tabs/profile.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {

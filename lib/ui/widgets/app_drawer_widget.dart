@@ -26,7 +26,6 @@ class AppDrawerWidget extends StatefulWidget {
 
 class _AppDrawerWidgetState extends State<AppDrawerWidget> {
   bool isDarkModeOn;
-  static double iconSize = 40.0;
 
   @override
   void initState() {

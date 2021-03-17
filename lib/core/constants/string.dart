@@ -5,3 +5,6 @@ const String LogoutTitle = "Déconnexion";
 const String SettingsTitle = "Paramètres";
 const String TutorialTitle = "Tutoriel";
 const String CguTitle = "CGU";
+const String ProfiNavbarTitlel = "Profile";
+const String SwipeNavBarTitle = "Swipe";
+const String ChatNavBarTitle = "Tchat";
