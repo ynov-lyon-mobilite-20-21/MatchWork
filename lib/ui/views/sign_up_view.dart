@@ -6,6 +6,7 @@ import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_up_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return BaseWidget<SignUpViewModel>(
       model: SignUpViewModel(
           authenticationService: Provider.of<AuthenticationService>(context)),
@@ -130,7 +132,6 @@ Widget _formWidget(
         children: [
           TextFieldWidget(
             controller: model.nameController,
-            color: Colors.white,
             label: 'Nom',
             validation: (value) => model.nameValidator(value),
           ),
@@ -139,7 +140,6 @@ Widget _formWidget(
           ),
           TextFieldWidget(
             controller: model.firstNameController,
-            color: Colors.white,
             label: 'Prénom',
             validation: (value) => model.nameValidator(value),
           ),
@@ -148,7 +148,6 @@ Widget _formWidget(
           ),
           TextFieldWidget(
             controller: model.emailController,
-            color: Colors.white,
             label: 'Email',
             inputType: TextInputType.emailAddress,
             validation: (value) => model.emailValidator(value),
@@ -158,7 +157,6 @@ Widget _formWidget(
           ),
           TextFieldWidget(
             controller: model.passwordController,
-            color: Colors.white,
             isObscureText: true,
             label: 'Mot de passe',
             validation: (value) => model.passwordValidator(value),
@@ -168,7 +166,6 @@ Widget _formWidget(
           ),
           TextFieldWidget(
             controller: model.confirmationController,
-            color: Colors.white,
             isObscureText: true,
             label: 'Confirmation du mot de passe',
             validation: (value) => model.confirmationValidator(value),

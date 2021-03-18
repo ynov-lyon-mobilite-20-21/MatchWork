@@ -20,6 +20,7 @@ class _HomeViewState extends State<HomeView> {
 
   setUi() {
     DeviceBarUtils.showStatusBar(true);
+    DeviceBarUtils.changeStatusBarColor(AppColors.StatusBarColor);
   }
 
   @override
