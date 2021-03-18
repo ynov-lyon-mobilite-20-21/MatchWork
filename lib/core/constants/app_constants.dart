@@ -7,7 +7,7 @@ class ImagesPath {
   static const String IconsPath = "${RootPath}icons/";
   static const String BackgroundsPath = "${RootPath}background/";
   static const String LogosPath = "${RootPath}logo/";
-  static const String CarouselPath = "${RootPath}tuto/";
+  static const String OnBoardingPath = "${RootPath}onboarding/";
   static const String GifAnimationPath = "${AnimationsRootPath}gifs/";
   static const String JsonAnimationPath = "${AnimationsRootPath}jsons/";
 }
@@ -107,7 +107,7 @@ class AppIcons {
     Logout,
     BrightnessMode,
     EditProfile,
-    Tutorial,
+    OnBoarding,
     Settings
   ];
 
@@ -120,24 +120,24 @@ class AppIcons {
   static const Logout = "${ImagesPath.IconsPath}icon_deco.png";
   static const BrightnessMode = "${ImagesPath.IconsPath}icon_mode.png";
   static const EditProfile = "${ImagesPath.IconsPath}icon_modif.png";
-  static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
+  static const OnBoarding = "${ImagesPath.IconsPath}icon_tuto.png";
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
 }
 
-class AppCarouselImage {
-  static const carouselImages = [
-    FirstTutoImage,
-    SecondTutoImage,
-    ThirdTutoImage,
-    FourTutoImage,
-    FiveTutoImage
+class AppOnBoardingImages {
+  static const onBoardingImages = [
+    FirstOnBoardingImage,
+    SecondOnBoardingImage,
+    ThirdOnBoardingImage,
+    FourOnBoardingImage,
+    FiveOnBoardingImage
   ];
 
-  static const FirstTutoImage = "${ImagesPath.CarouselPath}tuto_1.png";
-  static const SecondTutoImage = "${ImagesPath.CarouselPath}tuto_2.png";
-  static const ThirdTutoImage = "${ImagesPath.CarouselPath}tuto_3.png";
-  static const FourTutoImage = "${ImagesPath.CarouselPath}tuto_4.png";
-  static const FiveTutoImage = "${ImagesPath.CarouselPath}tuto_5.png";
+  static const FirstOnBoardingImage = "${ImagesPath.OnBoardingPath}tuto_1.png";
+  static const SecondOnBoardingImage = "${ImagesPath.OnBoardingPath}tuto_2.png";
+  static const ThirdOnBoardingImage = "${ImagesPath.OnBoardingPath}tuto_3.png";
+  static const FourOnBoardingImage = "${ImagesPath.OnBoardingPath}tuto_4.png";
+  static const FiveOnBoardingImage = "${ImagesPath.OnBoardingPath}tuto_5.png";
 }
 
 class AppAnimations {

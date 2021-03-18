@@ -100,7 +100,7 @@ flutter:
     - assets/images/icons/
     - assets/images/logo/
     - assets/images/background/
-    - assets/images/tuto/
+    - assets/images/onboarding/
     - assets/animations/
     - assets/animations/gifs/
     - assets/animations/jsons/

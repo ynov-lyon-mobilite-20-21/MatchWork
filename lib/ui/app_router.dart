@@ -6,7 +6,7 @@ import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/sign_in_view.dart';
 import 'package:match_work/ui/views/sign_up_view.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
+import 'package:match_work/ui/views/on_boarding_view.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,7 +20,7 @@ class AppRouter {
       case RoutePath.Register:
         return MaterialPageRoute(builder: (_) => SignUpView());
       case RoutePath.Tutorial:
-        return MaterialPageRoute(builder: (_) => TutorialView());
+        return MaterialPageRoute(builder: (_) => OnBoardingView());
       case RoutePath.Conversation:
         User caller = settings.arguments as User;
         return MaterialPageRoute(

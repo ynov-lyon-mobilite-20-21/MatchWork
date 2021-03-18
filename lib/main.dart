@@ -8,6 +8,7 @@ import 'package:match_work/ui/app_router.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
+import 'package:match_work/ui/views/on_boarding_view.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_constants.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               theme: model.getTheme(),
               debugShowCheckedModeBanner: false,
-              home: SplashScreen(),
+              home: OnBoardingView(),
               onGenerateRoute: AppRouter.generateRoute,
             ),
           )),

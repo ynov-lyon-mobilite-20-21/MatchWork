@@ -11,7 +11,7 @@ class ImageLoader {
     AppLogoImages.appIconsLogo.forEach((element) {
       _images.add(Image.asset(element));
     });
-    AppCarouselImage.carouselImages.forEach((element) {
+    AppOnBoardingImages.onBoardingImages.forEach((element) {
       _images.add(Image.asset(element));
     });
     AppIcons.appIcons.forEach((element) {
