@@ -14,15 +14,15 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  List<String> imgList = AppOnBoardingImages.onBoardingImages;
+  List<String> onBoardingImages = AppOnBoardingImages.onBoardingImages;
 
   PageController _pageController = PageController();
   int currentPage = 0;
   bool isFinalPageReached = false;
 
   void getChangedPageAndMoveBar(int page) {
-    if (page >= imgList.length) {
-      page = page % imgList.length;
+    if (page >= onBoardingImages.length) {
+      page = page % onBoardingImages.length;
       isFinalPageReached = true;
     }
 
@@ -33,29 +33,26 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceBarUtils.changeStatusBarColor(Colors.transparent);
-
+    DeviceBarUtils.showStatusBar(false);
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
         Container(
-            height: double.infinity,
-            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (page) => getChangedPageAndMoveBar(page),
                 itemBuilder: (context, position) {
-                  return Scaffold(
-                    body: Image.asset(
-                      imgList[currentPage],
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                      alignment: Alignment.center,
+                  return Container(
+                    child: Image.asset(
+                      onBoardingImages[currentPage],
+                      fit: BoxFit.fill,
                     ),
                   );
                 })),
-        imgList.last == imgList[currentPage] || isFinalPageReached
+        onBoardingImages.last == onBoardingImages[currentPage] ||
+                isFinalPageReached
             ? showContinueButton(context)
             : showDotIndicator(context)
       ],
@@ -64,7 +61,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   DotIndicatorWidget showDotIndicator(BuildContext context) {
     return DotIndicatorWidget(
-      dotLenght: imgList.length,
+      dotLenght: onBoardingImages.length,
       activePageIndex: currentPage,
       dotActiveColor: AppColors.AccentColor,
       dotInactiveColor: Colors.grey,
