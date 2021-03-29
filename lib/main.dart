@@ -7,7 +7,11 @@ import 'package:match_work/provider_setup.dart';
 import 'package:match_work/ui/app_router.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+<<<<<<< HEAD
 import 'package:match_work/ui/views/onboarding_view.dart';
+=======
+import 'package:match_work/ui/views/qr_code_scanner_resullt_view.dart';
+>>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
 import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +42,11 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               theme: model.getTheme(),
               debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
               home: OnBoardingView(),
+=======
+              home: QRcodeScanLauncherView(),
+>>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
               onGenerateRoute: AppRouter.generateRoute,
             ),
           )),
