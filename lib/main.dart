@@ -7,10 +7,12 @@ import 'package:match_work/provider_setup.dart';
 import 'package:match_work/ui/app_router.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/views/qr_code_scanner_resullt_view.dart';
 import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_constants.dart';
+import 'ui/views/qr_code_scan_launcher_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
             child: MaterialApp(
               theme: model.getTheme(),
               debugShowCheckedModeBanner: false,
-              home: SplashScreen(),
+              home: QRcodeScanLauncherView(),
               onGenerateRoute: AppRouter.generateRoute,
             ),
           )),

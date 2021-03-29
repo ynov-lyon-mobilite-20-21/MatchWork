@@ -42,7 +42,8 @@ class AppBackgroundImages {
     BackgroundSplashScreen,
     BackgroundLoginLight,
     BackgroundLoginDark,
-    BackgroundHomeDark
+    BackgroundHomeDark,
+    BackgroundQrCode
   ];
 
   static const BackgroundSplashScreen =
@@ -53,6 +54,8 @@ class AppBackgroundImages {
       "${ImagesPath.BackgroundsPath}background_connexion_night.png";
   static const BackgroundHomeDark =
       "${ImagesPath.BackgroundsPath}fond_home.png";
+  static const BackgroundQrCode =
+      "${ImagesPath.BackgroundsPath}background_qr_code.png";
 }
 
 class AppLogoImages {
@@ -90,7 +93,10 @@ class AppImages {
     WelcomeBlue,
     ProfilBannere,
     ProfilBannerDark,
-    ProfilBannerLight
+    ProfilBannerLight,
+    QrCodeSample,
+    QrCodeSuccess,
+    QrCodeFailed,
   ];
 
   static const ProfilBannere =
@@ -102,6 +108,9 @@ class AppImages {
       "${ImagesPath.RootPath}profil_rec_banner_light.png";
   static const ProfilBannerDark =
       "${ImagesPath.RootPath}profil_rec_banner_dark.png";
+  static const QrCodeSample = "${ImagesPath.RootPath}qr_code.png";
+  static const QrCodeSuccess = "${ImagesPath.RootPath}rond_good.png";
+  static const QrCodeFailed = "${ImagesPath.RootPath}rond_nogood.png";
 }
 
 class AppIcons {
