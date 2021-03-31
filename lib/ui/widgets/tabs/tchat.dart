@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/user.dart';
-import 'package:match_work/core/utils/date_utils.dart';
+import 'package:match_work/core/utils/date_utils.dart' as dateUtils;
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -221,9 +221,9 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                       ),
                     ),
                     Text(
-                      DateUtils.isToday(dateLastMessage)
-                          ? DateUtils.getHourFormat(dateLastMessage)
-                          : DateUtils.getDateFormat(dateLastMessage),
+                      dateUtils.DateUtils.isToday(dateLastMessage)
+                          ? dateUtils.DateUtils.getHourFormat(dateLastMessage)
+                          : dateUtils.DateUtils.getDateFormat(dateLastMessage),
                       style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],

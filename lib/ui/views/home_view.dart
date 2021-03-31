@@ -65,6 +65,16 @@ class _HomeViewState extends State<HomeView> {
                     label: SwipeNavBarTitle),
                 BottomNavigationBarItem(
                     icon: Image(
+                      image: AssetImage(AppIcons.InactiveSwipe),
+                      height: iconHeight,
+                    ),
+                    activeIcon: Image(
+                      image: AssetImage(AppIcons.ActiveSwipe),
+                      height: iconHeight,
+                    ),
+                    label: NewsNavBarTitle),
+                BottomNavigationBarItem(
+                    icon: Image(
                       image: AssetImage(AppIcons.InactiveChat),
                       height: iconHeight,
                     ),

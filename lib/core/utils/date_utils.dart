@@ -13,5 +13,5 @@ class DateUtils {
       DateFormat('dd/MM/yyyy').format(date);
 
   static String getHourFormat(DateTime date) =>
-      DateFormat('hh:mm').format(date);
+      DateFormat('HH:mm').format(date);
 }

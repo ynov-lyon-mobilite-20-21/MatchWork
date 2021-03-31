@@ -5,10 +5,7 @@ import 'package:match_work/core/constants/app_constants.dart';
 final ThemeData DarkThemeData = ThemeData(
     scaffoldBackgroundColor: AppColors.PrimaryColor,
     appBarTheme: AppBarTheme(color: AppColors.AppBarColor),
-    iconTheme: IconThemeData (
-      color: Colors.white,
-      size: 50.0
-    ),
+    iconTheme: IconThemeData(color: Colors.white, size: 50.0),
     canvasColor: AppColors.AppBarColor,
     focusColor: AppColors.AppBarColor,
     textTheme: TextTheme(
@@ -33,6 +30,7 @@ final ThemeData DarkThemeData = ThemeData(
         ),
         bodyText1: TextStyle(
           color: Colors.white,
+          fontSize: 14.0,
         ),
         bodyText2: TextStyle(
           color: Colors.white,
