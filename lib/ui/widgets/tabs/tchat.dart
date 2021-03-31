@@ -1,17 +1,17 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/user.dart';
-import 'package:match_work/core/utils/date_utils.dart' as dateUtils;
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/conversation_widget.dart';
 import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/match_request_widget.dart';
 import 'package:match_work/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';
-
-import '../profile_picture_widget.dart';
 
 class Tchat extends StatefulWidget {
   @override
@@ -53,6 +53,67 @@ class _TchatState extends State<Tchat> {
                         ));
                       }
                     }),
+                  ),
+                ),
+                Container(
+                  color: theme.bottomNavigationBarTheme.backgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ExpandablePanel(
+                      theme: ExpandableThemeData(
+                          expandIcon: Icons.keyboard_arrow_down,
+                          collapseIcon: Icons.keyboard_arrow_up,
+                          iconColor: theme.textTheme.headline4.color),
+                      header: Text("Nouveaux contacts",
+                          style: theme.textTheme.headline4
+                              .copyWith(fontSize: 18.0)),
+                      collapsed: Text(
+                        "3 demandes de connexion en attente",
+                        style:
+                            theme.textTheme.subtitle2.copyWith(fontSize: 14.0),
+                        softWrap: true,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      expanded: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            maxHeight:
+                                MediaQuery.of(context).size.height * 0.4),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: MatchRequestWidget(
+                                  user: User(
+                                      firstName: "prenom", lastName: "nom"),
+                                  accept: () => null,
+                                  reject: () => null,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: MatchRequestWidget(
+                                  user: User(
+                                      firstName: "prenom", lastName: "nom"),
+                                  accept: () => null,
+                                  reject: () => null,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: MatchRequestWidget(
+                                  user: User(
+                                      firstName: "prenom", lastName: "nom"),
+                                  accept: () => null,
+                                  reject: () => null,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -113,126 +174,5 @@ class _TchatState extends State<Tchat> {
                 ),
               ],
             ));
-  }
-}
-
-class ConversationWidget extends StatefulWidget {
-  final Conversation conversation;
-
-  final Function(DismissDirection direction) onDelete;
-  final theme;
-
-  const ConversationWidget(
-      {Key key,
-      @required this.conversation,
-      @required this.onDelete,
-      this.theme})
-      : super(key: key);
-
-  @override
-  _ConversationWidgetState createState() => _ConversationWidgetState();
-}
-
-class _ConversationWidgetState extends State<ConversationWidget> {
-  @override
-  Widget build(BuildContext context) {
-    DateTime dateLastMessage =
-        widget.conversation.lastMessageCreatedAt.toDate();
-    return Dismissible(
-      key: Key(widget.conversation.id),
-      background: Container(color: Colors.red),
-      direction: DismissDirection.horizontal,
-      confirmDismiss: (direction) async {
-        return await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Confirmation"),
-              content: const Text(
-                  "Voulez-vous vraiment supprimer cette conversation?"),
-              actions: <Widget>[
-                FlatButton(
-                    onPressed: () => Navigator.of(context).pop(true),
-                    child: const Text("Supprimer")),
-                FlatButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text("Annuler"),
-                ),
-              ],
-            );
-          },
-        );
-      },
-      onDismissed: widget.onDelete,
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(RoutePath.Conversation,
-              arguments: widget.conversation.caller);
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  children: [
-                    !widget.conversation.isRead &&
-                            widget.conversation.senderUid ==
-                                widget.conversation.caller.uid
-                        ? CircleAvatar(
-                            radius: 5.0,
-                            backgroundColor: Theme.of(context).indicatorColor,
-                          )
-                        : Container(
-                            width: 10.0,
-                          ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    ProfilePictureWidget(
-                      radius: 35.0,
-                      path: widget.conversation.caller.pictureUrl,
-                      borderThickness: 5.0,
-                      backgroundColor: Theme.of(context).indicatorColor,
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.conversation.caller.displayName(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4
-                                  .copyWith(fontWeight: FontWeight.normal),
-                              textScaleFactor: 1.3),
-                          Text(
-                            widget.conversation.lastMessageContent,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      dateUtils.DateUtils.isToday(dateLastMessage)
-                          ? dateUtils.DateUtils.getHourFormat(dateLastMessage)
-                          : dateUtils.DateUtils.getDateFormat(dateLastMessage),
-                      style: Theme.of(context).textTheme.subtitle2,
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
