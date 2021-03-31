@@ -48,15 +48,12 @@ dependencies:
   sign_in_with_apple: ^2.5.2
   crypto: ^2.1.5
   flutter_overlay_loader: ^0.0.2
-<<<<<<< HEAD
   image_picker: ^0.6.6+5
   firebase_storage: ^5.2.0
   html: ^0.15.0
   path_provider: ^1.6.28
   expandable: ^5.0.1
   flutter_pdfview: ^1.0.4
-=======
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
   flutter_barcode_scanner: ^1.0.2
 
 dev_dependencies:

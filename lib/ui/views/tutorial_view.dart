@@ -18,7 +18,6 @@ class TutorialView extends StatefulWidget {
   _TutorialViewState createState() => _TutorialViewState();
 }
 
-
 addStringToSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('isFirstLaunchSwipe', true);
@@ -84,7 +83,6 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
     var lastImage = widget.images.last;
     var _current = widget.images.indexOf(widget.currentImage);
     final double height = MediaQuery.of(context).size.height;
-    
 
     if (_current == widget.images.indexOf(lastImage) || isVisible) {
       isVisible = true;

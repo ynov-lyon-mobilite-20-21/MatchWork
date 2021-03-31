@@ -57,13 +57,9 @@ class QrCodeScannerSuccess extends StatelessWidget {
                       "go".toUpperCase(),
                       style: TextStyle(color: Colors.white),
                     ),
-<<<<<<< HEAD
                     onPressed: () => Navigator.of(context)
                         .pushNamedAndRemoveUntil(RoutePath.OnBoarding,
                             (Route<dynamic> route) => false),
-=======
-                    onPressed: () => {},
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
                     color: AppColors.AccentColor,
                   )),
             ])));

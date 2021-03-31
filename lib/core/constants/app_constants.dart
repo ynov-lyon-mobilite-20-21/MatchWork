@@ -22,12 +22,9 @@ class RoutePath {
   static const String Tchat = "tchat";
   static const String Profile = "profile";
   static const String Conversation = "conversation";
-<<<<<<< HEAD
   static const String EditProfile = "edit_profile";
   static const String Pdf = "pdf";
-=======
   static const QrScan = "qrCode";
->>>>>>> 9c9b6f6 ([Done] QrCode Scan)
 }
 
 class AppColors {
@@ -96,11 +93,8 @@ class AppImages {
     WelcomeWhite,
     WelcomeBlue,
     ProfilBannere,
-<<<<<<< HEAD
     ProfilBannerDark,
     ProfilBannerLight,
-=======
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
     QrCodeSample,
     QrCodeSuccess,
     QrCodeFailed,
@@ -111,13 +105,10 @@ class AppImages {
   static const UnknownUser = "${ImagesPath.RootPath}unknown_user.png";
   static const WelcomeWhite = "${ImagesPath.RootPath}welcome_white.png";
   static const WelcomeBlue = "${ImagesPath.RootPath}welcome_blue.png";
-<<<<<<< HEAD
   static const ProfilBannerLight =
       "${ImagesPath.RootPath}profil_rec_banner_light.png";
   static const ProfilBannerDark =
       "${ImagesPath.RootPath}profil_rec_banner_dark.png";
-=======
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
   static const QrCodeSample = "${ImagesPath.RootPath}qr_code.png";
   static const QrCodeSuccess = "${ImagesPath.RootPath}rond_good.png";
   static const QrCodeFailed = "${ImagesPath.RootPath}rond_nogood.png";

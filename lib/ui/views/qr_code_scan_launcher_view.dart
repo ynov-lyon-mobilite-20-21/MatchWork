@@ -4,10 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/constants/string.dart';
-<<<<<<< HEAD
 import 'package:match_work/core/services/storage_manager.dart';
-=======
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:match_work/ui/views/qr_code_scanner_resullt_view.dart';
 
@@ -39,11 +36,7 @@ class _QRcodeScanLauncherViewState extends State<QRcodeScanLauncherView> {
         child: Column(
           children: [
             InkWell(
-<<<<<<< HEAD
               onTap: () => Navigator.of(context).pop(),
-=======
-              onTap: () => null /*Navigator.of(context).pop()*/,
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
               child: Container(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.only(
@@ -113,16 +106,7 @@ class _QRcodeScanLauncherViewState extends State<QRcodeScanLauncherView> {
         this.qrCode = qrCode;
       });
 
-<<<<<<< HEAD
-      print("Qr code result : $qrCode");
-
-      /// TODO : Implementer quelque chose quand le retour est égal à -1
       if (qrCode == QrCodeKey) {
-        StorageManager.saveData(StorageFirstaunchKey, false);
-
-=======
-      if (qrCode == QrCodeKey) {
->>>>>>> ff44f20 ([WIP] qr code design, missing redirections)
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => QrCodeScannerSuccess()),
