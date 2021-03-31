@@ -22,8 +22,12 @@ class RoutePath {
   static const String Tchat = "tchat";
   static const String Profile = "profile";
   static const String Conversation = "conversation";
+<<<<<<< HEAD
   static const String EditProfile = "edit_profile";
   static const String Pdf = "pdf";
+=======
+  static const QrScan = "qrCode";
+>>>>>>> 9c9b6f6 ([Done] QrCode Scan)
 }
 
 class AppColors {

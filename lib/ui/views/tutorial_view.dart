@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/constants/string.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
@@ -92,6 +93,7 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
           child: Container(
             color: AppColors.PrimaryColor,
             height: height * 0.056,
+<<<<<<< HEAD
             child: TextButton(
                 onPressed: () async {
                   addStringToSF();
@@ -112,6 +114,25 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
                 child: Text("Continuer",
                     style: TextStyle(fontSize: 20, color: Colors.white))),
           ));
+=======
+            onPressed: () async {
+              bool isAuthenticated = await Provider.of<AuthenticationService>(
+                      context,
+                      listen: false)
+                  .isUserLoggedIn();
+              if (isAuthenticated) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => HomeView()));
+              } else {
+                Navigator.pushNamed(context, RoutePath.Start);
+              }
+            },
+            child: Text("Continuer",
+                style: TextStyle(fontSize: 20, color: Colors.white))),
+      );
+>>>>>>> 97d9402 ([Done] QrCode Scan)
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
