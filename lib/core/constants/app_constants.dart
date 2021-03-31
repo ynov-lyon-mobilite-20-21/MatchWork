@@ -108,7 +108,9 @@ class AppIcons {
     BrightnessMode,
     EditProfile,
     Tutorial,
-    Settings
+    Settings,
+    Coeur,
+    Croix
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -122,6 +124,8 @@ class AppIcons {
   static const EditProfile = "${ImagesPath.IconsPath}icon_modif.png";
   static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
+  static const Coeur = "${ImagesPath.IconsPath}coeur.png";
+  static const Croix = "${ImagesPath.IconsPath}croix.png";
 }
 
 class AppCarouselImage {
