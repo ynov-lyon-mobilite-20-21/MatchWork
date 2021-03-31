@@ -58,7 +58,7 @@ class QrCodeScannerSuccess extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () => Navigator.of(context)
-                        .pushNamedAndRemoveUntil(RoutePath.Tutorial,
+                        .pushNamedAndRemoveUntil(RoutePath.OnBoarding,
                             (Route<dynamic> route) => false),
                     color: AppColors.AccentColor,
                   )),

@@ -7,7 +7,7 @@ class ImagesPath {
   static const String IconsPath = "${RootPath}icons/";
   static const String BackgroundsPath = "${RootPath}background/";
   static const String LogosPath = "${RootPath}logo/";
-  static const String CarouselPath = "${RootPath}tuto/";
+  static const String OnBoardingPath = "${RootPath}onboarding/";
   static const String GifAnimationPath = "${AnimationsRootPath}gifs/";
   static const String JsonAnimationPath = "${AnimationsRootPath}jsons/";
 }
@@ -16,7 +16,7 @@ class RoutePath {
   static const String Home = "/";
   static const String Login = "login";
   static const String Register = "register";
-  static const String Tutorial = "tutorial";
+  static const String OnBoarding = "onboarding";
   static const String Start = "start";
   static const String Swipe = "swipe";
   static const String Tchat = "tchat";
@@ -166,20 +166,20 @@ class AppIcons {
   static const Delete = "${ImagesPath.IconsPath}icon_supprimer.png";
 }
 
-class AppCarouselImage {
-  static const carouselImages = [
-    FirstTutoImage,
-    SecondTutoImage,
-    ThirdTutoImage,
-    FourTutoImage,
-    FiveTutoImage
+class AppOnBoardingImage {
+  static const onBoardingImages = [
+    FirstOnBoardingmage,
+    SecondOnBoardingmage,
+    ThirdOnBoardingmage,
+    FourOnBoardingmage,
+    FiveOnBoardingmage
   ];
 
-  static const FirstTutoImage = "${ImagesPath.CarouselPath}tuto_1.png";
-  static const SecondTutoImage = "${ImagesPath.CarouselPath}tuto_2.png";
-  static const ThirdTutoImage = "${ImagesPath.CarouselPath}tuto_3.png";
-  static const FourTutoImage = "${ImagesPath.CarouselPath}tuto_4.png";
-  static const FiveTutoImage = "${ImagesPath.CarouselPath}tuto_5.png";
+  static const FirstOnBoardingmage = "${ImagesPath.OnBoardingPath}tuto_1.png";
+  static const SecondOnBoardingmage = "${ImagesPath.OnBoardingPath}tuto_2.png";
+  static const ThirdOnBoardingmage = "${ImagesPath.OnBoardingPath}tuto_3.png";
+  static const FourOnBoardingmage = "${ImagesPath.OnBoardingPath}tuto_4.png";
+  static const FiveOnBoardingmage = "${ImagesPath.OnBoardingPath}tuto_5.png";
 }
 
 class AppAnimations {

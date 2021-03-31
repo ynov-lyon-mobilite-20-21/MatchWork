@@ -165,7 +165,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                       case TUTORIAL:
                                         {
                                           Navigator.pushNamed(
-                                              context, RoutePath.Tutorial);
+                                              context, RoutePath.OnBoarding);
                                         }
                                         break;
                                       case EDIT_PROFILE:

@@ -13,7 +13,7 @@ import 'package:match_work/ui/views/qr_code_scan_launcher_view.dart';
 >>>>>>> 9c9b6f6 ([Done] QrCode Scan)
 import 'package:match_work/ui/views/sign_in_view.dart';
 import 'package:match_work/ui/views/sign_up_view.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
+import 'package:match_work/ui/views/onboarding_view.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -26,6 +26,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginView());
       case RoutePath.Register:
         return MaterialPageRoute(builder: (_) => SignUpView());
+<<<<<<< HEAD
       case RoutePath.Tutorial:
         return MaterialPageRoute(builder: (_) => TutorialView());
 <<<<<<< HEAD
@@ -33,6 +34,10 @@ class AppRouter {
         bool isOldUser = settings.arguments as bool;
         return MaterialPageRoute(builder: (_) => ModificationProfile(isOldUser: isOldUser,));
 =======
+=======
+      case RoutePath.OnBoarding:
+        return MaterialPageRoute(builder: (_) => OnBoardingView());
+>>>>>>> 324aa76 (hot fix onboarding)
       case RoutePath.QrScan:
         return MaterialPageRoute(builder: (_) => QRcodeScanLauncherView());
 >>>>>>> 9c9b6f6 ([Done] QrCode Scan)
