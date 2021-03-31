@@ -32,7 +32,7 @@ class AppColors {
   static const StatusBarColor = const Color(0xff184246);
   static const BackgroundLightColor = const Color(0xFFE5E5E5);
   static const BackgroundDarkColor = const Color(0xff0083a0);
-  static const CircleAvatarBorderColor = const Color(0xff00C4C4);
+  static const CircleAvatarBorderColor = const Color(0xFFE5E5E5);
 }
 
 class AppBackgroundImages {
@@ -86,7 +86,9 @@ class AppImages {
     UnknownUser,
     WelcomeWhite,
     WelcomeBlue,
-    ProfilBannere
+    ProfilBannere,
+    ProfilBannerDark,
+    ProfilBannerLight
   ];
 
   static const ProfilBannere =
@@ -94,6 +96,10 @@ class AppImages {
   static const UnknownUser = "${ImagesPath.RootPath}unknown_user.png";
   static const WelcomeWhite = "${ImagesPath.RootPath}welcome_white.png";
   static const WelcomeBlue = "${ImagesPath.RootPath}welcome_blue.png";
+  static const ProfilBannerLight =
+      "${ImagesPath.RootPath}profil_rec_banner_light.png";
+  static const ProfilBannerDark =
+      "${ImagesPath.RootPath}profil_rec_banner_dark.png";
 }
 
 class AppIcons {
@@ -108,7 +114,8 @@ class AppIcons {
     BrightnessMode,
     EditProfile,
     Tutorial,
-    Settings
+    Settings,
+    ProfilGuillemet
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -122,6 +129,7 @@ class AppIcons {
   static const EditProfile = "${ImagesPath.IconsPath}icon_modif.png";
   static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
+  static const ProfilGuillemet = "${ImagesPath.IconsPath}profil_guillemet.png";
 }
 
 class AppCarouselImage {

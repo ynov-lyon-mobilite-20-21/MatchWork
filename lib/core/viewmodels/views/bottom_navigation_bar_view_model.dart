@@ -9,7 +9,7 @@ import '../base_model.dart';
 class BottomNavigationBarViewModel extends BaseModel {
   int _currentTab = 1;
 
-  List<Widget> _screens = [ProfileView(), Swipe(), News(), Tchat()];
+  List<Widget> _screens = [Profile(), Swipe(), News(), Tchat()];
   set currentTab(int tab) {
     this._currentTab = tab;
     notifyListeners();

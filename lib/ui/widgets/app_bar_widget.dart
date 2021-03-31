@@ -14,8 +14,12 @@ class AppBarWidget {
 
     return isVisible
         ? AppBar(
+            title: Container(padding: EdgeInsets.only(left: 110),
+              child: Text('Profil',
+              style: TextStyle(color: iconColor),)
+            ),
             elevation: 0,
-            backgroundColor: Colors.transparent,
+            backgroundColor: color,
             leading: Padding(
               padding:
                   EdgeInsets.only(left: MediaQuery.of(context).size.width / 30),
