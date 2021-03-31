@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_view.dart';
 
-final List<String> imgList = AppCarouselImage.carouselImages;
+final List<String> imgList = AppOnBoardingImage.onBoardingImages;
 
 class TutorialView extends StatefulWidget {
   @override
@@ -93,7 +93,6 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
           child: Container(
             color: AppColors.PrimaryColor,
             height: height * 0.056,
-<<<<<<< HEAD
             child: TextButton(
                 onPressed: () async {
                   addStringToSF();
@@ -114,25 +113,6 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
                 child: Text("Continuer",
                     style: TextStyle(fontSize: 20, color: Colors.white))),
           ));
-=======
-            onPressed: () async {
-              bool isAuthenticated = await Provider.of<AuthenticationService>(
-                      context,
-                      listen: false)
-                  .isUserLoggedIn();
-              if (isAuthenticated) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => HomeView()));
-              } else {
-                Navigator.pushNamed(context, RoutePath.Start);
-              }
-            },
-            child: Text("Continuer",
-                style: TextStyle(fontSize: 20, color: Colors.white))),
-      );
->>>>>>> 97d9402 ([Done] QrCode Scan)
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
