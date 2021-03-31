@@ -22,6 +22,7 @@ class RoutePath {
   static const String Tchat = "tchat";
   static const String Profile = "profile";
   static const String Conversation = "conversation";
+  static const String EditProfile = "edit";
 }
 
 class AppColors {
@@ -108,7 +109,8 @@ class AppIcons {
     BrightnessMode,
     EditProfile,
     Tutorial,
-    Settings
+    Settings,
+    Delete
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -122,6 +124,7 @@ class AppIcons {
   static const EditProfile = "${ImagesPath.IconsPath}icon_modif.png";
   static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
+  static const Delete = "${ImagesPath.IconsPath}icon_supprimer.png";
 }
 
 class AppCarouselImage {
