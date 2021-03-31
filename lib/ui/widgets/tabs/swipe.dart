@@ -27,6 +27,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
         builder: (context, model, widget) => model.users.length > 1
             ? Center(
           child: Column(children: [
+            SizedBox(
+              width: 50,
+              height: 50,
+            ),
+
             Container(
               height: MediaQuery.of(context).size.height * 0.7,
               child: TinderSwapCard(
@@ -36,10 +41,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                 totalNum: model.users.length,
                 stackNum: 2,
                 swipeEdge: 1.0,
-                maxWidth: MediaQuery.of(context).size.width * 0.93,
-                maxHeight: MediaQuery.of(context).size.width * 1.23,
-                minWidth: MediaQuery.of(context).size.width * 0.92,
-                minHeight: MediaQuery.of(context).size.width * 1.22,
+                maxWidth: MediaQuery.of(context).size.width * 0.91,
+                maxHeight: MediaQuery.of(context).size.height * 0.62,
+                minWidth: MediaQuery.of(context).size.width * 0.90,
+                minHeight: MediaQuery.of(context).size.height * 0.61,
                 cardBuilder: (context, index) {
                   return StreamBuilder<List<User>>(
                     stream: model.outUsers,
@@ -129,7 +134,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                               0.85,
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                              color: theme.accentColor,
+                                              color: Colors.transparent,
                                             ),
                                             borderRadius:
                                             BorderRadius.circular(
@@ -151,7 +156,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                 ),
                                 back: Container(
                                   decoration: BoxDecoration(
-                                    color: theme.cardTheme.color,
+                                    color: theme.cardColor,
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(8.0)),
                                   ),
@@ -172,8 +177,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                 OutlineInputBorder(
                                                   borderSide:
                                                   new BorderSide(
-                                                      color: theme
-                                                          .accentColor),
+                                                      color: theme.cardColor),
                                                   borderRadius:
                                                   BorderRadius
                                                       .circular(10.0),
@@ -184,12 +188,22 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                   style: theme.textTheme
                                                       .bodyText2),
                                             ),
+                                            Container(
+                                              height: 20.0,
+                                              width: 20.0,
+                                            ),
                                             SizedBox(
-                                              height:
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                                  0.07,
+                                              width: MediaQuery.of(context).size.width * 0.83,
+                                              height: 1,
+                                              child: DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                    color: theme.accentColor
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 20.0,
+                                              width: 20.0,
                                             ),
                                             InputDecorator(
                                               decoration: InputDecoration(
@@ -202,8 +216,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                 OutlineInputBorder(
                                                   borderSide:
                                                   new BorderSide(
-                                                      color: theme
-                                                          .accentColor),
+                                                      color: theme.cardColor),
                                                   borderRadius:
                                                   BorderRadius
                                                       .circular(10.0),
@@ -213,12 +226,22 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                 currentUser.bio ?? "",
                                               ),
                                             ),
+                                            Container(
+                                              height: 20.0,
+                                              width: 20.0,
+                                            ),
                                             SizedBox(
-                                              height:
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                                  0.07,
+                                              width: MediaQuery.of(context).size.width * 0.83,
+                                              height: 1,
+                                              child: DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                    color: theme.accentColor
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 20.0,
+                                              width: 20.0,
                                             ),
                                             InputDecorator(
                                               decoration: InputDecoration(
@@ -231,8 +254,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                 OutlineInputBorder(
                                                   borderSide:
                                                   new BorderSide(
-                                                      color: theme
-                                                          .accentColor),
+                                                      color: theme.cardColor),
                                                   borderRadius:
                                                   BorderRadius
                                                       .circular(10.0),
@@ -332,13 +354,16 @@ class SkillButton extends StatefulWidget {
 class _SkillButtonState extends State<SkillButton> {
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ThemeProvider>(context).getTheme();
     return ButtonTheme(
       minWidth: 65.0,
       child: RaisedButton(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0.0),
-            side: BorderSide(color: Colors.white)),
-        color: widget.color,
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            side: BorderSide(color: theme.textTheme.caption.color)),
+        color: theme.textTheme.caption.color,
         padding: EdgeInsets.all(8.0),
         onPressed: () {},
         child: Text(
