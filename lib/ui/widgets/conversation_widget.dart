@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/utils/date_utils.dart' as dateUtils;
+import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
+import 'package:provider/provider.dart';
 
 class ConversationWidget extends StatefulWidget {
   final Conversation conversation;
 
   final Function(DismissDirection direction) onDelete;
-  final theme;
 
   const ConversationWidget(
-      {Key key,
-      @required this.conversation,
-      @required this.onDelete,
-      this.theme})
+      {Key key, @required this.conversation, @required this.onDelete})
       : super(key: key);
 
   @override
@@ -24,6 +22,7 @@ class ConversationWidget extends StatefulWidget {
 class _ConversationWidgetState extends State<ConversationWidget> {
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Provider.of<ThemeProvider>(context).getTheme();
     DateTime dateLastMessage =
         widget.conversation.lastMessageCreatedAt.toDate();
     return Dismissible(
@@ -70,7 +69,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                                 widget.conversation.caller.uid
                         ? CircleAvatar(
                             radius: 5.0,
-                            backgroundColor: Theme.of(context).indicatorColor,
+                            backgroundColor: theme.indicatorColor,
                           )
                         : Container(
                             width: 10.0,
@@ -82,7 +81,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                       radius: 35.0,
                       path: widget.conversation.caller.pictureUrl,
                       borderThickness: 5.0,
-                      backgroundColor: Theme.of(context).indicatorColor,
+                      backgroundColor: theme.indicatorColor,
                     ),
                     SizedBox(
                       width: 10.0,
@@ -94,25 +93,27 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                           Text(widget.conversation.caller.displayName(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4
+                              style: theme.textTheme.headline4
                                   .copyWith(fontWeight: FontWeight.normal),
                               textScaleFactor: 1.3),
                           Text(
                             widget.conversation.lastMessageContent,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: theme.textTheme.subtitle2,
                           ),
                         ],
                       ),
                     ),
-                    Text(
-                      dateUtils.DateUtils.isToday(dateLastMessage)
-                          ? dateUtils.DateUtils.getHourFormat(dateLastMessage)
-                          : dateUtils.DateUtils.getDateFormat(dateLastMessage),
-                      style: Theme.of(context).textTheme.subtitle2,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        dateUtils.DateUtils.isToday(dateLastMessage)
+                            ? dateUtils.DateUtils.getHourFormat(dateLastMessage)
+                            : dateUtils.DateUtils.getDateFormat(
+                                dateLastMessage),
+                        style: theme.textTheme.subtitle2,
+                      ),
                     )
                   ],
                 ),

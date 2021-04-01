@@ -4,10 +4,7 @@ import 'package:match_work/core/constants/app_constants.dart';
 final ThemeData lightThemeData = ThemeData(
     fontFamily: "Raleway",
     scaffoldBackgroundColor: Color(0xffFFFFFF),
-    iconTheme: IconThemeData (
-        color: AppColors.BackgroundDarkColor,
-        size: 50.0
-    ),
+    iconTheme: IconThemeData(color: AppColors.BackgroundDarkColor, size: 50.0),
     appBarTheme: AppBarTheme(
       color: AppColors.PrimaryColor,
       iconTheme: IconThemeData(
@@ -58,6 +55,7 @@ final ThemeData lightThemeData = ThemeData(
     ),
     primarySwatch: Colors.grey,
     primaryColorLight: Color(0xffFFFFFF),
+    primaryColorDark: AppColors.PrimaryColor,
     primaryColor: AppColors.PrimaryColor,
     brightness: Brightness.light,
     backgroundColor: const Color(0xFFE5E5E5),

@@ -26,7 +26,7 @@ class _TchatState extends State<Tchat> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context).getTheme();
+    ThemeData theme = Provider.of<ThemeProvider>(context).getTheme();
 
     return BaseWidget<TchatModel>(
         model: TchatModel(authenticationService: Provider.of(context)),
@@ -134,7 +134,6 @@ class _TchatState extends State<Tchat> {
                                 .map((Conversation conversation) =>
                                     ConversationWidget(
                                       conversation: conversation,
-                                      theme: theme,
                                       onDelete: (direction) async {
                                         String message =
                                             await model.removeConversation(
@@ -153,7 +152,6 @@ class _TchatState extends State<Tchat> {
                                 .map((Conversation conversation) =>
                                     ConversationWidget(
                                       conversation: conversation,
-                                      theme: theme,
                                       onDelete: (direction) async {
                                         String message =
                                             await model.removeConversation(
