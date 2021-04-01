@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
+import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/date_utils.dart' as dateUtils;
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
@@ -97,7 +98,15 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                                   .copyWith(fontWeight: FontWeight.normal),
                               textScaleFactor: 1.3),
                           Text(
-                            widget.conversation.lastMessageContent,
+                            widget.conversation.lastMessageContent != null
+                                ? widget.conversation.lastMessageContent
+                                : widget.conversation.senderUid ==
+                                        Provider.of<AuthenticationService>(
+                                                context)
+                                            .currentUser
+                                            .uid
+                                    ? "Votre demande de connexion a été acceptée"
+                                    : "Vous avez accepté la demande de connexion",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.subtitle2,

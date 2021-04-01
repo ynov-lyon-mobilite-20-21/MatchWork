@@ -46,7 +46,7 @@ class _MatchRequestWidgetState extends State<MatchRequestWidget> {
         Row(
           children: [
             InkWell(
-              onTap: () => widget.accept,
+              onTap: widget.accept,
               child: Container(
                 decoration: BoxDecoration(
                     color: AppColors.CircleAvatarBorderColor,
@@ -64,7 +64,7 @@ class _MatchRequestWidgetState extends State<MatchRequestWidget> {
               width: 8.0,
             ),
             InkWell(
-              onTap: () => widget.reject,
+              onTap: widget.reject,
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(

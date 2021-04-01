@@ -80,6 +80,9 @@ class ConversationRepository {
     });
   }
 
+  Future createConversation({@required Conversation conversation}) async =>
+      _conversationsCollection.doc(conversation.id).set(conversation.toJson());
+
   Future<bool> sendMessage(
       String senderUid, String callerUid, ChatMessage message) async {
     try {

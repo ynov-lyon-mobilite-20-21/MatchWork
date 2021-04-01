@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
+import 'package:match_work/core/models/match_request.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
@@ -30,7 +31,10 @@ class _TchatState extends State<Tchat> {
 
     return BaseWidget<TchatModel>(
         model: TchatModel(authenticationService: Provider.of(context)),
-        onModelReady: (model) => model.listenConversationsStream(),
+        onModelReady: (model) {
+          model.listenConversationsStream();
+          model.listenMatchRequestsStream();
+        },
         builder: (context, model, widget) => Column(
               children: [
                 Container(
@@ -55,67 +59,71 @@ class _TchatState extends State<Tchat> {
                     }),
                   ),
                 ),
-                Container(
-                  color: theme.bottomNavigationBarTheme.backgroundColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ExpandablePanel(
-                      theme: ExpandableThemeData(
-                          expandIcon: Icons.keyboard_arrow_down,
-                          collapseIcon: Icons.keyboard_arrow_up,
-                          iconColor: theme.textTheme.headline4.color),
-                      header: Text("Nouveaux contacts",
-                          style: theme.textTheme.headline4
-                              .copyWith(fontSize: 18.0)),
-                      collapsed: Text(
-                        "3 demandes de connexion en attente",
-                        style:
-                            theme.textTheme.subtitle2.copyWith(fontSize: 14.0),
-                        softWrap: true,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      expanded: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxHeight:
-                                MediaQuery.of(context).size.height * 0.4),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: MatchRequestWidget(
-                                  user: User(
-                                      firstName: "prenom", lastName: "nom"),
-                                  accept: () => null,
-                                  reject: () => null,
+                StreamBuilder(
+                    stream: model.outMatchRequests,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        List<MatchRequest> matchRequests = [...snapshot.data];
+                        if (matchRequests.length > 0) {
+                          return Container(
+                            color:
+                                theme.bottomNavigationBarTheme.backgroundColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ExpandablePanel(
+                                theme: ExpandableThemeData(
+                                    expandIcon: Icons.keyboard_arrow_down,
+                                    collapseIcon: Icons.keyboard_arrow_up,
+                                    iconColor: theme.textTheme.headline4.color),
+                                header: Text("Nouveaux contacts",
+                                    style: theme.textTheme.headline4
+                                        .copyWith(fontSize: 18.0)),
+                                collapsed: Text(
+                                  "${matchRequests.length} demande${matchRequests.length > 1 ? 's' : ''} de connexion en attente",
+                                  style: theme.textTheme.subtitle2
+                                      .copyWith(fontSize: 14.0),
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                expanded: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height *
+                                              0.4),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        ...matchRequests.map(
+                                            (MatchRequest matchRequest) =>
+                                                Container(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 8.0),
+                                                    child: MatchRequestWidget(
+                                                        user: matchRequest.user,
+                                                        accept: () async => await model
+                                                            .acceptMatchRequest(
+                                                                matchRequest:
+                                                                    matchRequest),
+                                                        reject: () async => await model
+                                                            .rejectMatchRequest(
+                                                                matchRequest:
+                                                                    matchRequest)),
+                                                  ),
+                                                ))
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: MatchRequestWidget(
-                                  user: User(
-                                      firstName: "prenom", lastName: "nom"),
-                                  accept: () => null,
-                                  reject: () => null,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: MatchRequestWidget(
-                                  user: User(
-                                      firstName: "prenom", lastName: "nom"),
-                                  accept: () => null,
-                                  reject: () => null,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                            ),
+                          );
+                        }
+                      }
+                      return Container();
+                    }),
                 Expanded(
                   child: StreamBuilder<List<Conversation>>(
                     stream: model.outConversations,
