@@ -33,7 +33,7 @@ class UserRepository {
   static String experienceDescriptionReference = 'description';
 
   final CollectionReference _usersCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
   Stream<User> userStream({@required Firebase.User firebaseUser}) =>
       _usersCollection
@@ -52,12 +52,21 @@ class UserRepository {
         }
       });
 
-  Stream<List<User>> getAllUsersStream()  =>  _usersCollection.snapshots().map((QuerySnapshot querySnapshot){
-    if(querySnapshot.docs.length ==0 )
-      return [];
-    return querySnapshot.docs.map((DocumentSnapshot snapshot) => User.fromSnapshot(snapshot)).toList();
-
-  });
+  Stream<List<User>> getAllUsersStream() {
+    return _usersCollection
+        .snapshots()
+        .asyncMap((QuerySnapshot querySnapshot) async {
+      if (querySnapshot.docs.length == 0) return [];
+      return Future.wait(
+          querySnapshot.docs.map((DocumentSnapshot snapshot) async {
+        User user = User.fromSnapshot(snapshot);
+        user.skills = await getSkillsByUser(user);
+        user.formations = await getFormationsByUser(user);
+        user.experiences = await getExperiencesByUser(user);
+        return user;
+      }));
+    });
+  }
 
   Future<User> getUserByUid(String uid) async {
     try {
@@ -122,7 +131,7 @@ class UserRepository {
     List<Skill> skills = [];
 
     var snapshots =
-    await _usersCollection.doc(user.uid).collection(skillsReference).get();
+        await _usersCollection.doc(user.uid).collection(skillsReference).get();
     snapshots.docs
         .forEach((snapshot) => skills.add(Skill.fromSnapshot(snapshot)));
 
@@ -151,7 +160,7 @@ class UserRepository {
         .collection(formationsReference)
         .get();
     snapshots.docs.forEach(
-            (snapshot) => formations.add(Formation.fromSnapshot(snapshot)));
+        (snapshot) => formations.add(Formation.fromSnapshot(snapshot)));
 
     return formations;
   }
@@ -178,7 +187,7 @@ class UserRepository {
         .collection(experiencesReference)
         .get();
     snapshots.docs.forEach(
-            (snapshot) => experiences.add(Experience.fromSnapshot(snapshot)));
+        (snapshot) => experiences.add(Experience.fromSnapshot(snapshot)));
 
     return experiences;
   }
