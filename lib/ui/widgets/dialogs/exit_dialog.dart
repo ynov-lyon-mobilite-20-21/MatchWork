@@ -6,18 +6,18 @@ class ExitAlertDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('Exit?'),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop(false);
           },
           child: Text(
             'Cancel',
             style: Theme.of(context).textTheme.button.copyWith(
-              fontWeight: FontWeight.normal,
-            ),
+                  fontWeight: FontWeight.normal,
+                ),
           ),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop(true);
           },

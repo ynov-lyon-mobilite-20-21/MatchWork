@@ -39,10 +39,10 @@ class _ConversationWidgetState extends State<ConversationWidget> {
               content: const Text(
                   "Voulez-vous vraiment supprimer cette conversation?"),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                     onPressed: () => Navigator.of(context).pop(true),
                     child: const Text("Supprimer")),
-                FlatButton(
+                TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
                   child: const Text("Annuler"),
                 ),

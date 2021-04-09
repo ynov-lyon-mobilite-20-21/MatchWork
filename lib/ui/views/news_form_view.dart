@@ -38,7 +38,7 @@ class _NewsFormViewState extends State<NewsFormView> {
               iconTheme: IconThemeData(color: theme.textTheme.subtitle1.color),
               centerTitle: true,
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text(
                     model.news == null ? "Publier" : "Modifier",
                     style: TextStyle(color: AppColors.CircleAvatarBorderColor),

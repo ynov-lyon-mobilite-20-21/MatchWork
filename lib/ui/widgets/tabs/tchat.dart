@@ -131,10 +131,9 @@ class _TchatState extends State<Tchat> {
                                         String message =
                                             await model.removeConversation(
                                                 conversation: conversation);
-                                        Scaffold.of(context)
+                                        ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
-                                          content: Text(message,
-                                              style: theme.textTheme.caption),
+                                          content: Text(message),
                                         ));
                                       },
                                     )),
@@ -149,10 +148,9 @@ class _TchatState extends State<Tchat> {
                                         String message =
                                             await model.removeConversation(
                                                 conversation: conversation);
-                                        Scaffold.of(context)
+                                        ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
-                                          content: Text(message,
-                                              style: theme.textTheme.caption),
+                                          content: Text(message),
                                         ));
                                       },
                                     )),

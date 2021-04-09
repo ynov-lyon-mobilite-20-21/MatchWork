@@ -127,12 +127,10 @@ void loginWithExternalService(
     @required bool success,
     String error}) {
   if (success) {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => HomeView()));
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => HomeView()));
   } else {
-    scaffoldKey.currentState.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(error),
     ));
   }

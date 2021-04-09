@@ -32,7 +32,10 @@ class _SignInViewState extends State<SignInView> {
         data: theme,
         child: Scaffold(
           key: _scaffoldKey,
-          appBar: AppBar(),
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: theme.textTheme.headline2.color),
+            backgroundColor: theme.backgroundColor,
+          ),
           body: Stack(
             children: [
               Container(

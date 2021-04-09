@@ -29,7 +29,10 @@ class _SignUpViewState extends State<SignUpView> {
         data: theme,
         child: Scaffold(
           key: _scaffoldKey,
-          appBar: AppBar(),
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: theme.textTheme.headline2.color),
+            backgroundColor: theme.backgroundColor,
+          ),
           body: Stack(
             children: [
               Container(
@@ -61,7 +64,9 @@ class _SignUpViewState extends State<SignUpView> {
                                   padding: const EdgeInsets.only(bottom: 20.0),
                                   child: Text(
                                     "Inscription",
-                                    style: theme.textTheme.headline2,
+                                    style: theme.textTheme.headline2.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30.0),
                                   ),
                                 ),
                                 Column(
@@ -208,7 +213,7 @@ Widget _formWidget(
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         RoutePath.Home, (route) => false);
                   } else {
-                    scaffoldKey.currentState.showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(model.error),
                     ));
                   }

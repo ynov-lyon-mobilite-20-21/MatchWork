@@ -79,28 +79,29 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
     if (_current == widget.images.indexOf(lastImage) || isVisible) {
       isVisible = true;
       return Container(
-        padding: EdgeInsets.only(left: height * 0.35, top: height * 0.93),
-        child: FlatButton(
+          padding: EdgeInsets.only(left: height * 0.37, top: height * 0.94),
+          child: Container(
             color: AppColors.PrimaryColor,
             height: height * 0.056,
-            onPressed: () async {
-              StorageManager.saveData("isFirstLaunch", false);
-              bool isAuthenticated = await Provider.of<AuthenticationService>(
-                      context,
-                      listen: false)
-                  .isUserLoggedIn();
-              if (isAuthenticated) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => HomeView()));
-              } else {
-                Navigator.pushNamed(context, RoutePath.Start);
-              }
-            },
-            child: Text("Continuer",
-                style: TextStyle(fontSize: 20, color: Colors.white))),
-      );
+            child: TextButton(
+                onPressed: () async {
+                  StorageManager.saveData("isFirstLaunch", false);
+                  bool isAuthenticated =
+                      await Provider.of<AuthenticationService>(context,
+                              listen: false)
+                          .isUserLoggedIn();
+                  if (isAuthenticated) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => HomeView()));
+                  } else {
+                    Navigator.pushNamed(context, RoutePath.Start);
+                  }
+                },
+                child: Text("Continuer",
+                    style: TextStyle(fontSize: 20, color: Colors.white))),
+          ));
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
