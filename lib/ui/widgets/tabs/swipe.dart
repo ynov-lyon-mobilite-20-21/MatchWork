@@ -1,7 +1,10 @@
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
+import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -19,197 +22,294 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
     var theme = Provider.of<ThemeProvider>(context).getTheme();
 
     return BaseWidget<SwipeModel>(
-        model: SwipeModel(),
-        builder: (context, model, widget) => model.index == 1
-            ? Center(
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: TinderSwapCard(
-                    swipeDown: false,
-                    swipeUp: false,
-                    orientation: AmassOrientation.TOP,
-                    totalNum: 5,
-                    stackNum: 3,
-                    swipeEdge: 5.0,
-                    maxWidth: MediaQuery.of(context).size.width * 0.92,
-                    maxHeight: MediaQuery.of(context).size.width * 1.22,
-                    minWidth: MediaQuery.of(context).size.width * 0.91,
-                    minHeight: MediaQuery.of(context).size.width * 1.21,
-                    cardBuilder: (context, index) => FlipCard(
-                      direction: FlipDirection.HORIZONTAL,
-                      speed: 750,
-                      front: Container(
-                        decoration: BoxDecoration(
-                          color: theme.cardColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                            Align(
-                            alignment: Alignment.center,
-                              child : Image.asset(
-                                model.tinderimages[index],
-                                height: MediaQuery.of(context).size.height * 0.40
-                                ,
-                              )),
-                              Text(
-                                model.tindername[index],
-                                style: theme.textTheme.headline4,
-                              ),
-                              Text(model.tinderage[index],
-                                  style: theme.textTheme.caption),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.02,
-                              ),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.17,
-                                width: MediaQuery.of(context).size.width * 0.85,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: theme.accentColor,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                padding: EdgeInsets.only(left: 2.0),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Wrap(
-                                    children: <Widget>[
-                                      SkillButton(
-                                          color: theme.primaryColor,
-                                          text: model.tinderspe2[index],
-                                          style: theme.textTheme.bodyText2),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.02,
-                                      ),
-                                      if (model.tinderspe2[index] != "")
-                                        SkillButton(
-                                            color: theme.primaryColor,
-                                            text: model.tinderspe2[index],
-                                            style: theme.textTheme.bodyText2),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.02,
-                                      ),
-                                      if (model.tinderspe2[index] != "")
-                                        SkillButton(
-                                            color: theme.primaryColor,
-                                            text: model.tinderspe2[index],
-                                            style: theme.textTheme.bodyText2),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.02,
-                                      ),
-                                      if (model.tinderspe2[index] != "")
-                                        SkillButton(
-                                            color: theme.primaryColor,
-                                            text: model.tinderspe2[index],
-                                            style: theme.textTheme.bodyText2),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.02,
-                                      ),
-                                      if (model.tinderspe2[index] != "")
-                                        SkillButton(
-                                            color: theme.primaryColor,
-                                            text: model.tinderspe2[index],
-                                            style: theme.textTheme.bodyText2),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+        model: SwipeModel(authenticationService: Provider.of(context)),
+        onModelReady: (model) => model.listenUsers(),
+        builder: (context, model, widget) => StreamBuilder(
+            stream: model.outUsers,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<User> users = snapshot.data;
+                return users.length == 0
+                    ? LoaderWidget()
+                    : Center(
+                        child: Column(
+                        children: [
+                          SizedBox(
+                            width: 50,
+                            height: 50,
                           ),
-                        ),
-                      ),
-                      back: Container(
-                        decoration: BoxDecoration(
-                          color: theme.cardColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: 'BIO',
-                                      labelStyle: TextStyle(
-                                        color: theme.accentColor,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                            color: theme.accentColor),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            child: TinderSwapCard(
+                              swipeDown: false,
+                              swipeUp: false,
+                              orientation: AmassOrientation.TOP,
+                              totalNum: users.length,
+                              stackNum: 2,
+                              swipeEdge: 1.0,
+                              maxWidth:
+                                  MediaQuery.of(context).size.width * 0.91,
+                              maxHeight:
+                                  MediaQuery.of(context).size.height * 0.62,
+                              minWidth:
+                                  MediaQuery.of(context).size.width * 0.90,
+                              minHeight:
+                                  MediaQuery.of(context).size.height * 0.61,
+                              cardBuilder: (context, index) {
+                                User currentUser = users[index];
+                                List<Widget> listSkills = [];
+                                currentUser.skills.forEach((skill) {
+                                  Widget skillWidget = Padding(
+                                    padding: const EdgeInsets.only(left: 3.0),
+                                    child: SkillButton(
+                                        color: theme.primaryColor,
+                                        text: skill.label,
+                                        style: theme.textTheme.bodyText2),
+                                  );
+                                  listSkills.add(skillWidget);
+                                });
+                                return FlipCard(
+                                  direction: FlipDirection.HORIZONTAL,
+                                  speed: 750,
+                                  front: Container(
+                                    decoration: BoxDecoration(
+                                      color: theme.cardColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                              alignment: Alignment.center,
+                                              child: currentUser.pictureUrl !=
+                                                          null &&
+                                                      currentUser
+                                                          .pictureUrl.isNotEmpty
+                                                  ? Image.network(
+                                                      currentUser.pictureUrl,
+                                                      fit: BoxFit.contain,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.43,
+                                                    )
+                                                  : Image.asset(
+                                                      AppLogoImages
+                                                          .LogoMatchWorkBlue,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.43,
+                                                    )),
+                                          Text(
+                                            currentUser.displayName(),
+                                            style: theme.textTheme.headline4,
+                                          ),
+                                          Text("",
+                                              style: theme.textTheme.bodyText2),
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.02,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.transparent,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              child: SingleChildScrollView(
+                                                scrollDirection: Axis.vertical,
+                                                child: Wrap(
+                                                  children: listSkills,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    child: Text(
-                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quodvertices sub uno elogio iussit occidi ideo efferatus, quod ei celebrari vilitatem intempestivam urgenti, cum inpenderet inopia, gravius rationabili responderunt; et perissent ad unum.",
-                                        style: theme.textTheme.subtitle2),
                                   ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.width *
-                                        0.07,
-                                  ),
-                                  InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: 'Experience',
-                                      labelStyle: TextStyle(
-                                        color: theme.accentColor,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                            color: theme.accentColor),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                  back: Container(
+                                    decoration: BoxDecoration(
+                                      color: theme.cardColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)),
+                                    ),
+                                    child: SingleChildScrollView(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(20.0),
+                                        child: Container(
+                                          child: Column(
+                                            children: [
+                                              InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: 'BIO',
+                                                  labelStyle: TextStyle(
+                                                    color: theme.accentColor,
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: new BorderSide(
+                                                        color: theme.cardColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                    currentUser.bio ?? "",
+                                                    style: theme
+                                                        .textTheme.bodyText2),
+                                              ),
+                                              Container(
+                                                height: 20.0,
+                                                width: 20.0,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.83,
+                                                height: 1,
+                                                child: DecoratedBox(
+                                                  decoration: BoxDecoration(
+                                                      color: theme.accentColor),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 20.0,
+                                                width: 20.0,
+                                              ),
+                                              InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: 'Experience',
+                                                  labelStyle: TextStyle(
+                                                    color: theme.accentColor,
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: new BorderSide(
+                                                        color: theme.cardColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  currentUser.bio ?? "",
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 20.0,
+                                                width: 20.0,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.83,
+                                                height: 1,
+                                                child: DecoratedBox(
+                                                  decoration: BoxDecoration(
+                                                      color: theme.accentColor),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 20.0,
+                                                width: 20.0,
+                                              ),
+                                              InputDecorator(
+                                                decoration: InputDecoration(
+                                                  labelText: 'Parcours',
+                                                  labelStyle: TextStyle(
+                                                    color: theme.accentColor,
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: new BorderSide(
+                                                        color: theme.cardColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  currentUser.bio ?? "",
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    child: Text(
-                                        "Denique Antiochensis ordinis vertices sub uno elogio iussit occidi ideo efferatus, quod vertices sub uno elogio iussit occidi ideo efferatus, m urgenti, cum inpenderet inopia, gr", style: theme.textTheme.subtitle2,),
                                   ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.width *
-                                        0.07,
-                                  ),
-                                  InputDecorator(
-                                    decoration: InputDecoration(
-                                      labelText: 'Parcours',
-                                      labelStyle: TextStyle(
-                                        color: theme.accentColor,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: new BorderSide(
-                                            color: theme.accentColor),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                    child: Text("", style: theme.textTheme.subtitle2),
-                                  ),
-                                ],
-                              ),
+                                );
+                              },
+                              cardController: model.controller,
+                              swipeCompleteCallback:
+                                  (CardSwipeOrientation orientation,
+                                      int index) async {
+                                User userSelected = users[index];
+                                if (orientation.index == 1) {
+                                  bool hasConversation = await model
+                                      .hasConversation(user: userSelected);
+                                  if (hasConversation) {
+                                    Navigator.pushNamed(
+                                        context, RoutePath.Conversation,
+                                        arguments: userSelected);
+                                  } else {
+                                    await model.matchUser(user: userSelected);
+                                  }
+                                }
+                              },
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            : SizedBox.expand(child: LoaderWidget(opacity: 0.0)));
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              RawMaterialButton(
+                                onPressed: () {
+                                  model.controller.triggerLeft();
+                                },
+                                elevation: 2.0,
+                                fillColor: Colors.white,
+                                child: Image.asset(AppIcons.Croix,
+                                    width: 25, height: 25),
+                                padding: EdgeInsets.all(15.0),
+                                shape: CircleBorder(),
+                              ),
+                              RawMaterialButton(
+                                onPressed: () {
+                                  model.controller.triggerRight();
+                                },
+                                elevation: 2.0,
+                                fillColor: Colors.white,
+                                child: Image.asset(
+                                  AppIcons.Coeur,
+                                  width: 25,
+                                  height: 25,
+                                ),
+                                padding: EdgeInsets.all(15.0),
+                                shape: CircleBorder(),
+                              )
+                            ],
+                          )
+                        ],
+                      ));
+              }
+              return LoaderWidget();
+            }));
   }
 }
 
@@ -232,19 +332,17 @@ class SkillButton extends StatefulWidget {
 class _SkillButtonState extends State<SkillButton> {
   @override
   Widget build(BuildContext context) {
-    return ButtonTheme(
-      minWidth: 65.0,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: BorderSide(color: Colors.white)),
-        color: widget.color,
-        padding: EdgeInsets.all(8.0),
-        onPressed: () {},
-        child: Text(
-          widget.text,
-          style: widget.style,
-        ),
+    var theme = Provider.of<ThemeProvider>(context).getTheme();
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: theme.indicatorColor, width: 2.0),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          )),
+      child: Text(
+        widget.text,
+        style: theme.textTheme.bodyText2.copyWith(color: theme.indicatorColor),
       ),
     );
   }

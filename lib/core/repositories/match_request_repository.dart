@@ -14,7 +14,9 @@ class MatchRequestRepository {
   final UserRepository _userRepository = UserRepository();
 
   Future sendRequest({@required MatchRequest matchRequest}) async =>
-      await _matchRequestsCollection.add(matchRequest.toJson());
+      await _matchRequestsCollection
+          .doc(matchRequest.id)
+          .set(matchRequest.toJson());
 
   Stream<List<MatchRequest>> getMatchRequestsStream(
           {@required String userUid}) =>

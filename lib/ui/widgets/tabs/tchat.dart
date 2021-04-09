@@ -1,10 +1,8 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/conversation.dart';
 import 'package:match_work/core/models/match_request.dart';
-import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -41,23 +39,10 @@ class _TchatState extends State<Tchat> {
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 20),
                   child: SearchBarWidget(
-                    primaryColor: theme.focusColor,
-                    secondColor: theme.textTheme.caption.color,
-                    controller: model.searchController,
-                    onChanged: (value) => model.onChangeSearch(),
-                    search: () => model.search().then((User user) {
-                      if (user != null) {
-                        Navigator.of(context)
-                            .pushNamed(RoutePath.Conversation, arguments: user);
-                      } else {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              "Aucun utilisateur trouvé avec cette adresse mail",
-                              style: theme.textTheme.caption),
-                        ));
-                      }
-                    }),
-                  ),
+                      primaryColor: theme.focusColor,
+                      secondColor: theme.textTheme.caption.color,
+                      controller: model.searchController,
+                      onChanged: (value) => model.onChangeSearch()),
                 ),
                 StreamBuilder(
                     stream: model.outMatchRequests,

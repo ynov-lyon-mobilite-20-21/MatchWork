@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController controller;
-  final Function search;
   final Function onChanged;
   final Color primaryColor;
   final Color secondColor;
@@ -10,7 +9,6 @@ class SearchBarWidget extends StatefulWidget {
   SearchBarWidget(
       {Key key,
       @required this.controller,
-      @required this.search,
       @required this.onChanged,
       @required this.primaryColor,
       @required this.secondColor})
@@ -71,13 +69,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               ),
             ),
           ),
-          InkWell(
-              onTap: widget.search,
-              child: Icon(
-                Icons.search,
-                color: widget.secondColor,
-                size: 25.0,
-              )),
         ],
       ),
     );

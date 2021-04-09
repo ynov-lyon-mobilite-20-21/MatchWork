@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 
 class ImageLoader {
-  List<Image> _images = List<Image>();
+  List<Image> _images = [];
 
   ImageLoader() {
     AppBackgroundImages.appBackgroundImages.forEach((element) {

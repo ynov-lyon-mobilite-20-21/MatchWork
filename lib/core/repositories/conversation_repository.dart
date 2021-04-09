@@ -62,7 +62,7 @@ class ConversationRepository {
   Future<Conversation> getConversationById(String conversationId) async {
     DocumentSnapshot snapshot =
         await _conversationsCollection.doc(conversationId).get();
-    return Conversation.fromSnapshot(snapshot);
+    return snapshot.exists ? Conversation.fromSnapshot(snapshot) : null;
   }
 
   Stream<List<ChatMessage>> getMessagesStream(String idConversation) {

@@ -32,7 +32,7 @@ class AppColors {
   static const StatusBarColor = const Color(0xff184246);
   static const BackgroundLightColor = const Color(0xFFE5E5E5);
   static const BackgroundDarkColor = const Color(0xff0083a0);
-  static const CircleAvatarBorderColor = const Color(0xFFE5E5E5);
+  static const CircleAvatarBorderColor = const Color(0xff00C4C4);
 }
 
 class AppBackgroundImages {
@@ -115,7 +115,10 @@ class AppIcons {
     EditProfile,
     Tutorial,
     Settings,
-    ProfilGuillemet
+    ProfilGuillemet,
+    Settings,
+    Coeur,
+    Croix
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -130,6 +133,8 @@ class AppIcons {
   static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
   static const ProfilGuillemet = "${ImagesPath.IconsPath}profil_guillemet.png";
+  static const Coeur = "${ImagesPath.IconsPath}coeur.png";
+  static const Croix = "${ImagesPath.IconsPath}croix.png";
 }
 
 class AppCarouselImage {
