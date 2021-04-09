@@ -15,6 +15,7 @@ class NewsFormViewModel extends BaseModel {
   NewsRepository _newsRepository = NewsRepository();
   File image;
   TextEditingController controller = TextEditingController();
+  ImagePicker _imagePicker = ImagePicker();
 
   NewsFormViewModel(
       {@required AuthenticationService authenticationService, this.news})
@@ -33,15 +34,17 @@ class NewsFormViewModel extends BaseModel {
 
   Future getImgFromCamera() async {
     busy = true;
-    image = await ImagePicker.pickImage(
+    PickedFile pickedFile = await _imagePicker.getImage(
         source: ImageSource.camera, imageQuality: 50);
+    image = File(pickedFile.path);
     busy = false;
   }
 
   Future getImgFromGallery() async {
     busy = true;
-    image = await ImagePicker.pickImage(
+    PickedFile pickedFile = await _imagePicker.getImage(
         source: ImageSource.gallery, imageQuality: 50);
+    image = File(pickedFile.path);
     busy = false;
   }
 

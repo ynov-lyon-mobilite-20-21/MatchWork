@@ -31,6 +31,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
     return ChangeNotifierProvider<BottomNavigationBarViewModel>(
       create: (context) => BottomNavigationBarViewModel(),
       child: Consumer2<BottomNavigationBarViewModel, ThemeProvider>(
@@ -45,7 +47,9 @@ class _HomeViewState extends State<HomeView> {
               items: [
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage(AppIcons.InactiveProfile),
+                      image: AssetImage(isDarkMode
+                          ? AppIcons.InactiveProfileDark
+                          : AppIcons.InactiveProfile),
                       height: iconHeight,
                     ),
                     activeIcon: Image(
@@ -55,7 +59,9 @@ class _HomeViewState extends State<HomeView> {
                     label: ProfiNavbarTitlel),
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage(AppIcons.InactiveSwipe),
+                      image: AssetImage(isDarkMode
+                          ? AppIcons.InactiveSwipeDark
+                          : AppIcons.InactiveSwipe),
                       height: iconHeight,
                     ),
                     activeIcon: Image(
@@ -65,17 +71,21 @@ class _HomeViewState extends State<HomeView> {
                     label: SwipeNavBarTitle),
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage(AppIcons.InactiveSwipe),
+                      image: AssetImage(isDarkMode
+                          ? AppIcons.InactiveNewsDark
+                          : AppIcons.InactiveNews),
                       height: iconHeight,
                     ),
                     activeIcon: Image(
-                      image: AssetImage(AppIcons.ActiveSwipe),
+                      image: AssetImage(AppIcons.ActiveNews),
                       height: iconHeight,
                     ),
                     label: NewsNavBarTitle),
                 BottomNavigationBarItem(
                     icon: Image(
-                      image: AssetImage(AppIcons.InactiveChat),
+                      image: AssetImage(isDarkMode
+                          ? AppIcons.InactiveChatDark
+                          : AppIcons.InactiveChat),
                       height: iconHeight,
                     ),
                     activeIcon: Image(
