@@ -107,8 +107,6 @@ class ConversationViewModel extends BaseModel {
     });
   }
 
-  Future<bool> isFirstReading() async {}
-
   void sendMessage() {
     if (controller.text.trim() != '') {
       String authenticatedUserUid = _authenticationService.currentUser.uid;
