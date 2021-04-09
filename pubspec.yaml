@@ -52,6 +52,7 @@ dependencies:
   firebase_storage: ^5.2.0
   html: ^0.15.0
   path_provider: ^1.6.28
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:

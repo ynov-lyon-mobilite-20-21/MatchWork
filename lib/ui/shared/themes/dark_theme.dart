@@ -52,7 +52,7 @@ final ThemeData DarkThemeData = ThemeData(
     primaryColor: AppColors.PrimaryColor,
     indicatorColor: Colors.white,
     primaryColorLight: AppColors.PrimaryColor,
-    primaryColorDark: AppColors.AppBarColor,
+    primaryColorDark: AppColors.CircleAvatarBorderColor,
     brightness: Brightness.dark,
     backgroundColor: AppColors.PrimaryColor,
     accentColor: AppColors.AccentColor,

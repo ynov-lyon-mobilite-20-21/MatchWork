@@ -18,8 +18,8 @@ class Conversation {
       {this.id,
       @required this.senderUid,
       @required this.receiverUid,
-      @required this.lastMessageContent,
-      @required this.lastMessageCreatedAt,
+      this.lastMessageContent,
+      this.lastMessageCreatedAt,
       this.isRead = false});
 
   Conversation.fromSnapshot(DocumentSnapshot snapshot)
