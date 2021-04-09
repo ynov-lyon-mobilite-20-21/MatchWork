@@ -6,6 +6,7 @@ import 'package:match_work/core/viewmodels/views/conversation_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/match_animation_widget.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -24,77 +25,89 @@ class _ConversationViewState extends State<ConversationView> {
     ThemeData theme = Provider.of<ThemeProvider>(context).getTheme();
 
     return BaseWidget<ConversationViewModel>(
+      child: MatchAnimationWidget(),
       model: ConversationViewModel(
           authenticationService: Provider.of(context), caller: widget.caller),
       onModelReady: (model) {
         model.listenMessageStream();
         model.listenConversationStream();
       },
-      builder: (context, model, widget) => Scaffold(
-        backgroundColor: theme.backgroundColor,
-        appBar: AppBar(
-          backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
-          iconTheme: IconThemeData(color: theme.textTheme.headline4.color),
-          title: Row(
-            children: [
-              ProfilePictureWidget(
-                path: model.caller.pictureUrl,
-                radius: 15.0,
-                backgroundColor: Colors.grey,
-                borderThickness: 1.5,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Text(
-                model.caller.displayName(),
-                style: theme.textTheme.headline4,
-              )
-            ],
-          ),
-        ),
-        body: Column(
+      builder: (context, model, widget) {
+        return Stack(
           children: [
-            Expanded(
-                child: Container(
-              child: StreamBuilder(
-                stream: model.outMessages,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError)
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  if (snapshot.hasData) {
-                    List<ChatMessage> messages = [
-                      ...model.sendingMessages.reversed,
-                      ...snapshot.data
-                    ];
-                    return ListView.builder(
-                        padding: EdgeInsets.only(bottom: 16, top: 16),
-                        reverse: true,
-                        itemCount: messages.length,
-                        itemBuilder: (_, int index) {
-                          ChatMessage message = messages[index];
-                          return Opacity(
-                            opacity:
-                                index < messages.length - snapshot.data.length
-                                    ? .5
-                                    : 1,
-                            child: chatMessage(message,
-                                message.id == model.lastMessageRead?.id),
-                          );
-                        });
-                  }
-                  return Center(
-                    child: LoaderWidget(
-                      opacity: 0.1,
+            Scaffold(
+              backgroundColor: theme.backgroundColor,
+              appBar: AppBar(
+                backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
+                iconTheme:
+                    IconThemeData(color: theme.textTheme.headline4.color),
+                title: Row(
+                  children: [
+                    ProfilePictureWidget(
+                      path: model.caller.pictureUrl,
+                      radius: 15.0,
+                      backgroundColor: Colors.grey,
+                      borderThickness: 1.5,
                     ),
-                  );
-                },
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Text(
+                      model.caller.displayName(),
+                      style: theme.textTheme.headline4,
+                    )
+                  ],
+                ),
               ),
-            )),
-            chatBar(model.controller, () => model.sendMessage())
+              body: Column(
+                children: [
+                  Expanded(
+                      child: Container(
+                    child: StreamBuilder(
+                      stream: model.outMessages,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError)
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        if (snapshot.hasData) {
+                          List<ChatMessage> messages = [
+                            ...model.sendingMessages.reversed,
+                            ...snapshot.data
+                          ];
+                          return ListView.builder(
+                              padding: EdgeInsets.only(bottom: 16, top: 16),
+                              reverse: true,
+                              itemCount: messages.length,
+                              itemBuilder: (_, int index) {
+                                ChatMessage message = messages[index];
+                                return Opacity(
+                                  opacity: index <
+                                          messages.length - snapshot.data.length
+                                      ? .5
+                                      : 1,
+                                  child: chatMessage(message,
+                                      message.id == model.lastMessageRead?.id),
+                                );
+                              });
+                        }
+                        return Center(
+                          child: LoaderWidget(
+                            opacity: 0.1,
+                          ),
+                        );
+                      },
+                    ),
+                  )),
+                  chatBar(model.controller, () => model.sendMessage())
+                ],
+              ),
+            ),
+            model.playingFirstReadingAnimation
+                ? widget
+                : Visibility(visible: false, child: Container())
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 

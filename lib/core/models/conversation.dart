@@ -11,6 +11,7 @@ class Conversation {
   Timestamp lastMessageCreatedAt;
   bool isRead;
   List isDeletedList = [];
+  List participantsAlreadyFirstReading = [];
 
   User caller;
 
@@ -35,7 +36,9 @@ class Conversation {
         isRead =
             snapshot.data()[ConversationRepository.conversationIsReadReference],
         isDeletedList = snapshot.data()[
-            ConversationRepository.conversationParticipantInfoReference];
+            ConversationRepository.conversationParticipantInfoReference],
+        participantsAlreadyFirstReading = snapshot.data()[ConversationRepository
+            .conversationParticipantsAlreadyFirstReadingReference];
 
   Map<String, dynamic> toJson() => {
         ConversationRepository.conversationSenderUidReference: senderUid,
@@ -46,7 +49,10 @@ class Conversation {
             lastMessageCreatedAt,
         ConversationRepository.conversationIsReadReference: isRead,
         ConversationRepository.conversationParticipantInfoReference:
-            isDeletedList
+            isDeletedList,
+        ConversationRepository
+                .conversationParticipantsAlreadyFirstReadingReference:
+            participantsAlreadyFirstReading
       };
 }
 

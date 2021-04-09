@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:match_work/core/models/chat_message.dart';
 import 'package:match_work/core/models/conversation.dart';
+import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
 import 'package:match_work/core/utils/conversation_utils.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,6 +20,8 @@ class ConversationRepository {
   static String conversationLastMessageCreatedAtReference =
       'lastMessageCreatedAt';
   static String conversationIsReadReference = 'isRead';
+  static String conversationParticipantsAlreadyFirstReadingReference =
+      'participantsAlreadyFirstReading';
   static String conversationParticipantInfoReference = 'participantInfo';
   static String conversationParticipantInfoUserUidReference = 'userUid';
   static String conversationParticipantInfoIsDeletedReference = 'isDeleted';
@@ -136,5 +139,21 @@ class ConversationRepository {
         .update({conversationParticipantInfoReference: participantInfoList})
         .then((value) => true)
         .catchError((error) => false);
+  }
+
+  Future<bool> updateFirstReading(
+      {@required Conversation conversation, @required User user}) async {
+    if (!conversation.participantsAlreadyFirstReading.contains(user.uid)) {
+      conversation.participantsAlreadyFirstReading.add(user.uid);
+      return await _conversationsCollection
+          .doc(conversation.id)
+          .update({
+            conversationParticipantsAlreadyFirstReadingReference:
+                conversation.participantsAlreadyFirstReading
+          })
+          .then((value) => true)
+          .catchError((error) => false);
+    }
+    return true;
   }
 }

@@ -19,6 +19,7 @@ class ConversationViewModel extends BaseModel {
       ConversationRepository();
   ChatMessage lastMessageRead;
   List<ChatMessage> sendingMessages = []; //Liste des messages en cours d'envoi
+  bool playingFirstReadingAnimation = false;
 
   BehaviorSubject<List<ChatMessage>> _messagesSubject =
       BehaviorSubject<List<ChatMessage>>.seeded([]);
@@ -43,6 +44,14 @@ class ConversationViewModel extends BaseModel {
         .getConversationStream(conversationId: conversationId)
         .listen((Conversation conversation) {
       if (conversation != null && !_conversationSubject.isClosed) {
+        if (!conversation.participantsAlreadyFirstReading
+            .contains(_authenticationService.currentUser.uid)) {
+          playingFirstReadingAnimation = true;
+          notifyListeners();
+          _conversationRepository.updateFirstReading(
+              conversation: conversation,
+              user: _authenticationService.currentUser);
+        }
         _inConversation(conversation);
         if (!conversation.isRead &&
             conversation.receiverUid == authenticatedUserUid) {
@@ -97,6 +106,8 @@ class ConversationViewModel extends BaseModel {
       }
     });
   }
+
+  Future<bool> isFirstReading() async {}
 
   void sendMessage() {
     if (controller.text.trim() != '') {

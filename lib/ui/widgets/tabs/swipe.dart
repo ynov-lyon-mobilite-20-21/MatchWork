@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
@@ -29,6 +30,11 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<User> users = snapshot.data;
+                users.removeWhere((User user) =>
+                    user.uid ==
+                    Provider.of<AuthenticationService>(context)
+                        .currentUser
+                        .uid);
                 return users.length == 0
                     ? LoaderWidget()
                     : Center(
