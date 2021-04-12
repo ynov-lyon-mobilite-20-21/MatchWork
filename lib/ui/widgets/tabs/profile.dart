@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/modification_profil.dart';
 import 'package:match_work/ui/widgets/app_bar_widget.dart';
@@ -11,13 +13,15 @@ class ProfileView extends StatefulWidget {
   _ProfileViewState createState() => _ProfileViewState();
 }
 
+
 class _ProfileViewState extends State<ProfileView> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
 
   @override
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context).getTheme();
-
+    User currentUser = Provider.of<AuthenticationService>(context).currentUser;
     return Scaffold(
         appBar: AppBarWidget.showAppBar(
             context: context,
@@ -55,13 +59,13 @@ class _ProfileViewState extends State<ProfileView> {
                         padding: EdgeInsets.only(left: 30, top: 70),
                         child: Column(
                           children: [
-                            Text("Thomas Noel",
+                            Text(currentUser.displayName(),
                                 style: TextStyle(
                                   fontSize: 20.0,
                                   color: theme.textTheme.bodyText1.color,
                                   letterSpacing: 2.0,
                                 )),
-                            Text("18 ans",
+                            Text(currentUser.age.toString(),
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   color: theme.textTheme.bodyText1.color,
@@ -147,7 +151,7 @@ class _ProfileViewState extends State<ProfileView> {
                       title: Text('Description du profil :',
                           style: theme.textTheme.bodyText1),
                       subtitle: Text(
-                        ' ',
+                        currentUser.bio,
                         style: theme.textTheme.bodyText1,
                       ),
                     )
