@@ -39,3 +39,12 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# Firebase Config iOS
+GoogleService-Info.plist
+
+# iOS Build
+Runner.app.dSYM.zip
+Runner.ipa
+
+
