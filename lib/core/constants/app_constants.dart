@@ -110,7 +110,8 @@ class AppIcons {
     Tutorial,
     Settings,
     Coeur,
-    Croix
+    Croix,
+    Delete
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -126,6 +127,7 @@ class AppIcons {
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
   static const Coeur = "${ImagesPath.IconsPath}coeur.png";
   static const Croix = "${ImagesPath.IconsPath}croix.png";
+  static const Delete = "${ImagesPath.IconsPath}icon_supprimer.png";
 }
 
 class AppCarouselImage {

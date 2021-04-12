@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
+import 'package:match_work/ui/views/modification_profil.dart';
 import 'package:match_work/ui/widgets/app_bar_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -68,6 +69,20 @@ class _ProfileViewState extends State<ProfileView> {
                                 )),
                           ],
                         ),
+                      ),
+
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ModificationProfile()),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.settings,
+                          color: Colors.black,
+                        ),
+                        iconSize: 40.0,
                       ),
                     ],
                   ),
