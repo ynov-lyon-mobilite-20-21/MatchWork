@@ -5,32 +5,33 @@ class Experience {
   String id;
   String company;
   String job;
-  String startYear;
-  String endYear;
+  int startYear;
+  int endYear;
   String description;
 
   Experience(
       {this.id,
-        this.company,
-        this.job,
-        this.startYear,
-        this.endYear,
-        this.description});
+      this.company,
+      this.job,
+      this.startYear,
+      this.endYear,
+      this.description});
 
   Experience.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
         company = snapshot.data()[UserRepository.experienceCompanyReference],
-        job =snapshot.data()[UserRepository.experienceJobReference],
-        startYear = snapshot.data()[UserRepository.experienceStartYearReference],
+        job = snapshot.data()[UserRepository.experienceJobReference],
+        startYear =
+            snapshot.data()[UserRepository.experienceStartYearReference],
         endYear = snapshot.data()[UserRepository.experienceEndYearReference],
-        description =snapshot.data()[UserRepository.experienceDescriptionReference];
-
+        description =
+            snapshot.data()[UserRepository.experienceDescriptionReference];
 
   Map<String, dynamic> toJson() => {
-    UserRepository.experienceCompanyReference: company,
-    UserRepository.experienceJobReference: job,
-    UserRepository.experienceStartYearReference: startYear,
-    UserRepository.experienceEndYearReference: endYear,
-    UserRepository.experienceDescriptionReference: description
-  };
+        UserRepository.experienceCompanyReference: company,
+        UserRepository.experienceJobReference: job,
+        UserRepository.experienceStartYearReference: startYear,
+        UserRepository.experienceEndYearReference: endYear,
+        UserRepository.experienceDescriptionReference: description
+      };
 }

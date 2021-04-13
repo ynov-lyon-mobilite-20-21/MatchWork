@@ -14,6 +14,8 @@ class UserRepository {
   static String pictureUrlReference = 'pictureUrl';
   static String ageReference = 'age';
   static String bioReference = 'bio';
+  static String statusReference = 'status';
+  static String genderReference = 'gender';
   static String skillsReference = 'skills';
   static String formationsReference = 'formations';
   static String experiencesReference = 'experiences';

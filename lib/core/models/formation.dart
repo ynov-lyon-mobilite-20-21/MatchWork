@@ -4,8 +4,8 @@ import 'package:match_work/core/repositories/user_repository.dart';
 class Formation {
   String id;
   String school;
-  String startYear;
-  String endYear;
+  int startYear;
+  int endYear;
   String degree;
   String description;
 

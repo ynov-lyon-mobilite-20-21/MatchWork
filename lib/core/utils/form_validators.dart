@@ -29,4 +29,12 @@ class FormValidators {
     }
     return null;
   }
+
+  static String isAge(String value, [String message]) {
+    int age = int.parse(value, onError: (value) => -1);
+    if (age < 0 || age > 150) {
+      return message == null ? 'Age non valide' : message;
+    }
+    return null;
+  }
 }

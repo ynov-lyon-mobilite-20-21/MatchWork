@@ -22,6 +22,7 @@ class RoutePath {
   static const String Tchat = "tchat";
   static const String Profile = "profile";
   static const String Conversation = "conversation";
+  static const String EditProfile = "edit_profile";
 }
 
 class AppColors {
@@ -124,7 +125,8 @@ class AppIcons {
     ProfilGuillemet,
     Settings,
     Coeur,
-    Croix
+    Croix,
+    Delete
   ];
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
@@ -147,6 +149,7 @@ class AppIcons {
   static const ProfilGuillemet = "${ImagesPath.IconsPath}profil_guillemet.png";
   static const Coeur = "${ImagesPath.IconsPath}coeur.png";
   static const Croix = "${ImagesPath.IconsPath}croix.png";
+  static const Delete = "${ImagesPath.IconsPath}icon_supprimer.png";
 }
 
 class AppCarouselImage {

@@ -159,14 +159,23 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                       case LOGOUT:
                                         {
                                           model.signOut();
-                                          Navigator.pushNamed(
-                                              context, RoutePath.Start);
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  RoutePath.Start,
+                                                  (Route<dynamic> route) =>
+                                                      false);
                                         }
                                         break;
                                       case TUTORIAL:
                                         {
                                           Navigator.pushNamed(
                                               context, RoutePath.Tutorial);
+                                        }
+                                        break;
+                                      case EDIT_PROFILE:
+                                        {
+                                          Navigator.pushNamed(
+                                              context, RoutePath.EditProfile);
                                         }
                                         break;
                                     }
