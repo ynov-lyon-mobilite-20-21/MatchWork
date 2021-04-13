@@ -169,6 +169,12 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                               context, RoutePath.Tutorial);
                                         }
                                         break;
+                                      case EDIT_PROFILE:
+                                        {
+                                          Navigator.pushNamed(
+                                              context, RoutePath.EditProfile);
+                                        }
+                                        break;
                                     }
                                   }))
                               .toList()),

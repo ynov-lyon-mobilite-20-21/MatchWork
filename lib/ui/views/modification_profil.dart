@@ -168,8 +168,8 @@ class ModificationProfile extends StatelessWidget {
                     ),
                     decoration: InputDecoration(
                       labelStyle: TextStyle(
-                      color: isDarkMode?Colors.white:Colors.black,
-                    ),
+                        color: isDarkMode?Colors.white:Colors.black,
+                      ),
                       //border: OutlineInputBorder(),
                       labelText: 'Statut',
                       isDense: true,                      // Added this
@@ -251,21 +251,21 @@ class ModificationProfile extends StatelessWidget {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
+                                  width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
                             margin: EdgeInsets.only(right: 15, bottom: 10),
                             child: Padding(
                               padding: EdgeInsets.all(10),
                               child: Text("Compétence",
-                              style: TextStyle(
-                                color: isDarkMode?Colors.white:Color(0xff006E7F),
-                              )),
+                                  style: TextStyle(
+                                    color: isDarkMode?Colors.white:Color(0xff006E7F),
+                                  )),
                             )),
                         Container(
                             decoration: BoxDecoration(
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
+                                  width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
                             margin: EdgeInsets.only(right: 15,  bottom: 10),
                             child: Padding(
                               padding: EdgeInsets.all(10),
@@ -279,7 +279,7 @@ class ModificationProfile extends StatelessWidget {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
+                                  width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
                             margin: EdgeInsets.only(right: 15,  bottom: 10),
                             child: Padding(
                               padding: EdgeInsets.all(10),
@@ -293,7 +293,7 @@ class ModificationProfile extends StatelessWidget {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
+                                  width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
                             margin: EdgeInsets.only(right: 15,  bottom: 10),
                             child: Padding(
                               padding: EdgeInsets.all(10),
@@ -307,7 +307,7 @@ class ModificationProfile extends StatelessWidget {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
+                                  width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
                             margin: EdgeInsets.only(right: 15,  bottom: 10),
                             child: Padding(
                               padding: EdgeInsets.all(10),
@@ -321,7 +321,7 @@ class ModificationProfile extends StatelessWidget {
                                 color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(5),
                                 border: Border.all(
-                                    width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
+                                  width: 3.0, color: isDarkMode?Colors.white:Color(0xff006E7F),)),
                             margin: EdgeInsets.only(right: 15,  bottom: 10),
                             child: Padding(
                               padding: EdgeInsets.all(10),
@@ -337,19 +337,19 @@ class ModificationProfile extends StatelessWidget {
                     Row(
                       children: [
                         Container(padding: EdgeInsets.only(right: 1),
-                          width: 250,
-                          child: TextField(
-                            style: TextStyle(color: isDarkMode?Colors.white:Colors.black,),
-                            decoration: InputDecoration(
-                            labelStyle: TextStyle(color: isDarkMode?Colors.white:Colors.black,),
-                              //border: OutlineInputBorder(),
-                              labelText: 'entrez une compétence',
-                              isDense: true,                      // Added this
-                              // Added this
-                            ),
+                            width: 250,
+                            child: TextField(
+                              style: TextStyle(color: isDarkMode?Colors.white:Colors.black,),
+                              decoration: InputDecoration(
+                                labelStyle: TextStyle(color: isDarkMode?Colors.white:Colors.black,),
+                                //border: OutlineInputBorder(),
+                                labelText: 'entrez une compétence',
+                                isDense: true,                      // Added this
+                                // Added this
+                              ),
 
 
-                        )),
+                            )),
 
                         Container(padding: EdgeInsets.only(left: 20, right: 10),
                           child: ElevatedButton(
@@ -362,7 +362,7 @@ class ModificationProfile extends StatelessWidget {
                             },
                             child: Text('Ajouter',
                                 style: TextStyle(
-                                  color: Colors.white
+                                    color: Colors.white
                                 )),
                           ),
 
@@ -405,9 +405,9 @@ class ModificationProfile extends StatelessWidget {
 
                               Padding(padding: EdgeInsets.only(right: 20),
                                   child: ListTile(title: Text("Titre expérience",
-                                  style: TextStyle(
-                                    color: isDarkMode?Colors.white:Colors.black,
-                                  ),),
+                                    style: TextStyle(
+                                      color: isDarkMode?Colors.white:Colors.black,
+                                    ),),
                                     subtitle: Text("description",
                                       style: TextStyle(
                                         color: isDarkMode?Colors.white:Colors.black,
@@ -512,9 +512,9 @@ class ModificationProfile extends StatelessWidget {
 
                         },
                         child: Text('Ajouter',
-                        style: TextStyle(
-                          color: Colors.white
-                        ),),
+                          style: TextStyle(
+                              color: Colors.white
+                          ),),
 
                       ),
 
@@ -597,8 +597,8 @@ class ModificationProfile extends StatelessWidget {
                       ListTile(
                         title: Text('Ajouter une formation',
                           style: TextStyle(
-                          color: isDarkMode?Colors.white:Color(0xff006E7F),
-                        ),
+                            color: isDarkMode?Colors.white:Color(0xff006E7F),
+                          ),
 
                         ),
                       ),

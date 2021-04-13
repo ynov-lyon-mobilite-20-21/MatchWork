@@ -22,6 +22,7 @@ class RoutePath {
   static const String Tchat = "tchat";
   static const String Profile = "profile";
   static const String Conversation = "conversation";
+  static const String EditProfile = "edit_profile";
 }
 
 class AppColors {
@@ -86,7 +87,9 @@ class AppImages {
     UnknownUser,
     WelcomeWhite,
     WelcomeBlue,
-    ProfilBannere
+    ProfilBannere,
+    ProfilBannerDark,
+    ProfilBannerLight
   ];
 
   static const ProfilBannere =
@@ -94,20 +97,32 @@ class AppImages {
   static const UnknownUser = "${ImagesPath.RootPath}unknown_user.png";
   static const WelcomeWhite = "${ImagesPath.RootPath}welcome_white.png";
   static const WelcomeBlue = "${ImagesPath.RootPath}welcome_blue.png";
+  static const ProfilBannerLight =
+      "${ImagesPath.RootPath}profil_rec_banner_light.png";
+  static const ProfilBannerDark =
+      "${ImagesPath.RootPath}profil_rec_banner_dark.png";
 }
 
 class AppIcons {
   static const appIcons = [
     ActiveSwipe,
     InactiveSwipe,
+    InactiveSwipeDark,
     ActiveProfile,
     InactiveProfile,
+    InactiveProfileDark,
     ActiveChat,
     InactiveChat,
+    InactiveChatDark,
+    ActiveNews,
+    InactiveNews,
+    InactiveNewsDark,
     Logout,
     BrightnessMode,
     EditProfile,
     Tutorial,
+    Settings,
+    ProfilGuillemet,
     Settings,
     Coeur,
     Croix,
@@ -116,18 +131,26 @@ class AppIcons {
 
   static const ActiveSwipe = "${ImagesPath.IconsPath}match_on.png";
   static const InactiveSwipe = "${ImagesPath.IconsPath}match_off.png";
+  static const InactiveSwipeDark = "${ImagesPath.IconsPath}match_dark.png";
   static const ActiveProfile = "${ImagesPath.IconsPath}profil_on.png";
   static const InactiveProfile = "${ImagesPath.IconsPath}profil_off.png";
+  static const InactiveProfileDark = "${ImagesPath.IconsPath}profil_dark.png";
   static const ActiveChat = "${ImagesPath.IconsPath}chat_on.png";
   static const InactiveChat = "${ImagesPath.IconsPath}chat_off.png";
+  static const InactiveChatDark = "${ImagesPath.IconsPath}chat_dark.png";
+  static const ActiveNews = "${ImagesPath.IconsPath}actu_on.png";
+  static const InactiveNews = "${ImagesPath.IconsPath}actu_off.png";
+  static const InactiveNewsDark = "${ImagesPath.IconsPath}actu_dark.png";
   static const Logout = "${ImagesPath.IconsPath}icon_deco.png";
   static const BrightnessMode = "${ImagesPath.IconsPath}icon_mode.png";
   static const EditProfile = "${ImagesPath.IconsPath}icon_modif.png";
   static const Tutorial = "${ImagesPath.IconsPath}icon_tuto.png";
   static const Settings = "${ImagesPath.IconsPath}icon_parametre.png";
+  static const ProfilGuillemet = "${ImagesPath.IconsPath}profil_guillemet.png";
   static const Coeur = "${ImagesPath.IconsPath}coeur.png";
   static const Croix = "${ImagesPath.IconsPath}croix.png";
   static const Delete = "${ImagesPath.IconsPath}icon_supprimer.png";
+
 }
 
 class AppCarouselImage {
@@ -149,5 +172,7 @@ class AppCarouselImage {
 class AppAnimations {
   static const Loader = "${ImagesPath.GifAnimationPath}loading.gif";
   static const SplashLogo = "${ImagesPath.GifAnimationPath}splashLogo.gif";
+  static const MatchLight = "${ImagesPath.GifAnimationPath}match_light.gif";
+  static const MatchDark = "${ImagesPath.GifAnimationPath}match_dark.gif";
   static const SplashJsonLogo = "${ImagesPath.JsonAnimationPath}splash.json";
 }
