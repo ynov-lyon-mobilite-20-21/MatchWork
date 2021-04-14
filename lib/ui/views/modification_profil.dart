@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/enums/gender.dart';
-import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/date_utils.dart' as date_utils;
 import 'package:match_work/core/utils/form_validators.dart';
 import 'package:match_work/core/viewmodels/views/modification_profil_view_model.dart';
@@ -28,7 +27,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
     double width = MediaQuery.of(context).size.width * 0.91;
     return BaseWidget<ModificationProfileViewModel>(
         model: ModificationProfileViewModel(
-            user: Provider.of<AuthenticationService>(context).currentUser),
+            authenticationService: Provider.of(context)),
         onModelReady: (model) async => await model.getCurrentUser(),
         builder: (context, model, widget) => Scaffold(
               appBar: AppBar(
@@ -324,10 +323,24 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                   isDarkMode ? Color(0xff006E7F) : Colors.white,
                               child: Column(children: [
                                 ...model.user.experiences
-                                    .map((experience) => ExperienceWidget(
-                                          experience: experience,
-                                          onDelete: () => model
-                                              .removeExperience(experience),
+                                    .map((experience) => Column(
+                                          children: [
+                                            ExperienceWidget(
+                                              experience: experience,
+                                              onDelete: () => model
+                                                  .removeExperience(experience),
+                                            ),
+                                            Container(
+                                              height: 1,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.80,
+                                              color: isDarkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            )
+                                          ],
                                         )),
                               ]),
                             ),

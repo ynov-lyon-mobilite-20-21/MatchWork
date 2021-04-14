@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/viewmodels/widgets/tabs/profile_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
+import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/experience_widget.dart';
+import 'package:match_work/ui/widgets/formation_widget.dart';
+import 'package:match_work/ui/widgets/profile_picture_widget.dart';
+import 'package:match_work/ui/widgets/skill_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_constants.dart';
@@ -15,470 +21,297 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    var theme = Provider.of<ThemeProvider>(context).getTheme();
-    var isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-    //var textstyle = TextStyle(color : theme.text)
-    return Scaffold(
-        appBar: AppBarWidget.showAppBar(
-            context: context,
-            isVisible: true,
-            iconColor: Colors.white,
-            color: Color(0xff006E7F)),
-        backgroundColor: theme.scaffoldBackgroundColor,
-        body: SingleChildScrollView(
-            child: Stack(children: <Widget>[
-          Container(
-              child: Column(children: <Widget>[
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 1,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: isDarkMode
-                              ? AssetImage(AppImages.ProfilBannerDark)
-                              : AssetImage(AppImages.ProfilBannerLight),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CircleAvatar(
-                            radius: 70,
-                            backgroundColor: AppColors.CircleAvatarBorderColor,
-                            child: CircleAvatar(
-                              radius: 67,
-                              backgroundImage: AssetImage(AppIcons.Settings),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Column(
-                            children: [
-                              Text("Thomas Noel",
-                                  style: TextStyle(
-                                    fontSize: 22.0,
-                                    color: Colors.white,
-                                    letterSpacing: 2.0,
-                                  )),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text("18 ans",
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.white,
-                                    letterSpacing: 2.0,
-                                  )),
-                              SizedBox(
-                                height: 40,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+    ThemeData theme = Provider.of<ThemeProvider>(context).getTheme();
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+
+    return BaseWidget<ProfileModel>(
+      model: ProfileModel(authenticationService: Provider.of(context)),
+      onModelReady: (model) => model.listenUserStream(),
+      builder: (context, model, widget) => Scaffold(
+          appBar: AppBarWidget.showAppBar(
+              context: context,
+              isVisible: true,
+              iconColor: Colors.white,
+              color: Color(0xff006E7F)),
+          backgroundColor: theme.scaffoldBackgroundColor,
+          body: SingleChildScrollView(
+              child: Stack(children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width * 1,
-              color: isDarkMode ? Color(0xff00C4C4) : Colors.white,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text('Statut\n',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: isDarkMode
-                                ? Color(0xffF7F7F7)
-                                : AppColors.PrimaryColor,
-                          )),
-                      subtitle: Text(
-                        'qkjsdhqksjdhqisdu',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 1,
-              color: isDarkMode ? Color(0xff0B5C69) : Color(0xffF7F7F7),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 20,
-                  ),
+                child: Column(children: <Widget>[
+              Column(
+                children: [
                   Row(
                     children: [
-                      Image.asset(
-                        AppIcons.ProfilGuillemet,
-                        height: MediaQuery.of(context).size.width * 0.18,
-                        width: MediaQuery.of(context).size.width * 0.18,
-                        alignment: Alignment.topLeft,
-                      ),
-                      Expanded(
-                        child: ListTile(
-                          title: Text('Biographie',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
-                              )),
-                          subtitle: Text(
-                            '\nqskdqhksjdhqksdhqsskjdhqisduhqsidqssduhqssjdhqsjkdjqsuhiduqhsdqihjsxhdqksdhqhsdhqsjkdhgsqhdjhkqshdqsjkhshdqsjkhdgqsjhsdqsjhdh',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: isDarkMode ? Colors.white : Colors.black,
-                            ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: isDarkMode
+                                ? AssetImage(AppImages.ProfilBannerDark)
+                                : AssetImage(AppImages.ProfilBannerLight),
+                            fit: BoxFit.cover,
                           ),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            ProfilePictureWidget(
+                              radius: 67.0,
+                              borderThickness: 3.0,
+                              path: model.user.pictureUrl,
+                              backgroundColor:
+                                  AppColors.CircleAvatarBorderColor,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Column(
+                              children: [
+                                Text(model.user.displayName(),
+                                    style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                    )),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                model.user.age != null
+                                    ? Text("${model.user.age} ans",
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.white,
+                                          letterSpacing: 2.0,
+                                        ))
+                                    : Container(),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
                 ],
               ),
-            ),
-            Container(
-              color: isDarkMode ? Color(0xff006E7F) : Colors.white,
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 15.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Compétence",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: isDarkMode
-                            ? Color(0xffF7F7F7)
-                            : AppColors.PrimaryColor,
-                      ),
-                      textAlign: TextAlign.left,
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                color: isDarkMode ? Color(0xff00C4C4) : Colors.white,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Wrap(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              width: 3.0,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.91,
+                      child: ListTile(
+                        title: Text('Statut\n',
+                            style: TextStyle(
+                              fontSize: 20.0,
                               color: isDarkMode
                                   ? Color(0xffF7F7F7)
                                   : AppColors.PrimaryColor,
                             )),
-                        margin: EdgeInsets.only(right: 15, bottom: 10),
-                        child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              "Compétence",
-                              style: TextStyle(
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
+                        subtitle: model.user.status != null
+                            ? Text(
+                                model.user.status,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black,
+                                ),
+                              )
+                            : Center(
+                                child: Text(
+                                  "Aucun statut renseigné",
+                                  style: theme.textTheme.caption,
+                                ),
                               ),
-                            )),
                       ),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 3.0,
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
-                              )),
-                          margin: EdgeInsets.only(right: 15, bottom: 10),
-                          child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                "Compétence",
-                                style: TextStyle(
-                                  color: isDarkMode
-                                      ? Color(0xffF7F7F7)
-                                      : AppColors.PrimaryColor,
-                                ),
-                              ))),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 3.0,
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
-                              )),
-                          margin: EdgeInsets.only(right: 15, bottom: 10),
-                          child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                "Compétence",
-                                style: TextStyle(
-                                  color: isDarkMode
-                                      ? Color(0xffF7F7F7)
-                                      : AppColors.PrimaryColor,
-                                ),
-                              ))),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 3.0,
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
-                              )),
-                          margin: EdgeInsets.only(right: 15, bottom: 10),
-                          child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                "Compétence",
-                                style: TextStyle(
-                                  color: isDarkMode
-                                      ? Color(0xffF7F7F7)
-                                      : AppColors.PrimaryColor,
-                                ),
-                              ))),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 3.0,
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
-                              )),
-                          margin: EdgeInsets.only(right: 15, bottom: 10),
-                          child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                "Compétence",
-                                style: TextStyle(
-                                  color: isDarkMode
-                                      ? Color(0xffF7F7F7)
-                                      : AppColors.PrimaryColor,
-                                ),
-                              ))),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 3.0,
-                                color: isDarkMode
-                                    ? Color(0xffF7F7F7)
-                                    : AppColors.PrimaryColor,
-                              )),
-                          margin: EdgeInsets.only(right: 15, bottom: 10),
-                          child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                "Compétence",
-                                style: TextStyle(
-                                  color: isDarkMode
-                                      ? Color(0xffF7F7F7)
-                                      : AppColors.PrimaryColor,
-                                ),
-                              ))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              //width: MediaQuery.of(context).size.width * 0.91,
-              color: isDarkMode ? Color(0xff0B5C69) : Color(0xffF7F7F7),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
+              Container(
+                width: MediaQuery.of(context).size.width * 1,
+                color: isDarkMode ? Color(0xff0B5C69) : Color(0xffF7F7F7),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          AppIcons.ProfilGuillemet,
+                          height: MediaQuery.of(context).size.width * 0.18,
+                          width: MediaQuery.of(context).size.width * 0.18,
+                          alignment: Alignment.topLeft,
+                        ),
+                        Expanded(
+                          child: ListTile(
+                            title: Text('Biographie\n',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: isDarkMode
+                                      ? Color(0xffF7F7F7)
+                                      : AppColors.PrimaryColor,
+                                )),
+                            subtitle: model.user.bio != null
+                                ? Text(
+                                    model.user.bio,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  )
+                                : Center(
+                                    child: Text(
+                                      "Aucune biographie renseignée",
+                                      style: theme.textTheme.caption,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: isDarkMode ? Color(0xff006E7F) : Colors.white,
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 15.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    ListTile(
                       title: Text(
-                        'Expérience',
+                        "Compétence",
                         style: TextStyle(
                           fontSize: 20,
                           color: isDarkMode
                               ? Color(0xffF7F7F7)
                               : AppColors.PrimaryColor,
                         ),
+                        textAlign: TextAlign.left,
                       ),
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        '- \tStage numéro 1 : Entreprise 2017-2020',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '\t\t\tMon travail consist à blablabla',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        '- \tStage numéro 2 : Entreprise 2017-2020',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '\t\t\tMon travail consist à blablabla',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
+                    model.user.skills.length > 0
+                        ? Wrap(
+                            children: [
+                              ...model.user.skills
+                                  .map((skill) => SkillWidget(skill: skill))
+                            ],
+                          )
+                        : Center(
+                            child: Text(
+                              "Aucune compétence renseignée",
+                              style: theme.textTheme.caption,
+                            ),
+                          ),
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        '- \tTravail numéro 1 : Entreprise 2017-2020',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '\t\t\tMon travail consist à blablabla',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  //Affiche une ligne
-                  Container(
-                    height: 1,
-                    width: MediaQuery.of(context).size.width * 0.80,
-                    color: isDarkMode ? Colors.white : Colors.black,
-                  ),
-
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        'Formation',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: isDarkMode
-                              ? Color(0xffF7F7F7)
-                              : AppColors.PrimaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        '- \tStage numéro 1 : Entreprise 2017-2020',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '\t\t\tMon travail consist à blablabla',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        '- \tStage numéro 2 : Entreprise 2017-2020',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '\t\t\tMon travail consist à blablabla',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.91,
-                    child: ListTile(
-                      title: Text(
-                        '- \tTravail numéro 1 : Entreprise 2017-2020',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        '\t\t\tMon travail consist à blablabla',
-                        style: TextStyle(
-                          color: isDarkMode ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ])),
-        ])));
+              Container(
+                //width: MediaQuery.of(context).size.width * 0.91,
+                color: isDarkMode ? Color(0xff0B5C69) : Color(0xffF7F7F7),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.91,
+                      child: ListTile(
+                        title: Text(
+                          'Expérience',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: isDarkMode
+                                ? Color(0xffF7F7F7)
+                                : AppColors.PrimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    model.user.experiences.length > 0
+                        ? Column(
+                            children: [
+                              ...model.user.experiences.map((experience) =>
+                                  ExperienceWidget(experience: experience))
+                            ],
+                          )
+                        : Center(
+                            child: Text(
+                              "Aucune expérience renseignée",
+                              style: theme.textTheme.caption,
+                            ),
+                          ),
+                    Container(
+                      height: 1,
+                      width: MediaQuery.of(context).size.width * 0.80,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.91,
+                      child: ListTile(
+                        title: Text(
+                          'Formation',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: isDarkMode
+                                ? Color(0xffF7F7F7)
+                                : AppColors.PrimaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    model.user.formations.length > 0
+                        ? Column(
+                            children: [
+                              ...model.user.formations.map((formation) =>
+                                  FormationWidget(formation: formation))
+                            ],
+                          )
+                        : Center(
+                            child: Text(
+                              "Aucune formation renseignée",
+                              style: theme.textTheme.caption,
+                            ),
+                          ),
+                    SizedBox(
+                      height: 20.0,
+                    )
+                  ],
+                ),
+              ),
+            ])),
+          ]))),
+    );
   }
 }

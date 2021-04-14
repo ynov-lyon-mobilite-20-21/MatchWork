@@ -50,7 +50,7 @@ class _SkillWidgetState extends State<SkillWidget> {
                       color: isDarkMode ? Colors.white : Color(0xff006E7F),
                     ),
                   )
-                : null
+                : SizedBox()
           ],
         ),
       ),

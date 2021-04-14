@@ -3,10 +3,12 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/constants/string.dart';
 import 'package:match_work/core/models/drawer_option.dart';
+import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
 
 const TUTORIAL = 0;
@@ -35,6 +37,8 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    User currentUser = Provider.of<AuthenticationService>(context).currentUser;
+
     final Map<int, DrawerOptions> _drawerOption = {
       TUTORIAL: DrawerOptions(
           iconPath: AppIcons.Tutorial, title: TutorialTitle, iconSize: 25),
@@ -61,22 +65,13 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                     DrawerHeader(
                       child: Column(
                         children: [
-                          Container(
-                            child: CircleAvatar(
-                              radius: 90,
-                              backgroundColor:
-                                  AppColors.CircleAvatarBorderColor,
-                              child: CircleAvatar(
-                                radius: 47,
-                                backgroundImage:
-                                    AssetImage(AppImages.UnknownUser),
-                              ),
-                            ),
-                            height: 100,
-                            width: 100,
-                            margin: EdgeInsets.only(bottom: 15),
+                          ProfilePictureWidget(
+                            radius: 60.0,
+                            backgroundColor: AppColors.CircleAvatarBorderColor,
+                            path: currentUser.pictureUrl,
+                            borderThickness: 3.0,
                           ),
-                          Text("Jean-Baptise BENOIT",
+                          Text(currentUser.displayName(),
                               style:
                                   widget.theme.getTheme().textTheme.bodyText1),
                         ],
@@ -174,8 +169,10 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                         break;
                                       case EDIT_PROFILE:
                                         {
-                                          Navigator.pushNamed(
-                                              context, RoutePath.EditProfile);
+                                          Navigator.pushNamed(context,
+                                                  RoutePath.EditProfile)
+                                              .then((value) =>
+                                                  model.busy = false);
                                         }
                                         break;
                                     }

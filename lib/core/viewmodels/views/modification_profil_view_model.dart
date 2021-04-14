@@ -8,11 +8,13 @@ import 'package:match_work/core/models/formation.dart';
 import 'package:match_work/core/models/skill.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
+import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/storage_utils.dart';
 import 'package:match_work/core/viewmodels/base_model.dart';
 
 class ModificationProfileViewModel extends BaseModel {
   User user;
+  final AuthenticationService _authenticationService;
 
   File image;
   List<Skill> skillsToAdd = [];
@@ -52,10 +54,14 @@ class ModificationProfileViewModel extends BaseModel {
   TextEditingController startDateFormationController = TextEditingController();
   TextEditingController endDateFormationController = TextEditingController();
 
-  ModificationProfileViewModel({@required this.user});
+  ModificationProfileViewModel(
+      {@required AuthenticationService authenticationService})
+      : _authenticationService = authenticationService;
 
   Future<void> getCurrentUser() async {
     busy = true;
+
+    this.user = _authenticationService.currentUser;
 
     user.skills = [];
     user.formations = [];
@@ -105,6 +111,9 @@ class ModificationProfileViewModel extends BaseModel {
           .removeFormation(formation: formation, user: user));
       formationsToAdd.forEach((formation) async => await _userRepository
           .createFormation(formation: formation, user: user));
+
+      _authenticationService.updateUser(user);
+
       return true;
     }
     busy = false;

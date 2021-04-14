@@ -20,42 +20,33 @@ class _ExperienceWidgetState extends State<ExperienceWidget> {
     Experience experience = widget.experience;
     Function onDelete = widget.onDelete;
     bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
-    return Column(
-      children: [
-        Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: ListTile(
-              title: Text(
-                "${experience.job} : ${experience.company} ${experience.startDate}${experience.endDate != null ? ' - ' + experience.endDate : ''}",
-                style: TextStyle(
-                  color: isDarkMode ? Colors.white : Colors.black,
-                ),
-              ),
-              subtitle: Text(
-                experience.description ?? '',
-                style: TextStyle(
-                  color: isDarkMode ? Colors.white : Colors.black,
-                ),
-              ),
-              trailing: onDelete != null
-                  ? InkWell(
-                      onTap: () {
-                        onDelete();
-                      },
-                      child: Image.asset(
-                        AppIcons.Delete,
-                        width: MediaQuery.of(context).size.width * 0.1,
-                      ),
-                    )
-                  : null,
-              contentPadding: EdgeInsets.only(left: 20),
-            )),
-        Container(
-          height: 1.0,
-          width: MediaQuery.of(context).size.width * 0.80,
-          color: isDarkMode ? Colors.white : Colors.black,
-        )
-      ],
-    );
+    return Padding(
+        padding: EdgeInsets.only(right: 20),
+        child: ListTile(
+          title: Text(
+            "${experience.job} : ${experience.company} ${experience.startDate}${experience.endDate != null ? ' - ' + experience.endDate : ''}",
+            style: TextStyle(
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
+          subtitle: Text(
+            experience.description ?? '',
+            style: TextStyle(
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
+          trailing: onDelete != null
+              ? InkWell(
+                  onTap: () {
+                    onDelete();
+                  },
+                  child: Image.asset(
+                    AppIcons.Delete,
+                    width: MediaQuery.of(context).size.width * 0.1,
+                  ),
+                )
+              : null,
+          contentPadding: EdgeInsets.only(left: 20),
+        ));
   }
 }

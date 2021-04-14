@@ -63,6 +63,10 @@ class AuthenticationService {
     }
   }
 
+  Future<void> updateUser(User user) async {
+    _inUser(user);
+  }
+
   Future<String> registrationWithEmailAndPassword(
       {@required String email,
       @required String password,
