@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/enums/gender.dart';
 import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/date_utils.dart' as date_utils;
 import 'package:match_work/core/utils/form_validators.dart';
 import 'package:match_work/core/viewmodels/views/modification_profil_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
@@ -23,15 +24,37 @@ class _ModificationProfileState extends State<ModificationProfile> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Provider.of<ThemeProvider>(context).getTheme();
-    var isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
+    double width = MediaQuery.of(context).size.width * 0.91;
     return BaseWidget<ModificationProfileViewModel>(
         model: ModificationProfileViewModel(
             user: Provider.of<AuthenticationService>(context).currentUser),
         onModelReady: (model) async => await model.getCurrentUser(),
         builder: (context, model, widget) => Scaffold(
               appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  "Modification du profil",
+                  style: TextStyle(color: theme.iconTheme.color),
+                ),
                 backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
                 iconTheme: theme.iconTheme,
+                actions: [
+                  TextButton(
+                      onPressed: () async {
+                        bool success = await model.editProfile();
+                        if (success) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: model.busy
+                          ? CircularProgressIndicator()
+                          : Text(
+                              "Enregistrer",
+                              style: TextStyle(
+                                  color: AppColors.CircleAvatarBorderColor),
+                            ))
+                ],
               ),
               backgroundColor: theme.backgroundColor,
               body: SingleChildScrollView(
@@ -68,7 +91,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                               color: isDarkMode
                                   ? Color(0xff0B5C69)
                                   : Color(0xffF7F7F7),
-                              width: MediaQuery.of(context).size.width * 0.91,
+                              width: width,
                               child: Column(children: <Widget>[
                                 Container(
                                   child: Column(
@@ -183,7 +206,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                           height: 20,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.91,
+                          width: width,
                           child: TextFieldWidget(
                             label: "Statut",
                             controller: model.statusController,
@@ -193,10 +216,10 @@ class _ModificationProfileState extends State<ModificationProfile> {
                           height: 20,
                         ),
                         Container(
-                            width: MediaQuery.of(context).size.width * 0.91,
+                            width: width,
                             child: TextFieldWidget(
-                              label: "Description",
-                              controller: model.descriptionController,
+                              label: "Bio",
+                              controller: model.bioController,
                             )),
                         SizedBox(
                           height: 20,
@@ -240,45 +263,37 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                   }),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.only(right: 1),
-                                      width: 250,
-                                      child: TextField(
-                                        style: TextStyle(
-                                          color: isDarkMode
-                                              ? Colors.white
-                                              : Colors.black,
+                              Form(
+                                key: model.skillFormKey,
+                                child: Container(
+                                  width: width,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: TextFieldWidget(
+                                          label: "Entrez une compétence",
+                                          controller: model.skillController,
+                                          validation: (value) =>
+                                              FormValidators.isNotEmpty(value),
                                         ),
-                                        decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                            color: isDarkMode
-                                                ? Colors.white
-                                                : Colors.black,
-                                          ),
-                                          //border: OutlineInputBorder(),
-                                          labelText: 'entrez une compétence',
-                                          isDense: true, // Added this
-                                          // Added this
-                                        ),
-                                      )),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(left: 20, right: 10),
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Color(0xff00C4C4)),
                                       ),
-                                      onPressed: () {},
-                                      child: Text('Ajouter',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ),
-                                  )
-                                ],
+                                      SizedBox(
+                                        width: 20.0,
+                                      ),
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Color(0xff00C4C4)),
+                                        ),
+                                        onPressed: () => model.addSkill(),
+                                        child: Text('Ajouter',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                               SizedBox(
                                 height: 20,
@@ -290,7 +305,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                           height: 10,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.91,
+                          width: width,
                           child: Column(children: [
                             ListTile(
                               title: Text(
@@ -304,26 +319,15 @@ class _ModificationProfileState extends State<ModificationProfile> {
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.91,
+                              width: width,
                               color:
                                   isDarkMode ? Color(0xff006E7F) : Colors.white,
                               child: Column(children: [
                                 ...model.user.experiences
-                                    .map((experience) => Column(
-                                          children: [
-                                            ExperienceWidget(
-                                                experience: experience),
-                                            Container(
-                                              height: 1,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.80,
-                                              color: isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                            )
-                                          ],
+                                    .map((experience) => ExperienceWidget(
+                                          experience: experience,
+                                          onDelete: () => model
+                                              .removeExperience(experience),
                                         )),
                               ]),
                             ),
@@ -337,49 +341,86 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                 ),
                               ),
                             ),
-                            TextField(
-                              style: TextStyle(
-                                color: isDarkMode ? Colors.white : Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                  color:
-                                      isDarkMode ? Colors.white : Colors.black,
-                                ),
-                                //border: OutlineInputBorder(),
-                                labelText: 'Titre',
-                                isDense: true, // Added this
-                                // Added this
-                              ),
-                            ),
-                            TextField(
-                              style: TextStyle(
-                                color: isDarkMode ? Colors.white : Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                  color:
-                                      isDarkMode ? Colors.white : Colors.black,
-                                ),
-                                //border: OutlineInputBorder(),
-                                labelText: 'Description',
-                                isDense: true, // Added this
-                                // Added this
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color(0xff00C4C4)),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                'Ajouter',
-                                style: TextStyle(color: Colors.white),
+                            Form(
+                              key: model.experienceFormKey,
+                              child: Column(
+                                children: [
+                                  TextFieldWidget(
+                                    label: "Poste",
+                                    controller: model.jobExperienceController,
+                                    validation: (value) =>
+                                        FormValidators.isNotEmpty(value),
+                                  ),
+                                  TextFieldWidget(
+                                    label: "Description",
+                                    controller:
+                                        model.descriptionExperienceController,
+                                    validation: (value) =>
+                                        FormValidators.isNotEmpty(value),
+                                  ),
+                                  TextFieldWidget(
+                                    label: "Entreprise",
+                                    controller:
+                                        model.companyExperienceController,
+                                    validation: (value) =>
+                                        FormValidators.isNotEmpty(value),
+                                  ),
+                                  TextFieldWidget(
+                                    label: "Date de début",
+                                    controller:
+                                        model.startDateExperienceController,
+                                    inputType: TextInputType.datetime,
+                                    helperText:
+                                        "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
+                                    validation: (value) =>
+                                        FormValidators.isDate(value),
+                                  ),
+                                  TextFieldWidget(
+                                    label: "Date de fin",
+                                    controller:
+                                        model.endDateExperienceController,
+                                    inputType: TextInputType.datetime,
+                                    helperText:
+                                        "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
+                                    validation: (value) {
+                                      String error =
+                                          FormValidators.isDate(value);
+                                      if (error == null) {
+                                        DateTime dateDebut = date_utils
+                                                .DateUtils
+                                            .getDateFromString(model
+                                                .startDateExperienceController
+                                                .text
+                                                .trim());
+                                        DateTime dateFin = date_utils.DateUtils
+                                            .getDateFromString(value.trim());
+                                        if (dateDebut != null &&
+                                            dateFin != null &&
+                                            dateFin.isBefore(dateDebut)) {
+                                          error =
+                                              "La date de fin doit être supérieure à la date de début";
+                                        }
+                                      }
+
+                                      return error;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Color(0xff00C4C4)),
+                                    ),
+                                    onPressed: () => model.addExperience(),
+                                    child: Text(
+                                      'Ajouter',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                             SizedBox(
@@ -397,7 +438,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.91,
+                              width: width,
                               color:
                                   isDarkMode ? Color(0xff006E7F) : Colors.white,
                               child: Column(children: [
@@ -405,7 +446,10 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                     .map((formation) => Column(
                                           children: [
                                             FormationWidget(
-                                                formation: formation),
+                                              formation: formation,
+                                              onDelete: () => model
+                                                  .removeFormation(formation),
+                                            ),
                                             Container(
                                               height: 1,
                                               width: MediaQuery.of(context)
@@ -430,82 +474,89 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                 ),
                               ),
                             ),
-                            TextField(
-                              style: TextStyle(
-                                color: isDarkMode ? Colors.white : Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                  color:
-                                      isDarkMode ? Colors.white : Colors.black,
-                                ),
-                                //border: OutlineInputBorder(),
-                                labelText: 'Titre',
-                                isDense: true, // Added this
-                                // Added this
-                              ),
-                            ),
-                            TextField(
-                              style: TextStyle(
-                                color: isDarkMode ? Colors.white : Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                  color:
-                                      isDarkMode ? Colors.white : Colors.black,
-                                ),
-                                //border: OutlineInputBorder(),
-                                labelText: 'Description',
-                                isDense: true, // Added this
-                                // Added this
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color(0xff00C4C4)),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                'Ajouter',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Container(
-                                child: Column(children: [
-                              Row(children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.red, // background
-                                    onPrimary: Colors.white,
-                                  ),
-                                  onPressed: () {},
-                                  child: Text('Annuler'),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 20),
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Color(0xff00C4C4)),
+                            Form(
+                                key: model.formationFormKey,
+                                child: Column(
+                                  children: [
+                                    TextFieldWidget(
+                                      label: "Diplôme",
+                                      controller:
+                                          model.degreeFormationController,
+                                      validation: (value) =>
+                                          FormValidators.isNotEmpty(value),
                                     ),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Enregistrer les modifications',
-                                      style: TextStyle(color: Colors.white),
+                                    TextFieldWidget(
+                                      label: "Description",
+                                      controller:
+                                          model.descriptionFormationController,
+                                      validation: (value) =>
+                                          FormValidators.isNotEmpty(value),
                                     ),
-                                  ),
-                                ),
-                              ])
-                            ])),
+                                    TextFieldWidget(
+                                      label: "Ecole",
+                                      controller:
+                                          model.schoolFormationController,
+                                      validation: (value) =>
+                                          FormValidators.isNotEmpty(value),
+                                    ),
+                                    TextFieldWidget(
+                                      label: "Date de début",
+                                      controller:
+                                          model.startDateFormationController,
+                                      inputType: TextInputType.datetime,
+                                      helperText:
+                                          "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
+                                      validation: (value) =>
+                                          FormValidators.isDate(value),
+                                    ),
+                                    TextFieldWidget(
+                                        label: "Date de fin",
+                                        controller:
+                                            model.endDateFormationController,
+                                        inputType: TextInputType.datetime,
+                                        helperText:
+                                            "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
+                                        validation: (value) {
+                                          String error =
+                                              FormValidators.isDate(value);
+                                          if (error == null) {
+                                            DateTime dateDebut = date_utils
+                                                    .DateUtils
+                                                .getDateFromString(model
+                                                    .startDateFormationController
+                                                    .text
+                                                    .trim());
+                                            DateTime dateFin =
+                                                date_utils.DateUtils
+                                                    .getDateFromString(
+                                                        value.trim());
+                                            if (dateDebut != null &&
+                                                dateFin != null &&
+                                                dateFin.isBefore(dateDebut)) {
+                                              error =
+                                                  "La date de fin doit être supérieure à la date de début";
+                                            }
+                                          }
+
+                                          return error;
+                                        }),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Color(0xff00C4C4)),
+                                      ),
+                                      onPressed: () => model.addFormation(),
+                                      child: Text(
+                                        'Ajouter',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                )),
                             SizedBox(
                               height: 30,
                             ),

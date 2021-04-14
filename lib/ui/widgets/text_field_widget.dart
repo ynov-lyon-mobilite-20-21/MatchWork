@@ -9,6 +9,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool isObscureText;
   final TextInputType inputType;
   final Color color;
+  final helperText;
 
   TextFieldWidget(
       {Key key,
@@ -17,7 +18,8 @@ class TextFieldWidget extends StatefulWidget {
       this.label,
       this.isObscureText = false,
       this.inputType = TextInputType.text,
-      this.color})
+      this.color,
+      this.helperText})
       : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     return TextFormField(
       style: TextStyle(color: color),
       decoration: InputDecoration(
+        helperText: widget.helperText,
         fillColor: color,
         focusColor: color,
         hoverColor: color,

@@ -25,20 +25,20 @@ class _FormationWidgetState extends State<FormationWidget> {
         padding: EdgeInsets.only(right: 20),
         child: ListTile(
           title: Text(
-            "${formation.degree} : ${formation.school} ${formation.startYear} - ${formation.endYear}",
+            "${formation.degree} : ${formation.school} ${formation.startDate}${formation.endDate != null ? ' - ' + formation.endDate : ''}",
             style: TextStyle(
               color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           subtitle: Text(
-            formation.description,
+            formation.description ?? '',
             style: TextStyle(
               color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           trailing: onDelete != null
               ? InkWell(
-                  onTap: onDelete(),
+                  onTap: () => onDelete(),
                   child: Image.asset(
                     AppIcons.Delete,
                     width: MediaQuery.of(context).size.width * 0.1,

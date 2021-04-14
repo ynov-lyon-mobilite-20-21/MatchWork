@@ -31,10 +31,61 @@ class FormValidators {
   }
 
   static String isAge(String value, [String message]) {
-    int age = int.parse(value, onError: (value) => -1);
+    int age = -1;
+    try {
+      age = int.parse(value);
+    } catch (e) {}
     if (age < 0 || age > 150) {
       return message == null ? 'Age non valide' : message;
     }
+    return null;
+  }
+
+  static String isDate(String value, [String message]) {
+    if (value.isEmpty) {
+      return "Veuillez entrer une date";
+    }
+
+    List<String> dates = value.trim().split('/');
+
+    if (dates.length > 3) {
+      return 'Format de date invalide';
+    }
+
+    try {
+      int yearPosition = dates.length - 1;
+      int year = int.parse(dates[yearPosition]);
+      if (year < 1900 || year > 2100) {
+        return 'Année invalide';
+      }
+    } catch (e) {
+      return 'Format de l\'année invalide';
+    }
+
+    if (dates.length > 1) {
+      try {
+        int monthPosition = dates.length - 2;
+        int month = int.parse(dates[monthPosition]);
+        if (month < 1 || month > 12) {
+          return 'Mois invalide';
+        }
+      } catch (e) {
+        return 'Format du mois non valide';
+      }
+    }
+
+    if (dates.length > 2) {
+      try {
+        int dayPosition = dates.length - 3;
+        int day = int.parse(dates[dayPosition]);
+        if (day < 1 || day > 31) {
+          return 'Jour invalide';
+        }
+      } catch (e) {
+        return 'Format du jour non valide';
+      }
+    }
+
     return null;
   }
 }

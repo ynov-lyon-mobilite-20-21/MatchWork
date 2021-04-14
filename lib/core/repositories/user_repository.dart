@@ -23,14 +23,14 @@ class UserRepository {
   static String skillLabelReference = 'label';
 
   static String formationSchoolReference = 'school';
-  static String formationStartYearReference = 'startYear';
-  static String formationEndYearReference = 'endYear';
+  static String formationStartDateReference = 'startYear';
+  static String formationEndDateReference = 'endYear';
   static String formationDegreeReference = 'degree';
   static String formationDescriptionReference = 'description';
 
   static String experienceCompanyReference = 'company';
-  static String experienceStartYearReference = 'startYear';
-  static String experienceEndYearReference = 'endYear';
+  static String experienceStartDateReference = 'startYear';
+  static String experienceEndDateReference = 'endYear';
   static String experienceJobReference = 'job';
   static String experienceDescriptionReference = 'description';
 
@@ -129,6 +129,20 @@ class UserRepository {
     }
   }
 
+  Future<bool> removeSkill({@required Skill skill, @required User user}) async {
+    try {
+      await _usersCollection
+          .doc(user.uid)
+          .collection(skillsReference)
+          .doc(skill.id)
+          .delete();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<List<Skill>> getSkillsByUser(User user) async {
     List<Skill> skills = [];
 
@@ -154,6 +168,21 @@ class UserRepository {
     }
   }
 
+  Future<bool> removeFormation(
+      {@required Formation formation, @required User user}) async {
+    try {
+      await _usersCollection
+          .doc(user.uid)
+          .collection(formationsReference)
+          .doc(formation.id)
+          .delete();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<List<Formation>> getFormationsByUser(User user) async {
     List<Formation> formations = [];
 
@@ -163,7 +192,6 @@ class UserRepository {
         .get();
     snapshots.docs.forEach(
         (snapshot) => formations.add(Formation.fromSnapshot(snapshot)));
-
     return formations;
   }
 
@@ -174,6 +202,21 @@ class UserRepository {
           .doc(user.uid)
           .collection(experiencesReference)
           .add(experience.toJson());
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> removeExperience(
+      {@required Experience experience, @required User user}) async {
+    try {
+      await _usersCollection
+          .doc(user.uid)
+          .collection(experiencesReference)
+          .doc(experience.id)
+          .delete();
       return true;
     } catch (e) {
       print(e);

@@ -4,32 +4,32 @@ import 'package:match_work/core/repositories/user_repository.dart';
 class Formation {
   String id;
   String school;
-  int startYear;
-  int endYear;
+  String startDate;
+  String endDate;
   String degree;
   String description;
 
   Formation(
       {this.id,
       this.school,
-      this.startYear,
-      this.endYear,
+      this.startDate,
+      this.endDate,
       this.degree,
       this.description});
 
   Formation.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
         school = snapshot.data()[UserRepository.formationSchoolReference],
-        startYear = snapshot.data()[UserRepository.formationStartYearReference],
-        endYear = snapshot.data()[UserRepository.formationEndYearReference],
+        startDate = snapshot.data()[UserRepository.formationStartDateReference],
+        endDate = snapshot.data()[UserRepository.formationEndDateReference],
         degree = snapshot.data()[UserRepository.formationDegreeReference],
         description =
             snapshot.data()[UserRepository.formationDescriptionReference];
 
   Map<String, dynamic> toJson() => {
         UserRepository.formationSchoolReference: school,
-        UserRepository.formationStartYearReference: startYear,
-        UserRepository.formationEndYearReference: endYear,
+        UserRepository.formationStartDateReference: startDate,
+        UserRepository.formationEndDateReference: endDate,
         UserRepository.formationDegreeReference: degree,
         UserRepository.formationDescriptionReference: description
       };
