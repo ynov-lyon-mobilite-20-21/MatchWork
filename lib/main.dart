@@ -12,6 +12,7 @@ import 'package:match_work/ui/views/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_constants.dart';
+import 'ui/views/qr_code_scan_launcher_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
