@@ -199,6 +199,21 @@ class AuthenticationService {
     await _userRepository.updateUser(user);
   }
 
+  Future<String> removeUserAuth() async {
+    User user = this.currentUser;
+    bool success = await _userRepository.removeUser(user);
+    if (!success) {
+      return "Erreur lors de la suppresion de l'utilisateur en base de données";
+    }
+    try {
+      _auth.currentUser.delete();
+    } catch (e) {
+      return e.toString();
+    }
+
+    return null;
+  }
+
   Future signOut() async {
     await _auth.signOut();
   }

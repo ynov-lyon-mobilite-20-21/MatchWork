@@ -86,6 +86,16 @@ class ConversationRepository {
   Future createConversation({@required Conversation conversation}) async =>
       _conversationsCollection.doc(conversation.id).set(conversation.toJson());
 
+  Future removeConversationsByUser({@required User user}) async {
+    QuerySnapshot snapshot = await _conversationsCollection.where(
+        [conversationSenderUidReference, conversationReceiverUidReference],
+        isEqualTo: user.uid).get();
+    snapshot.docs.removeWhere((element) => true);
+    snapshot.docs.forEach((DocumentSnapshot documentSnapshot) async {
+      await _conversationsCollection.doc(documentSnapshot.id).delete();
+    });
+  }
+
   Future<bool> sendMessage(
       String senderUid, String callerUid, ChatMessage message) async {
     try {

@@ -85,6 +85,16 @@ class NewsRepository {
     return null;
   }
 
+  Future removeNewsByUser({@required User user}) async {
+    QuerySnapshot snapshot = await _newsCollection
+        .where(userUidReference, isEqualTo: user.uid)
+        .get();
+    snapshot.docs.forEach((DocumentSnapshot documentSnapshot) async {
+      News news = News.fromSnapshot(documentSnapshot);
+      await this.removeNews(news: news);
+    });
+  }
+
   Stream<List<News>> getNewsStream() => _newsCollection
           .orderBy(createdAtReference, descending: true)
           .snapshots()
