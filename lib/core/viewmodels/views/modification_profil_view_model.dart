@@ -91,7 +91,7 @@ class ModificationProfileViewModel extends BaseModel {
     busy = true;
     if (userFormKey.currentState.validate()) {
       if (image != null) {
-        user.pictureUrl = await StorageUtils.uploadImageNews(image);
+        user.pictureUrl = await StorageUtils.uploadImageUser(image);
       }
 
       user.firstName = firstNameController.text.trim();

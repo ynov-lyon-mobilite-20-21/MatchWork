@@ -113,7 +113,7 @@ class AuthenticationService {
     return _auth.currentUser != null ? null : 'Erreur';
   }
 
-  Future<String> signInWithGoogle() async {
+  Future<Firebase.AuthCredential> getGoogleCredential() async {
     // Trigger the authentication flow
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
@@ -127,6 +127,12 @@ class AuthenticationService {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+
+    return credential;
+  }
+
+  Future<String> signInWithGoogle() async {
+    Firebase.GoogleAuthCredential credential = await getGoogleCredential();
 
     // Once signed in, return the UserCredential
     await _auth.signInWithCredential(credential);
@@ -153,7 +159,7 @@ class AuthenticationService {
     return digest.toString();
   }
 
-  Future<String> signInWithApple() async {
+  Future<Firebase.AuthCredential> getAppleCredential() async {
     // To prevent replay attacks with the credential returned from Apple, we
     // include a nonce in the credential request. When signing in in with
     // Firebase, the nonce in the id token returned by Apple, is expected to
@@ -175,10 +181,14 @@ class AuthenticationService {
       idToken: appleCredential.identityToken,
       rawNonce: rawNonce,
     );
+    return oauthCredential;
+  }
 
+  Future<String> signInWithApple() async {
+    final credential = await getAppleCredential();
     // Sign in the user with Firebase. If the nonce we generated earlier does
     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-    await Firebase.FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    await Firebase.FirebaseAuth.instance.signInWithCredential(credential);
 
     await updateUserByAuth();
 
@@ -197,6 +207,30 @@ class AuthenticationService {
         mail: _auth.currentUser.email.toLowerCase(),
         pictureUrl: _auth.currentUser.photoURL);
     await _userRepository.updateUser(user);
+  }
+
+  Future<String> removeUserAuth(
+      {@required Firebase.AuthCredential credential}) async {
+    User user = this.currentUser;
+    bool success = await _userRepository.removeUser(user);
+    if (!success) {
+      return "Erreur lors de la suppresion de l'utilisateur en base de données";
+    }
+
+    try {
+      _auth.currentUser.reauthenticateWithCredential(credential);
+      _auth.currentUser.delete();
+    } catch (e) {
+      print(e);
+      return "Erreur lors de la suppresion de l'utilisateur Firebase";
+    }
+
+    return null;
+  }
+
+  bool testCredential(Firebase.AuthCredential credential) {
+    _auth.currentUser.reauthenticateWithCredential(credential);
+    return true;
   }
 
   Future signOut() async {

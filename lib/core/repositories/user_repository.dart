@@ -5,6 +5,10 @@ import 'package:match_work/core/models/experience.dart';
 import 'package:match_work/core/models/formation.dart';
 import 'package:match_work/core/models/skill.dart';
 import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/repositories/conversation_repository.dart';
+import 'package:match_work/core/repositories/match_request_repository.dart';
+import 'package:match_work/core/repositories/news_repository.dart';
+import 'package:match_work/core/utils/storage_utils.dart';
 
 class UserRepository {
   static String firstNameReference = 'firstName';
@@ -109,6 +113,29 @@ class UserRepository {
   Future<bool> updateUser(User user) async {
     try {
       await _usersCollection.doc(user.uid).set(user.toJson());
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> removeUser(User user) async {
+    try {
+      final ConversationRepository _conversationRepository =
+          ConversationRepository();
+      final MatchRequestRepository _matchRequestRepository =
+          MatchRequestRepository();
+      final NewsRepository _newsRepository = NewsRepository();
+
+      await _matchRequestRepository.removeMatchRequestsByUser(user: user);
+      await _conversationRepository.removeConversationsByUser(user: user);
+      await _newsRepository.removeNewsByUser(user: user);
+      if (user.pictureUrl != null) {
+        await StorageUtils.deleteFileFromFirebaseByUrl(
+            urlFile: user.pictureUrl);
+      }
+      await _usersCollection.doc(user.uid).delete();
       return true;
     } catch (e) {
       print(e);
