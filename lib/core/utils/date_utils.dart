@@ -16,7 +16,7 @@ class DateUtils {
       DateFormat('HH:mm').format(date);
 
   static DateTime getDateFromString(String value) {
-    List dates = value.split('/');
+    List dates = value.trim().split('/');
     int year;
     int month;
     int day;
@@ -57,5 +57,22 @@ class DateUtils {
     }
 
     return null;
+  }
+
+  static int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    int month1 = currentDate.month;
+    int month2 = birthDate.month;
+    if (month2 > month1) {
+      age--;
+    } else if (month1 == month2) {
+      int day1 = currentDate.day;
+      int day2 = birthDate.day;
+      if (day2 > day1) {
+        age--;
+      }
+    }
+    return age;
   }
 }

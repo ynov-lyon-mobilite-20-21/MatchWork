@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:image_picker/image_picker.dart';
 import 'package:match_work/core/enums/gender.dart';
 import 'package:match_work/core/models/experience.dart';
@@ -9,6 +10,7 @@ import 'package:match_work/core/models/skill.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
 import 'package:match_work/core/services/authentication_service.dart';
+import 'package:match_work/core/utils/date_utils.dart';
 import 'package:match_work/core/utils/storage_utils.dart';
 import 'package:match_work/core/viewmodels/base_model.dart';
 
@@ -31,7 +33,7 @@ class ModificationProfileViewModel extends BaseModel {
   final userFormKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
   TextEditingController statusController = TextEditingController();
   TextEditingController bioController = TextEditingController();
 
@@ -76,7 +78,9 @@ class ModificationProfileViewModel extends BaseModel {
 
     firstNameController.text = user.firstName;
     nameController.text = user.lastName;
-    ageController.text = user.age?.toString();
+    birthdayController.text = user.birthday != null
+        ? DateUtils.getDateFormat(user.birthday.toDate())
+        : '';
     bioController.text = user.bio;
     statusController.text = user.status;
 
@@ -92,7 +96,8 @@ class ModificationProfileViewModel extends BaseModel {
 
       user.firstName = firstNameController.text.trim();
       user.lastName = nameController.text.trim();
-      user.age = int.parse(ageController.text.trim());
+      user.birthday = Timestamp.fromDate(
+          DateUtils.getDateFromString(birthdayController.text.trim()));
       user.status = statusController.text.trim();
       user.bio = bioController.text.trim();
       _userRepository.updateUser(user);
@@ -208,13 +213,26 @@ class ModificationProfileViewModel extends BaseModel {
     busy = true;
     PickedFile pickedFile = await _imagePicker.getImage(
         source: ImageSource.gallery, imageQuality: 50);
-    image = File(pickedFile.path);
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+    }
     busy = false;
   }
 
   void setGender(Gender gender) {
     busy = true;
     user.gender = gender;
+    busy = false;
+  }
+
+  Future<void> selectBirthday(BuildContext context) async {
+    busy = true;
+    DateTime birthday = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime.now());
+    birthdayController.text = DateUtils.getDateFormat(birthday);
     busy = false;
   }
 }

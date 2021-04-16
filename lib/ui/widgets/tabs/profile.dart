@@ -80,8 +80,8 @@ class _ProfileState extends State<Profile> {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      model.user.age != null
-                                          ? Text("${model.user.age} ans",
+                                      model.user.birthday != null
+                                          ? Text("${model.user.getAge()} ans",
                                               style: TextStyle(
                                                 fontSize: 15.0,
                                                 color: Colors.white,

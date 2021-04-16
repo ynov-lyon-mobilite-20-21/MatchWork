@@ -10,6 +10,7 @@ class TextFieldWidget extends StatefulWidget {
   final TextInputType inputType;
   final Color color;
   final helperText;
+  final Function onTap;
 
   TextFieldWidget(
       {Key key,
@@ -19,7 +20,8 @@ class TextFieldWidget extends StatefulWidget {
       this.isObscureText = false,
       this.inputType = TextInputType.text,
       this.color,
-      this.helperText})
+      this.helperText,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         widget.color != null ? widget.color : (theme.textTheme.subtitle1.color);
 
     return TextFormField(
+      onTap: () => widget.onTap(),
       style: TextStyle(color: color),
       decoration: InputDecoration(
         helperText: widget.helperText,

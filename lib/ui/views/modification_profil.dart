@@ -139,22 +139,26 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                       Row(
                                         children: [
                                           Expanded(
-                                              flex: 1,
+                                              flex: 3,
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
                                                     right: 20.0),
                                                 child: TextFieldWidget(
-                                                    label: "Age",
-                                                    controller:
-                                                        model.ageController,
-                                                    inputType:
-                                                        TextInputType.number,
+                                                    label: "Naissance",
+                                                    controller: model
+                                                        .birthdayController,
+                                                    helperText:
+                                                        "Format dd/mm/yyyy",
+                                                    onTap: () async =>
+                                                        await model
+                                                            .selectBirthday(
+                                                                context),
                                                     validation: (value) =>
-                                                        FormValidators.isAge(
+                                                        FormValidators.isDate(
                                                             value)),
                                               )),
                                           Expanded(
-                                              flex: 4,
+                                              flex: 5,
                                               child: Row(
                                                 children: [
                                                   Text(

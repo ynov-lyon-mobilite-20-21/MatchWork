@@ -14,7 +14,7 @@ class User {
   String pictureUrl;
   String phoneNumber;
   String mail;
-  int age;
+  Timestamp birthday;
   String bio;
   String status;
   Gender gender;
@@ -29,7 +29,7 @@ class User {
       this.mail,
       this.phoneNumber,
       this.pictureUrl,
-      this.age,
+      this.birthday,
       this.bio,
       this.status,
       this.gender});
@@ -52,7 +52,7 @@ class User {
         lastName = snapshot.data()[UserRepository.lastNameReference] ?? '',
         firstName = snapshot.data()[UserRepository.firstNameReference] ?? '',
         pictureUrl = snapshot.data()[UserRepository.pictureUrlReference] ?? '',
-        age = snapshot.data()[UserRepository.ageReference],
+        birthday = snapshot.data()[UserRepository.birthdayReference],
         bio = snapshot.data()[UserRepository.bioReference] ?? '',
         status = snapshot.data()[UserRepository.statusReference] ?? '',
         gender = snapshot.data()[UserRepository.genderReference] != null
@@ -68,11 +68,15 @@ class User {
         UserRepository.lastNameReference: lastName ?? '',
         UserRepository.pictureUrlReference: pictureUrl ?? '',
         UserRepository.phoneNumberReference: phoneNumber ?? '',
-        UserRepository.ageReference: age,
+        UserRepository.birthdayReference: birthday,
         UserRepository.bioReference: bio ?? '',
         UserRepository.statusReference: status ?? '',
         UserRepository.genderReference: gender.toString()
       };
+
+  int getAge() => this.birthday != null
+      ? DateUtils.calculateAge(this.birthday.toDate())
+      : null;
 
   void sortFormations() {
     if (this.formations != null) {

@@ -12,7 +12,7 @@ class UserRepository {
   static String phoneNumberReference = 'phoneNumber';
   static String mailReference = 'mail';
   static String pictureUrlReference = 'pictureUrl';
-  static String ageReference = 'age';
+  static String birthdayReference = 'birthday';
   static String bioReference = 'bio';
   static String statusReference = 'status';
   static String genderReference = 'gender';
