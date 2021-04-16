@@ -175,6 +175,7 @@ class AppAnimations {
   static const MatchLight = "${ImagesPath.GifAnimationPath}match_light.gif";
   static const MatchDark = "${ImagesPath.GifAnimationPath}match_dark.gif";
   static const SplashJsonLogo = "${ImagesPath.JsonAnimationPath}splash.json";
+  static const FirstSwipe = "${ImagesPath.GifAnimationPath}FirstSwipe.gif";
 }
 
 class AppFiles {

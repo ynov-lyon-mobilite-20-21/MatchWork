@@ -171,7 +171,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                       case EDIT_PROFILE:
                                         {
                                           Navigator.pushNamed(context,
-                                                  RoutePath.EditProfile)
+                                                  RoutePath.EditProfile, arguments: true)
                                               .then((value) =>
                                                   model.busy = false);
                                         }

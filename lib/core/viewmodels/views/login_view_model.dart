@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:match_work/core/models/user.dart';
+import 'package:match_work/core/repositories/user_repository.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/base_model.dart';
 
 class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService;
+  final UserRepository _userRepository = UserRepository();
   String error;
 
   LoginViewModel({@required AuthenticationService authenticationService})
@@ -28,5 +31,12 @@ class LoginViewModel extends BaseModel {
     busy = true;
     await _authenticationService.signOut();
     busy = false;
+  }
+
+  Future<bool> isUserCreated() async {
+    busy = true;
+    User user = await _userRepository.getUserByUid(_authenticationService.getAuthUid());
+    busy = false;
+    return user != null;
   }
 }

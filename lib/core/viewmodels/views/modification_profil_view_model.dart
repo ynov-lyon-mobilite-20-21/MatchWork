@@ -17,6 +17,7 @@ import 'package:match_work/core/viewmodels/base_model.dart';
 class ModificationProfileViewModel extends BaseModel {
   User user;
   final AuthenticationService _authenticationService;
+  final bool isOldUser;
 
   File image;
   List<Skill> skillsToAdd = [];
@@ -57,7 +58,7 @@ class ModificationProfileViewModel extends BaseModel {
   TextEditingController endDateFormationController = TextEditingController();
 
   ModificationProfileViewModel(
-      {@required AuthenticationService authenticationService})
+      {@required AuthenticationService authenticationService, @required this.isOldUser})
       : _authenticationService = authenticationService;
 
   Future<void> getCurrentUser() async {
@@ -232,7 +233,10 @@ class ModificationProfileViewModel extends BaseModel {
         initialDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
-    birthdayController.text = DateUtils.getDateFormat(birthday);
+    if (birthday!=null){
+      birthdayController.text = DateUtils.getDateFormat(birthday);
+    }
+
     busy = false;
   }
 }

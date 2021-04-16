@@ -25,7 +25,8 @@ class AppRouter {
       case RoutePath.Tutorial:
         return MaterialPageRoute(builder: (_) => TutorialView());
       case RoutePath.EditProfile:
-        return MaterialPageRoute(builder: (_) => ModificationProfile());
+        bool isOldUser = settings.arguments as bool;
+        return MaterialPageRoute(builder: (_) => ModificationProfile(isOldUser: isOldUser,));
       case RoutePath.Conversation:
         User caller = settings.arguments as User;
         return MaterialPageRoute(

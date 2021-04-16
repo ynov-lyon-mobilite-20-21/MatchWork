@@ -27,6 +27,7 @@ class SwipeModel extends BaseModel {
       ConversationRepository();
 
   final CardController controller = CardController();
+  bool playingFirstReadingAnimation = false;
 
   BehaviorSubject<List<User>> _usersSubject =
       BehaviorSubject<List<User>>.seeded([]);

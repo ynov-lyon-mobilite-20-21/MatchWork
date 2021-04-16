@@ -6,6 +6,7 @@ import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_view.dart';
 
@@ -14,6 +15,12 @@ final List<String> imgList = AppCarouselImage.carouselImages;
 class TutorialView extends StatefulWidget {
   @override
   _TutorialViewState createState() => _TutorialViewState();
+}
+
+
+addStringToSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('isFirstLaunchSwipe', true);
 }
 
 class _TutorialViewState extends State<TutorialView> {
@@ -69,12 +76,14 @@ class CarouselButtonWidget extends StatefulWidget {
 
 class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
   static bool isVisible = false;
+  bool test;
 
   @override
   Widget build(BuildContext context) {
     var lastImage = widget.images.last;
     var _current = widget.images.indexOf(widget.currentImage);
     final double height = MediaQuery.of(context).size.height;
+    
 
     if (_current == widget.images.indexOf(lastImage) || isVisible) {
       isVisible = true;
@@ -85,6 +94,7 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
             height: height * 0.056,
             child: TextButton(
                 onPressed: () async {
+                  addStringToSF();
                   StorageManager.saveData("isFirstLaunch", false);
                   bool isAuthenticated =
                       await Provider.of<AuthenticationService>(context,

@@ -15,8 +15,13 @@ import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
 class ModificationProfile extends StatefulWidget {
+  final bool isOldUser;
+  ModificationProfile({
+    @required this.isOldUser
+  });
   @override
   _ModificationProfileState createState() => _ModificationProfileState();
+
 }
 
 class _ModificationProfileState extends State<ModificationProfile> {
@@ -27,6 +32,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
     double width = MediaQuery.of(context).size.width * 0.91;
     return BaseWidget<ModificationProfileViewModel>(
         model: ModificationProfileViewModel(
+            isOldUser: widget.isOldUser,
             authenticationService: Provider.of(context)),
         onModelReady: (model) async => await model.getCurrentUser(),
         builder: (context, model, widget) => Scaffold(
@@ -43,7 +49,9 @@ class _ModificationProfileState extends State<ModificationProfile> {
                       onPressed: () async {
                         bool success = await model.editProfile();
                         if (success) {
-                          Navigator.pop(context);
+                          model.isOldUser?
+                          Navigator.pop(context):
+                          Navigator.of(context).pushNamedAndRemoveUntil(RoutePath.Home, (route) => false);
                         }
                       },
                       child: model.busy

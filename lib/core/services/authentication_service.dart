@@ -131,7 +131,6 @@ class AuthenticationService {
     // Once signed in, return the UserCredential
     await _auth.signInWithCredential(credential);
 
-    await updateUserByAuth();
 
     return _auth.currentUser != null ? null : 'Erreur';
   }
@@ -180,24 +179,12 @@ class AuthenticationService {
     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
     await Firebase.FirebaseAuth.instance.signInWithCredential(oauthCredential);
 
-    await updateUserByAuth();
+
 
     return _auth.currentUser != null ? null : 'Erreur';
   }
 
-  Future<void> updateUserByAuth() async {
-    String displayName = _auth.currentUser.displayName;
-    String firstName = displayName.split(' ').first.toLowerCase();
-    String lastName = displayName.substring(firstName.length + 1).toLowerCase();
-    User user = User(
-        uid: _auth.currentUser.uid,
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: _auth.currentUser.phoneNumber,
-        mail: _auth.currentUser.email.toLowerCase(),
-        pictureUrl: _auth.currentUser.photoURL);
-    await _userRepository.updateUser(user);
-  }
+
 
   Future signOut() async {
     await _auth.signOut();
@@ -206,5 +193,9 @@ class AuthenticationService {
   void dispose() {
     _userSubject.close();
     _compositeSubscription.dispose();
+  }
+
+  String getAuthUid(){
+    return _auth.currentUser.uid;
   }
 }
