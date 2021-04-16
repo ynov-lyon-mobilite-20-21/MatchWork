@@ -9,7 +9,7 @@ import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
-import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/loader_widget.dart';
 import 'package:match_work/ui/widgets/tutorial_swipe_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

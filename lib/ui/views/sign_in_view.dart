@@ -6,7 +6,7 @@ import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_in_view_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
-import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/loader_widget.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:match_work/ui/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';

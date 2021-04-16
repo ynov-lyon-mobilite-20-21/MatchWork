@@ -10,13 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_view.dart';
 
-final List<String> imgList = AppCarouselImage.carouselImages;
+final List<String> imgList = AppOnBoardingImage.onBoardingImages;
 
 class TutorialView extends StatefulWidget {
   @override
   _TutorialViewState createState() => _TutorialViewState();
 }
-
 
 addStringToSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -83,7 +82,6 @@ class _CarouselButtonWidgetState extends State<CarouselButtonWidget> {
     var lastImage = widget.images.last;
     var _current = widget.images.indexOf(widget.currentImage);
     final double height = MediaQuery.of(context).size.height;
-    
 
     if (_current == widget.images.indexOf(lastImage) || isVisible) {
       isVisible = true;

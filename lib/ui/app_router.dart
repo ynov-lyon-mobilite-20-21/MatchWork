@@ -6,11 +6,12 @@ import 'package:match_work/ui/views/conversation_view.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/modification_profil.dart';
+import 'package:match_work/ui/views/onboarding_view.dart';
 import 'package:match_work/ui/views/pdf_screen_view.dart';
+import 'package:match_work/ui/views/qr_code_scan_launcher_view.dart';
 import 'package:match_work/ui/views/remove_auth_user_view.dart';
 import 'package:match_work/ui/views/sign_in_view.dart';
 import 'package:match_work/ui/views/sign_up_view.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -23,11 +24,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginView());
       case RoutePath.Register:
         return MaterialPageRoute(builder: (_) => SignUpView());
-      case RoutePath.Tutorial:
-        return MaterialPageRoute(builder: (_) => TutorialView());
       case RoutePath.EditProfile:
         bool isOldUser = settings.arguments as bool;
-        return MaterialPageRoute(builder: (_) => ModificationProfile(isOldUser: isOldUser,));
+        return MaterialPageRoute(
+            builder: (_) => ModificationProfile(
+                  isOldUser: isOldUser,
+                ));
+      case RoutePath.OnBoarding:
+        return MaterialPageRoute(builder: (_) => OnBoardingView());
+      case RoutePath.QrScan:
+        return MaterialPageRoute(builder: (_) => QRcodeScanLauncherView());
       case RoutePath.Conversation:
         User caller = settings.arguments as User;
         return MaterialPageRoute(

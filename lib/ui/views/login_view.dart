@@ -6,6 +6,7 @@ import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/viewmodels/views/login_view_model.dart';
 import 'package:match_work/ui/views/base_widget.dart';
+import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/widgets/round_logo_button.dart';
 import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +88,8 @@ class _LoginViewState extends State<LoginView> {
                                               scaffoldKey: _scaffoldKey,
                                               success: success,
                                               error: model.error,
-                                              isCreatedUser: model.isUserCreated))),
+                                              isCreatedUser:
+                                                  model.isUserCreated))),
                               Visibility(
                                 visible: Platform.isIOS,
                                 child: Padding(
@@ -103,7 +105,8 @@ class _LoginViewState extends State<LoginView> {
                                                   scaffoldKey: _scaffoldKey,
                                                   success: success,
                                                   error: model.error,
-                                                  isCreatedUser: model.isUserCreated))),
+                                                  isCreatedUser:
+                                                      model.isUserCreated))),
                                 ),
                               )
                             ],
@@ -126,13 +129,16 @@ void loginWithExternalService(
     {@required BuildContext context,
     @required GlobalKey<ScaffoldState> scaffoldKey,
     @required bool success,
-      @required Function isCreatedUser,
-    String error}) async{
+    @required Function isCreatedUser,
+    String error}) async {
   if (success) {
-   bool isOldUser = await isCreatedUser();
-   isOldUser ?
-   Navigator.of(context).pushNamedAndRemoveUntil(RoutePath.Home, (route) => false) :
-   Navigator.of(context).pushNamedAndRemoveUntil(RoutePath.EditProfile, (route) => false , arguments: isOldUser);
+    bool isOldUser = await isCreatedUser();
+    isOldUser
+        ? Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => HomeView()))
+        : Navigator.of(context).pushNamedAndRemoveUntil(
+            RoutePath.EditProfile, (route) => false,
+            arguments: isOldUser);
   } else {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(error),

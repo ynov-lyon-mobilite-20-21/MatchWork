@@ -6,7 +6,7 @@ import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/experience_widget.dart';
 import 'package:match_work/ui/widgets/formation_widget.dart';
-import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/loader_widget.dart';
 import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:match_work/ui/widgets/skill_widget.dart';
 import 'package:provider/provider.dart';
