@@ -29,7 +29,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
             stream: model.outUsers,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<User> users = snapshot.data;
+                List<User> users = snapshot.data..shuffle();
                 users.removeWhere((User user) =>
                     user.uid ==
                     Provider.of<AuthenticationService>(context)
