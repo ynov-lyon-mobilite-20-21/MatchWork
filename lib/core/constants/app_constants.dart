@@ -24,6 +24,7 @@ class RoutePath {
   static const String Conversation = "conversation";
   static const String EditProfile = "edit_profile";
   static const String Pdf = "pdf";
+  static const String DeleteUser = "delete_user";
 }
 
 class AppColors {
@@ -122,7 +123,6 @@ class AppIcons {
     BrightnessMode,
     EditProfile,
     Tutorial,
-    Settings,
     ProfilGuillemet,
     Settings,
     Coeur,

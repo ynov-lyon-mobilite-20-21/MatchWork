@@ -13,7 +13,7 @@ import 'package:match_work/ui/widgets/profile_picture_widget.dart';
 import 'package:provider/provider.dart';
 
 const TUTORIAL = 0;
-const SETTINGS = 1;
+const DELETE_USER = 1;
 const EDIT_PROFILE = 2;
 const CGU = 3;
 const LOGOUT = 4;
@@ -43,8 +43,8 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
     final Map<int, DrawerOptions> _drawerOption = {
       TUTORIAL: DrawerOptions(
           iconPath: AppIcons.Tutorial, title: TutorialTitle, iconSize: 25),
-      SETTINGS:
-          DrawerOptions(iconPath: AppIcons.Settings, title: SettingsTitle),
+      DELETE_USER:
+          DrawerOptions(iconPath: AppIcons.Delete, title: DeleteUserTitle),
       EDIT_PROFILE: DrawerOptions(
         iconPath: AppIcons.EditProfile,
         title: EditProfileString,
@@ -188,6 +188,11 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                                   model.busy = false);
                                         }
                                         break;
+                                      case DELETE_USER:
+                                        {
+                                          Navigator.pushNamed(
+                                              context, RoutePath.DeleteUser);
+                                        }
                                     }
                                   }))
                               .toList()),

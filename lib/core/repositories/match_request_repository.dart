@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/models/match_request.dart';
+import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/repositories/user_repository.dart';
 
 class MatchRequestRepository {
@@ -37,4 +38,20 @@ class MatchRequestRepository {
 
   Future removeMatchRequest({@required MatchRequest matchRequest}) async =>
       await _matchRequestsCollection.doc(matchRequest.id).delete();
+
+  Future removeMatchRequestsByUser({@required User user}) async {
+    QuerySnapshot snapshot = await _matchRequestsCollection
+        .where(senderUidReference, isEqualTo: user.uid)
+        .get();
+    snapshot.docs.forEach((DocumentSnapshot documentSnapshot) async =>
+        await this.removeMatchRequest(
+            matchRequest: MatchRequest.fromSnapshot(documentSnapshot)));
+
+    QuerySnapshot snapshot2 = await _matchRequestsCollection
+        .where(recipientUidReference, isEqualTo: user.uid)
+        .get();
+    snapshot2.docs.forEach((DocumentSnapshot documentSnapshot) async =>
+        await this.removeMatchRequest(
+            matchRequest: MatchRequest.fromSnapshot(documentSnapshot)));
+  }
 }

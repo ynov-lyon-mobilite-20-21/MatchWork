@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 
 class StorageUtils {
   static String newsReference = 'news';
+  static String usersReference = 'users';
 
   static Future<String> _uploadFile(
       {@required firebase_storage.Reference reference,
@@ -45,6 +46,15 @@ class StorageUtils {
     firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
         .ref()
         .child(newsReference)
+        .child('/${Timestamp.now().millisecondsSinceEpoch}');
+    return _uploadFile(file: file, reference: ref);
+  }
+
+  static Future<String> uploadImageUser(File file) async {
+    // Create a Reference to the file
+    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child(usersReference)
         .child('/${Timestamp.now().millisecondsSinceEpoch}');
     return _uploadFile(file: file, reference: ref);
   }

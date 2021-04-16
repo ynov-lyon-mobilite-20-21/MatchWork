@@ -141,6 +141,22 @@ class ConversationRepository {
         .catchError((error) => false);
   }
 
+  Future removeConversationsByUser({@required User user}) async {
+    QuerySnapshot snapshot = await _conversationsCollection
+        .where(conversationSenderUidReference, isEqualTo: user.uid)
+        .get();
+    snapshot.docs.forEach((DocumentSnapshot documentSnapshot) async {
+      await _conversationsCollection.doc(documentSnapshot.id).delete();
+    });
+
+    QuerySnapshot snapshot2 = await _conversationsCollection
+        .where(conversationReceiverUidReference, isEqualTo: user.uid)
+        .get();
+    snapshot2.docs.forEach((DocumentSnapshot documentSnapshot) async {
+      await _conversationsCollection.doc(documentSnapshot.id).delete();
+    });
+  }
+
   Future<bool> updateFirstReading(
       {@required Conversation conversation, @required User user}) async {
     if (!conversation.participantsAlreadyFirstReading.contains(user.uid)) {
