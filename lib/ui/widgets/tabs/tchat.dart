@@ -7,7 +7,7 @@ import 'package:match_work/core/viewmodels/widgets/tabs/tchat_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/conversation_widget.dart';
-import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/loader_widget.dart';
 import 'package:match_work/ui/widgets/match_request_widget.dart';
 import 'package:match_work/ui/widgets/search_bar_widget.dart';
 import 'package:provider/provider.dart';

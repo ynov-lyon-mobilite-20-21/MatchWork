@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/constants/string.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/services/image_loader.dart';
 import 'package:match_work/core/services/storage_manager.dart';
@@ -68,12 +69,9 @@ class _SplashScreenState extends State<SplashScreen> {
         await Provider.of<AuthenticationService>(context, listen: false)
             .isUserLoggedIn();
 
-    StorageManager.readData("isFirstLaunch").then((isFirstLaunch) => {
+    StorageManager.readData(StorageFirstaunchKey).then((isFirstLaunch) => {
           if (isFirstLaunch == null)
-            {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  RoutePath.Tutorial, (Route<dynamic> route) => false)
-            }
+            {Navigator.of(context).pushNamed(RoutePath.QrScan)}
           else if (isAuthenticated)
             {
               Navigator.pushReplacement(
@@ -134,11 +132,5 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // Never called
-    super.dispose();
   }
 }
