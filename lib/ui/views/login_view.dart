@@ -88,7 +88,8 @@ class _LoginViewState extends State<LoginView> {
                                               scaffoldKey: _scaffoldKey,
                                               success: success,
                                               error: model.error,
-                                              isCreatedUser: model.isUserCreated))),
+                                              isCreatedUser:
+                                                  model.isUserCreated))),
                               Visibility(
                                 visible: Platform.isIOS,
                                 child: Padding(
@@ -104,7 +105,8 @@ class _LoginViewState extends State<LoginView> {
                                                   scaffoldKey: _scaffoldKey,
                                                   success: success,
                                                   error: model.error,
-                                                  isCreatedUser: model.isUserCreated))),
+                                                  isCreatedUser:
+                                                      model.isUserCreated))),
                                 ),
                               )
                             ],
@@ -127,13 +129,16 @@ void loginWithExternalService(
     {@required BuildContext context,
     @required GlobalKey<ScaffoldState> scaffoldKey,
     @required bool success,
-      @required Function isCreatedUser,
-    String error}) async{
+    @required Function isCreatedUser,
+    String error}) async {
   if (success) {
-   bool isOldUser = await isCreatedUser();
-   isOldUser ?
-   Navigator.of(context).pushNamedAndRemoveUntil(RoutePath.Home, (route) => false) :
-   Navigator.of(context).pushNamedAndRemoveUntil(RoutePath.EditProfile, (route) => false , arguments: isOldUser);
+    bool isOldUser = await isCreatedUser();
+    isOldUser
+        ? Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => HomeView()))
+        : Navigator.of(context).pushNamedAndRemoveUntil(
+            RoutePath.EditProfile, (route) => false,
+            arguments: isOldUser);
   } else {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(error),

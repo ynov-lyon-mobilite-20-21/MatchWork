@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
-import 'package:match_work/core/services/storage_manager.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class TutorialSwipeAnimationWidget extends StatefulWidget {
   @override
-  _TutorialSwipeAnimationWidgetState createState() => _TutorialSwipeAnimationWidgetState();
+  _TutorialSwipeAnimationWidgetState createState() =>
+      _TutorialSwipeAnimationWidgetState();
 }
 
-class _TutorialSwipeAnimationWidgetState extends State<TutorialSwipeAnimationWidget> {
+class _TutorialSwipeAnimationWidgetState
+    extends State<TutorialSwipeAnimationWidget> {
   bool _animationIsPlaying = true;
 
   addStringToSF() async {

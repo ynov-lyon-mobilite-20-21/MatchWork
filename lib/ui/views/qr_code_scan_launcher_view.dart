@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/constants/string.dart';
-import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
 import 'package:match_work/ui/views/qr_code_scanner_resullt_view.dart';
 

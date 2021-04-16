@@ -6,7 +6,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:match_work/core/models/app_file.dart';
 import 'package:match_work/core/utils/storage_utils.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
-import 'package:match_work/ui/widgets/loaderWidget.dart';
+import 'package:match_work/ui/widgets/loader_widget.dart';
 import 'package:provider/provider.dart';
 
 class PDFScreenView extends StatefulWidget {
