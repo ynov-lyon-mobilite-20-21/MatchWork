@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/constants/string.dart';
+import 'package:match_work/core/models/app_file.dart';
 import 'package:match_work/core/models/drawer_option.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
@@ -171,6 +172,18 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
                                         {
                                           Navigator.pushNamed(context,
                                                   RoutePath.EditProfile)
+                                              .then((value) =>
+                                                  model.busy = false);
+                                        }
+                                        break;
+                                      case CGU:
+                                        {
+                                          Navigator.pushNamed(
+                                                  context, RoutePath.Pdf,
+                                                  arguments: AppFile(
+                                                      title: AppTitlesFiles
+                                                          .CGUBtoCTitle,
+                                                      path: AppFiles.CGUBtoC))
                                               .then((value) =>
                                                   model.busy = false);
                                         }

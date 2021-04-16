@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/models/app_file.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/ui/views/conversation_view.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
 import 'package:match_work/ui/views/modification_profil.dart';
+import 'package:match_work/ui/views/pdf_screen_view.dart';
 import 'package:match_work/ui/views/sign_in_view.dart';
 import 'package:match_work/ui/views/sign_up_view.dart';
 import 'package:match_work/ui/views/tutorial_view.dart';
@@ -30,6 +32,9 @@ class AppRouter {
             builder: (_) => ConversationView(
                   caller: caller,
                 ));
+      case RoutePath.Pdf:
+        AppFile file = settings.arguments as AppFile;
+        return MaterialPageRoute(builder: (_) => PDFScreenView(pdf: file));
       default:
         return MaterialPageRoute(
             builder: (_) => ErrorView(

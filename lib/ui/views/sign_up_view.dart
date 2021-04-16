@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
+import 'package:match_work/core/models/app_file.dart';
 import 'package:match_work/core/services/authentication_service.dart';
 import 'package:match_work/core/utils/keyboard_utils.dart';
 import 'package:match_work/core/viewmodels/views/sign_up_view_model.dart';
@@ -191,6 +193,12 @@ Widget _formWidget(
                       style: TextStyle(color: Colors.black),
                       children: <TextSpan>[
                         TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => Navigator.pushNamed(
+                                  context, RoutePath.Pdf,
+                                  arguments: AppFile(
+                                      title: AppTitlesFiles.CGUBtoCTitle,
+                                      path: AppFiles.CGUBtoC)),
                             text: "conditions générales d'utilisation ",
                             style: TextStyle(
                                 color: Provider.of<ThemeProvider>(context)

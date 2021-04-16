@@ -53,6 +53,7 @@ dependencies:
   html: ^0.15.0
   path_provider: ^1.6.28
   expandable: ^5.0.1
+  flutter_pdfview: ^1.0.4
 
 dev_dependencies:
   flutter_test:
@@ -109,6 +110,7 @@ flutter:
     - assets/animations/
     - assets/animations/gifs/
     - assets/animations/jsons/
+    - assets/files/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

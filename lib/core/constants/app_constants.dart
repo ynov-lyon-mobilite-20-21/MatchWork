@@ -23,6 +23,7 @@ class RoutePath {
   static const String Profile = "profile";
   static const String Conversation = "conversation";
   static const String EditProfile = "edit_profile";
+  static const String Pdf = "pdf";
 }
 
 class AppColors {
@@ -174,4 +175,13 @@ class AppAnimations {
   static const MatchLight = "${ImagesPath.GifAnimationPath}match_light.gif";
   static const MatchDark = "${ImagesPath.GifAnimationPath}match_dark.gif";
   static const SplashJsonLogo = "${ImagesPath.JsonAnimationPath}splash.json";
+}
+
+class AppFiles {
+  static const RootPath = "assets/files/";
+  static const CGUBtoC = "${AppFiles.RootPath}CGU_BtoC_MatchWork.pdf";
+}
+
+class AppTitlesFiles {
+  static const CGUBtoCTitle = "CGU BtoC";
 }
