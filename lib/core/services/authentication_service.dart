@@ -64,7 +64,7 @@ class AuthenticationService {
   }
 
   Future<void> updateUser(User user) async {
-    _inUser(user);
+    await _inUser(user);
   }
 
   Future<String> registrationWithEmailAndPassword(
@@ -133,11 +133,7 @@ class AuthenticationService {
 
   Future<String> signInWithGoogle() async {
     Firebase.GoogleAuthCredential credential = await getGoogleCredential();
-
-    // Once signed in, return the UserCredential
-    await _auth.signInWithCredential(credential);
-
-    return _auth.currentUser != null ? null : 'Erreur';
+    return await signInWithCredential(credential: credential);
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
@@ -184,11 +180,19 @@ class AuthenticationService {
 
   Future<String> signInWithApple() async {
     final credential = await getAppleCredential();
-    // Sign in the user with Firebase. If the nonce we generated earlier does
-    // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-    await Firebase.FirebaseAuth.instance.signInWithCredential(credential);
+    return await signInWithCredential(credential: credential);
+  }
 
-    return _auth.currentUser != null ? null : 'Erreur';
+  Future<String> signInWithCredential(
+      {@required Firebase.AuthCredential credential}) async {
+    await _auth.signInWithCredential(credential);
+    if (_auth.currentUser != null) {
+      User user =
+          User(uid: _auth.currentUser.uid, mail: _auth.currentUser.email);
+      await updateUser(user);
+      return null;
+    }
+    return 'Echec de connexion';
   }
 
   Future<String> removeUserAuth(
