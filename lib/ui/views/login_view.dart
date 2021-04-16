@@ -11,7 +11,6 @@ import 'package:match_work/ui/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
-import 'home_view.dart';
 
 class LoginView extends StatefulWidget {
   @override

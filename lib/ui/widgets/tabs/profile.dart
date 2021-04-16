@@ -119,7 +119,8 @@ class _ProfileState extends State<Profile> {
                                         ? Color(0xffF7F7F7)
                                         : AppColors.PrimaryColor,
                                   )),
-                              subtitle: model.user.status != null
+                              subtitle: model.user.status != null &&
+                                      model.user.status.trim().isNotEmpty
                                   ? Text(
                                       model.user.status,
                                       style: TextStyle(
@@ -172,7 +173,8 @@ class _ProfileState extends State<Profile> {
                                             ? Color(0xffF7F7F7)
                                             : AppColors.PrimaryColor,
                                       )),
-                                  subtitle: model.user.bio != null
+                                  subtitle: model.user.bio != null &&
+                                          model.user.bio.trim().isNotEmpty
                                       ? Text(
                                           model.user.bio,
                                           style: TextStyle(
@@ -278,10 +280,13 @@ class _ProfileState extends State<Profile> {
                                     style: theme.textTheme.caption,
                                   ),
                                 ),
-                          Container(
-                            height: 1,
-                            width: MediaQuery.of(context).size.width * 0.80,
-                            color: isDarkMode ? Colors.white : Colors.black,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 1,
+                              width: MediaQuery.of(context).size.width * 0.80,
+                              color: isDarkMode ? Colors.white : Colors.black,
+                            ),
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.91,

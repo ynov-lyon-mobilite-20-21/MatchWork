@@ -46,15 +46,14 @@ class User {
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : uid = snapshot.id,
-        phoneNumber =
-            snapshot.data()[UserRepository.phoneNumberReference] ?? '',
-        mail = snapshot.data()[UserRepository.mailReference] ?? '',
-        lastName = snapshot.data()[UserRepository.lastNameReference] ?? '',
-        firstName = snapshot.data()[UserRepository.firstNameReference] ?? '',
-        pictureUrl = snapshot.data()[UserRepository.pictureUrlReference] ?? '',
+        phoneNumber = snapshot.data()[UserRepository.phoneNumberReference],
+        mail = snapshot.data()[UserRepository.mailReference],
+        lastName = snapshot.data()[UserRepository.lastNameReference],
+        firstName = snapshot.data()[UserRepository.firstNameReference],
+        pictureUrl = snapshot.data()[UserRepository.pictureUrlReference],
         birthday = snapshot.data()[UserRepository.birthdayReference],
-        bio = snapshot.data()[UserRepository.bioReference] ?? '',
-        status = snapshot.data()[UserRepository.statusReference] ?? '',
+        bio = snapshot.data()[UserRepository.bioReference],
+        status = snapshot.data()[UserRepository.statusReference],
         gender = snapshot.data()[UserRepository.genderReference] != null
             ? (snapshot.data()[UserRepository.genderReference] ==
                     Gender.Woman.toString()
@@ -63,14 +62,14 @@ class User {
             : null;
 
   Map<String, dynamic> toJson() => {
-        UserRepository.mailReference: mail ?? '',
-        UserRepository.firstNameReference: firstName ?? '',
-        UserRepository.lastNameReference: lastName ?? '',
-        UserRepository.pictureUrlReference: pictureUrl ?? '',
-        UserRepository.phoneNumberReference: phoneNumber ?? '',
+        UserRepository.mailReference: mail,
+        UserRepository.firstNameReference: firstName,
+        UserRepository.lastNameReference: lastName,
+        UserRepository.pictureUrlReference: pictureUrl,
+        UserRepository.phoneNumberReference: phoneNumber,
         UserRepository.birthdayReference: birthday,
-        UserRepository.bioReference: bio ?? '',
-        UserRepository.statusReference: status ?? '',
+        UserRepository.bioReference: bio,
+        UserRepository.statusReference: status,
         UserRepository.genderReference: gender.toString()
       };
 

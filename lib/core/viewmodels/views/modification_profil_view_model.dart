@@ -58,7 +58,8 @@ class ModificationProfileViewModel extends BaseModel {
   TextEditingController endDateFormationController = TextEditingController();
 
   ModificationProfileViewModel(
-      {@required AuthenticationService authenticationService, @required this.isOldUser})
+      {@required AuthenticationService authenticationService,
+      @required this.isOldUser})
       : _authenticationService = authenticationService;
 
   Future<void> getCurrentUser() async {
@@ -92,6 +93,10 @@ class ModificationProfileViewModel extends BaseModel {
     busy = true;
     if (userFormKey.currentState.validate()) {
       if (image != null) {
+        if (user.pictureUrl != null && user.pictureUrl.trim().isNotEmpty) {
+          await StorageUtils.deleteFileFromFirebaseByUrl(
+              urlFile: user.pictureUrl);
+        }
         user.pictureUrl = await StorageUtils.uploadImageUser(image);
       }
 
@@ -233,7 +238,7 @@ class ModificationProfileViewModel extends BaseModel {
         initialDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
-    if (birthday!=null){
+    if (birthday != null) {
       birthdayController.text = DateUtils.getDateFormat(birthday);
     }
 

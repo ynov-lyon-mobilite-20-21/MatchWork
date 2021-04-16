@@ -219,7 +219,8 @@ Widget _formWidget(
                 model.signUp().then((bool success) {
                   if (success) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        RoutePath.Home, (route) => false);
+                        RoutePath.EditProfile, (route) => false,
+                        arguments: false);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(model.error),

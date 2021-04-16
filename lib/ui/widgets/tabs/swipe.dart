@@ -6,14 +6,12 @@ import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/user.dart';
 import 'package:match_work/core/services/authentication_service.dart';
-import 'package:match_work/core/services/storage_manager.dart';
 import 'package:match_work/core/viewmodels/widgets/tabs/swipe_model.dart';
 import 'package:match_work/ui/provider/theme_provider.dart';
 import 'package:match_work/ui/views/base_widget.dart';
 import 'package:match_work/ui/widgets/loaderWidget.dart';
 import 'package:match_work/ui/widgets/tutorial_swipe_animation_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:match_work/ui/views/tutorial_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Swipe extends StatefulWidget {
@@ -25,9 +23,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   Future<bool> isUserLoggedin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!(prefs.getBool("isFirstLaunchSwipe") ?? true)) {
-      var checkValue = await prefs.getBool("isFirstLaunchSwipe");
+      var checkValue = prefs.getBool("isFirstLaunchSwipe");
       return checkValue;
     }
+    return false;
   }
 
   @override

@@ -137,7 +137,6 @@ class AuthenticationService {
     // Once signed in, return the UserCredential
     await _auth.signInWithCredential(credential);
 
-
     return _auth.currentUser != null ? null : 'Erreur';
   }
 
@@ -189,12 +188,8 @@ class AuthenticationService {
     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
     await Firebase.FirebaseAuth.instance.signInWithCredential(credential);
 
-
-
     return _auth.currentUser != null ? null : 'Erreur';
   }
-
-
 
   Future<String> removeUserAuth(
       {@required Firebase.AuthCredential credential}) async {
@@ -215,9 +210,16 @@ class AuthenticationService {
     return null;
   }
 
-  bool testCredential(Firebase.AuthCredential credential) {
-    _auth.currentUser.reauthenticateWithCredential(credential);
-    return true;
+  Future<bool> testCredential(Firebase.AuthCredential credential) async {
+    try {
+      Firebase.UserCredential userCredential;
+      userCredential = await _auth.currentUser
+          .reauthenticateWithCredential(credential)
+          .onError((error, stackTrace) => null);
+      return userCredential != null;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future signOut() async {
@@ -229,7 +231,7 @@ class AuthenticationService {
     _compositeSubscription.dispose();
   }
 
-  String getAuthUid(){
+  String getAuthUid() {
     return _auth.currentUser.uid;
   }
 }

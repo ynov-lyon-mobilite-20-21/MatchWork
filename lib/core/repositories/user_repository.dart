@@ -48,14 +48,8 @@ class UserRepository {
           .map((DocumentSnapshot snapshot) {
         if (snapshot.exists) {
           return User.fromSnapshot(snapshot);
-        } else {
-          User user = User(
-            uid: firebaseUser.uid,
-            mail: firebaseUser.email,
-          );
-          createUser(user);
-          return user;
         }
+        return null;
       });
 
   Stream<List<User>> getAllUsersStream() {
@@ -131,7 +125,7 @@ class UserRepository {
       await _matchRequestRepository.removeMatchRequestsByUser(user: user);
       await _conversationRepository.removeConversationsByUser(user: user);
       await _newsRepository.removeNewsByUser(user: user);
-      if (user.pictureUrl != null) {
+      if (user.pictureUrl != null && user.pictureUrl.trim().isNotEmpty) {
         await StorageUtils.deleteFileFromFirebaseByUrl(
             urlFile: user.pictureUrl);
       }

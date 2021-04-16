@@ -28,7 +28,7 @@ class RemoveAuthUserViewModel extends BaseModel {
       AuthCredential credential = EmailAuthProvider.credential(
           email: emailController.text.trim(),
           password: passwordController.text);
-      isValid = _authenticationService.testCredential(credential);
+      isValid = await _authenticationService.testCredential(credential);
       if (isValid) {
         error = await removeAuthUser(credential);
       } else {
@@ -44,7 +44,7 @@ class RemoveAuthUserViewModel extends BaseModel {
 
     bool isValid = true;
     final credential = await _authenticationService.getGoogleCredential();
-    isValid = _authenticationService.testCredential(credential);
+    isValid = await _authenticationService.testCredential(credential);
     if (isValid) {
       error = await removeAuthUser(credential);
     } else {
@@ -59,7 +59,7 @@ class RemoveAuthUserViewModel extends BaseModel {
 
     bool isValid = true;
     final credential = await _authenticationService.getAppleCredential();
-    isValid = _authenticationService.testCredential(credential);
+    isValid = await _authenticationService.testCredential(credential);
     if (isValid) {
       error = await removeAuthUser(credential);
     } else {
