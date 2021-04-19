@@ -5,7 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/constants/string.dart';
 import 'package:match_work/core/utils/device_bar_utils.dart';
-import 'package:match_work/ui/views/qr_code_scanner_resullt_view.dart';
+import 'package:match_work/ui/views/qr_code_scanner_result_view.dart';
 
 class QRcodeScanLauncherView extends StatefulWidget {
   @override
@@ -34,18 +34,6 @@ class _QRcodeScanLauncherViewState extends State<QRcodeScanLauncherView> {
         ),
         child: Column(
           children: [
-            InkWell(
-              onTap: () => Navigator.of(context).pop(),
-              child: Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(
-                    top: screenHeight / 20, left: screenHeight / 20),
-                child: Text(
-                  BackTitle,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ),
-            ),
             Container(
               alignment: Alignment.center,
               padding: EdgeInsets.only(top: screenHeight / 15),
@@ -81,13 +69,26 @@ class _QRcodeScanLauncherViewState extends State<QRcodeScanLauncherView> {
             Container(
                 width: screenHeight / 2.8,
                 height: screenHeight / 8,
-                padding: EdgeInsets.only(top: screenHeight / 15),
+                padding: EdgeInsets.only(top: screenHeight / 20),
                 child: RaisedButton(
                   child: Text(
                     "scannez".toUpperCase(),
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async => scanQRCode(),
+                  color: AppColors.AccentColor,
+                )),
+            Container(
+                width: screenHeight / 2.8,
+                height: screenHeight / 8,
+                padding: EdgeInsets.only(top: screenHeight / 20),
+                child: RaisedButton(
+                  child: Text(
+                    "entrez le code".toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async =>
+                      Navigator.of(context).pushNamed(RoutePath.Code),
                   color: AppColors.AccentColor,
                 )),
           ],

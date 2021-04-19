@@ -26,6 +26,7 @@ class RoutePath {
   static const String Pdf = "pdf";
   static const String DeleteUser = "delete_user";
   static const QrScan = "qrCode";
+  static const Code = "code";
 }
 
 class AppColors {
