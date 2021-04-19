@@ -29,7 +29,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   addStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("isFirstLaunchSwipe", true);
     prefs.setBool(StorageFirstaunchKey, false);
   }
 
