@@ -391,7 +391,6 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                     label: "Date de début",
                                     controller:
                                         model.startDateExperienceController,
-                                    inputType: TextInputType.datetime,
                                     helperText:
                                         "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                     validation: (value) =>
@@ -401,7 +400,6 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                     label: "Date de fin",
                                     controller:
                                         model.endDateExperienceController,
-                                    inputType: TextInputType.datetime,
                                     helperText:
                                         "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                     validation: (value) {
@@ -525,7 +523,6 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                       label: "Date de début",
                                       controller:
                                           model.startDateFormationController,
-                                      inputType: TextInputType.datetime,
                                       helperText:
                                           "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                       validation: (value) =>
@@ -535,7 +532,6 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                         label: "Date de fin",
                                         controller:
                                             model.endDateFormationController,
-                                        inputType: TextInputType.datetime,
                                         helperText:
                                             "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                         validation: (value) {
