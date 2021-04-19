@@ -36,8 +36,8 @@ class User {
 
   String displayName() {
     String lastName =
-        this.lastName.isNotEmpty ? this.lastName.toUpperCase() : '';
-    String firstName = this.firstName.isNotEmpty
+        this.lastName.isNotEmpty ? this.lastName.trim().toUpperCase() : '';
+    String firstName = this.firstName.trim().isNotEmpty
         ? this.firstName[0].toUpperCase() +
             this.firstName.substring(1).toLowerCase()
         : '';
@@ -46,14 +46,15 @@ class User {
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : uid = snapshot.id,
-        phoneNumber = snapshot.data()[UserRepository.phoneNumberReference],
-        mail = snapshot.data()[UserRepository.mailReference],
-        lastName = snapshot.data()[UserRepository.lastNameReference],
-        firstName = snapshot.data()[UserRepository.firstNameReference],
+        phoneNumber =
+            snapshot.data()[UserRepository.phoneNumberReference] ?? '',
+        mail = snapshot.data()[UserRepository.mailReference] ?? '',
+        lastName = snapshot.data()[UserRepository.lastNameReference] ?? '',
+        firstName = snapshot.data()[UserRepository.firstNameReference] ?? '',
         pictureUrl = snapshot.data()[UserRepository.pictureUrlReference],
         birthday = snapshot.data()[UserRepository.birthdayReference],
-        bio = snapshot.data()[UserRepository.bioReference],
-        status = snapshot.data()[UserRepository.statusReference],
+        bio = snapshot.data()[UserRepository.bioReference] ?? '',
+        status = snapshot.data()[UserRepository.statusReference] ?? '',
         gender = snapshot.data()[UserRepository.genderReference] != null
             ? (snapshot.data()[UserRepository.genderReference] ==
                     Gender.Woman.toString()
