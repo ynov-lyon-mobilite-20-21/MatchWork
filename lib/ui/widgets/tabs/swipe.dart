@@ -22,7 +22,7 @@ class Swipe extends StatefulWidget {
 class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
   Future<bool> isUserLoggedin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!(prefs.getBool("isFirstLaunchSwipe") ?? true)) {
+    if (!(prefs.getBool("isFirstLaunchSwipe") == true)) {
       var checkValue = prefs.getBool("isFirstLaunchSwipe");
       return checkValue;
     }
