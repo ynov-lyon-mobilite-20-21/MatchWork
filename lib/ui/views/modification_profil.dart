@@ -155,6 +155,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                                         TextInputType.datetime,
                                                     controller: model
                                                         .birthdayController,
+                                                    automaticFormatDate: true,
                                                     helperText:
                                                         "Format dd/mm/yyyy",
                                                     validation: (value) =>
@@ -391,6 +392,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                     controller:
                                         model.startDateExperienceController,
                                     inputType: TextInputType.datetime,
+                                    automaticFormatDate: true,
                                     helperText:
                                         "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                     validation: (value) =>
@@ -401,6 +403,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                     controller:
                                         model.endDateExperienceController,
                                     inputType: TextInputType.datetime,
+                                    automaticFormatDate: true,
                                     helperText:
                                         "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                     validation: (value) {
@@ -525,6 +528,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                       controller:
                                           model.startDateFormationController,
                                       inputType: TextInputType.datetime,
+                                      automaticFormatDate: true,
                                       helperText:
                                           "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                       validation: (value) =>
@@ -535,6 +539,7 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                         controller:
                                             model.endDateFormationController,
                                         inputType: TextInputType.datetime,
+                                        automaticFormatDate: true,
                                         helperText:
                                             "Format dd/mm/yyyy ou mm/yyyy ou yyyy",
                                         validation: (value) {
