@@ -36,10 +36,11 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         widget.color != null ? widget.color : (theme.textTheme.subtitle1.color);
 
     return TextFormField(
-      onTap: () => widget.onTap != null ? widget.onTap(): null,
+      onTap: () => widget.onTap != null ? widget.onTap() : null,
       style: TextStyle(color: color),
       decoration: InputDecoration(
         helperText: widget.helperText,
+        errorMaxLines: 5,
         fillColor: color,
         focusColor: color,
         hoverColor: color,

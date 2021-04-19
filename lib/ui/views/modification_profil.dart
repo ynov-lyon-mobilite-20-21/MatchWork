@@ -16,12 +16,9 @@ import 'package:provider/provider.dart';
 
 class ModificationProfile extends StatefulWidget {
   final bool isOldUser;
-  ModificationProfile({
-    @required this.isOldUser
-  });
+  ModificationProfile({@required this.isOldUser});
   @override
   _ModificationProfileState createState() => _ModificationProfileState();
-
 }
 
 class _ModificationProfileState extends State<ModificationProfile> {
@@ -49,9 +46,10 @@ class _ModificationProfileState extends State<ModificationProfile> {
                       onPressed: () async {
                         bool success = await model.editProfile();
                         if (success) {
-                          model.isOldUser?
-                          Navigator.pop(context):
-                          Navigator.of(context).pushNamedAndRemoveUntil(RoutePath.Home, (route) => false);
+                          model.isOldUser
+                              ? Navigator.pop(context)
+                              : Navigator.of(context).pushNamedAndRemoveUntil(
+                                  RoutePath.Home, (route) => false);
                         }
                       },
                       child: model.busy
@@ -153,17 +151,15 @@ class _ModificationProfileState extends State<ModificationProfile> {
                                                     right: 20.0),
                                                 child: TextFieldWidget(
                                                     label: "Naissance",
+                                                    inputType:
+                                                        TextInputType.datetime,
                                                     controller: model
                                                         .birthdayController,
                                                     helperText:
                                                         "Format dd/mm/yyyy",
-                                                    onTap: () async =>
-                                                        await model
-                                                            .selectBirthday(
-                                                                context),
                                                     validation: (value) =>
-                                                        FormValidators.isDate(
-                                                            value)),
+                                                        FormValidators
+                                                            .isBirthday(value)),
                                               )),
                                           Expanded(
                                               flex: 5,

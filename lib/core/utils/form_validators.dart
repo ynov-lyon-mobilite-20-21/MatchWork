@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:match_work/core/utils/date_utils.dart';
 
 class FormValidators {
   static String isNotEmpty(String value, [String message]) {
@@ -86,6 +87,25 @@ class FormValidators {
       }
     }
 
+    return null;
+  }
+
+  static String isBirthday(String value, [String message]) {
+    if (value.split('/').length != 3) {
+      return "Format de date invalide";
+    }
+    DateTime dateValue = DateUtils.getDateFromString(value);
+    if (dateValue == null) {
+      return "Date invalide";
+    }
+    String error = isDate(value);
+    if(error != null)
+      {
+        return error;
+      }
+    if (!dateValue.isBefore(DateTime.now())) {
+      return "La date doit être inférieure à aujourd'hui";
+    }
     return null;
   }
 }
