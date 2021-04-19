@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
 import 'package:match_work/core/models/app_file.dart';
 import 'package:match_work/core/models/user.dart';
+import 'package:match_work/ui/views/code_view.dart';
 import 'package:match_work/ui/views/conversation_view.dart';
 import 'package:match_work/ui/views/home_view.dart';
 import 'package:match_work/ui/views/login_view.dart';
@@ -34,6 +35,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => OnBoardingView());
       case RoutePath.QrScan:
         return MaterialPageRoute(builder: (_) => QRcodeScanLauncherView());
+      case RoutePath.Code:
+        return MaterialPageRoute(builder: (_) => CodeView());
       case RoutePath.Conversation:
         User caller = settings.arguments as User;
         return MaterialPageRoute(

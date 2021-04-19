@@ -12,3 +12,4 @@ const String NewsNavBarTitle = "Actualités";
 const String BackTitle = "Retour";
 const String QrCodeKey = "2a3eac949458096262750e1fd9972495a0fdca03";
 const String StorageFirstaunchKey = "isFirstLaunch";
+const String CodeKey = "958416";
