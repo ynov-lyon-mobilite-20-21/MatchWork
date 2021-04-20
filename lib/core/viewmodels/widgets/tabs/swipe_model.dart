@@ -57,8 +57,7 @@ class SwipeModel extends BaseModel {
         senderUid: _authenticationService.currentUser.uid,
         recipientUid: user.uid,
         createdAt: Timestamp.now());
-    return await _matchRequestRepository.sendRequest(
-        matchRequest: matchRequest);
+    await _matchRequestRepository.sendRequest(matchRequest: matchRequest);
   }
 
   @override

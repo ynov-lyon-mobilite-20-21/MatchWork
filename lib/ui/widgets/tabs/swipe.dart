@@ -394,11 +394,10 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                             future: isUserLoggedin(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<bool> snapshot) {
-                              if (snapshot.data == false) {
-                                return Container();
-                              } else {
+                              if (snapshot.hasData && snapshot.data == true) {
                                 return TutorialSwipeAnimationWidget();
                               }
+                              return Container();
                             },
                           ),
                         ],

@@ -30,6 +30,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   addStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(StorageFirstaunchKey, false);
+    prefs.setBool('isFirstLaunchSwipe', true);
   }
 
   int getCurrentIndex(int page) {

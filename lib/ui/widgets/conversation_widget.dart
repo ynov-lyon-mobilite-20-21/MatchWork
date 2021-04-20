@@ -105,8 +105,8 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                                                 context)
                                             .currentUser
                                             .uid
-                                    ? "Votre demande de connexion a été acceptée"
-                                    : "Vous avez accepté la demande de connexion",
+                                    ? "Vous avez accepté la demande de connexion"
+                                    : "Votre demande de connexion a été acceptée",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.subtitle2,

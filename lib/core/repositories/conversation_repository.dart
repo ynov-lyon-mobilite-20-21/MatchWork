@@ -172,4 +172,11 @@ class ConversationRepository {
     }
     return true;
   }
+
+  Stream<int> getNumberUnreadConversations({@required User user}) =>
+      _conversationsCollection
+          .where(conversationReceiverUidReference, isEqualTo: user.uid)
+          .where(conversationIsReadReference, isEqualTo: false)
+          .snapshots()
+          .map((QuerySnapshot querySnapshot) => querySnapshot.docs.length);
 }

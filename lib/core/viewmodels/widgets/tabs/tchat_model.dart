@@ -114,8 +114,8 @@ class TchatModel extends BaseModel {
 
   Future acceptMatchRequest({@required MatchRequest matchRequest}) async {
     Conversation conversation = Conversation(
-      senderUid: matchRequest.senderUid,
-      receiverUid: matchRequest.recipientUid,
+      senderUid: matchRequest.recipientUid,
+      receiverUid: matchRequest.senderUid,
       lastMessageCreatedAt: Timestamp.now(),
     );
     conversation.id = ConversationsUtils.getConversationId(

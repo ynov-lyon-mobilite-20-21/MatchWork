@@ -54,4 +54,10 @@ class MatchRequestRepository {
         await this.removeMatchRequest(
             matchRequest: MatchRequest.fromSnapshot(documentSnapshot)));
   }
+
+  Stream<int> getNumberMatchRequests({@required User user}) =>
+      _matchRequestsCollection
+          .where(recipientUidReference, isEqualTo: user.uid)
+          .snapshots()
+          .map((QuerySnapshot querySnapshot) => querySnapshot.docs.length);
 }
