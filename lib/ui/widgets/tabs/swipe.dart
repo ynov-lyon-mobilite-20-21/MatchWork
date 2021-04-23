@@ -211,7 +211,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                         ),
                                         child: SingleChildScrollView(
                                           child: Padding(
-                                            padding: EdgeInsets.all(20.0),
+                                            padding: EdgeInsets.all(10.0),
                                             child: Container(
                                               child: Column(
                                                 children: [
@@ -233,14 +233,14 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                                 .circular(10.0),
                                                       ),
                                                     ),
-                                                    child: Text(
+                                                    child: Flexible( child: Text(
                                                         currentUser.bio ?? "",
                                                         style: theme
                                                             .textTheme.headline5
                                                             .copyWith(
                                                                 color: theme
                                                                     .indicatorColor)),
-                                                  ),
+                                                  )),
                                                   Container(
                                                     height: 20.0,
                                                     width: 20.0,
@@ -322,7 +322,7 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                                     .cardColor),
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(10.0),
+                                                                .circular(8.0),
                                                       ),
                                                     ),
                                                     child: Wrap(
@@ -478,20 +478,21 @@ class ExperiencesZoneState extends State<ExperiencesZone> {
           title: Column(
             children: [
               Row(children: [
-                Text(widget.job + " - " + widget.company,
+          Flexible( child: Text(widget.job + " - " + widget.company,
                     style: theme.textTheme.headline3
-                        .copyWith(color: theme.indicatorColor)),
+                        .copyWith(color: theme.indicatorColor)
+          )),
               ]),
               Row(children: [
-                Text(widget.startDate + " - " + widget.endDate,
+              Flexible( child:Text(widget.startDate + " - " + widget.endDate,
                     style: theme.textTheme.headline4
-                        .copyWith(color: theme.indicatorColor)),
+                        .copyWith(color: theme.indicatorColor))),
               ]),
               Text(""),
               Row(children: [
-                Text(widget.description,
+                Flexible( child:Text(widget.description,
                     style: theme.textTheme.headline5
-                        .copyWith(color: theme.indicatorColor))
+                        .copyWith(color: theme.indicatorColor))),
               ])
             ],
           ),
@@ -535,25 +536,26 @@ class FormationsZoneState extends State<FormationsZone> {
             children: [
               Row(
                 children: [
-                  Text(
+          Flexible( child:Text(
                     widget.degree + " - " + widget.school,
                     style: theme.textTheme.headline3
                         .copyWith(color: theme.indicatorColor),
+                  )
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Text(widget.startDate + " - " + widget.endDate,
+              Flexible( child:Text(widget.startDate + " - " + widget.endDate,
                       style: theme.textTheme.headline4
-                          .copyWith(color: theme.indicatorColor))
+                          .copyWith(color: theme.indicatorColor)))
                 ],
               ),
               Text(" "),
               Row(children: [
-                Text(widget.description,
+    Flexible( child:Text(widget.description,
                     style: theme.textTheme.headline5
-                        .copyWith(color: theme.indicatorColor))
+                        .copyWith(color: theme.indicatorColor)))
               ])
             ],
           ),
