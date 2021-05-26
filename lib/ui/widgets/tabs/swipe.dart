@@ -180,7 +180,8 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                         .width *
                                                     0.02,
                                               ),
-                                              Expanded(
+
+                                              Flexible(
                                                 child: Container(
                                                   decoration: BoxDecoration(
                                                     border: Border.all(
@@ -233,14 +234,18 @@ class _SwipeState extends State<Swipe> with TickerProviderStateMixin {
                                                                 .circular(10.0),
                                                       ),
                                                     ),
-                                                    child: Flexible( child: Text(
+                                                    child: Row(
+                                                        children: [
+                                                          Flexible( child: Text(
                                                         currentUser.bio ?? "",
                                                         style: theme
                                                             .textTheme.headline5
                                                             .copyWith(
                                                                 color: theme
                                                                     .indicatorColor)),
-                                                  )),
+                                                  )
+                                                        ],),
+                                        ),
                                                   Container(
                                                     height: 20.0,
                                                     width: 20.0,
@@ -478,13 +483,13 @@ class ExperiencesZoneState extends State<ExperiencesZone> {
           title: Column(
             children: [
               Row(children: [
-          Flexible( child: Text(widget.job + " - " + widget.company,
+                Flexible( child: Text(widget.job + " - " + widget.company,
                     style: theme.textTheme.headline3
                         .copyWith(color: theme.indicatorColor)
           )),
               ]),
               Row(children: [
-              Flexible( child:Text(widget.startDate + " - " + widget.endDate,
+                Flexible( child:Text(widget.startDate + " - " + widget.endDate,
                     style: theme.textTheme.headline4
                         .copyWith(color: theme.indicatorColor))),
               ]),
@@ -536,7 +541,7 @@ class FormationsZoneState extends State<FormationsZone> {
             children: [
               Row(
                 children: [
-          Flexible( child:Text(
+                  Flexible( child:Text(
                     widget.degree + " - " + widget.school,
                     style: theme.textTheme.headline3
                         .copyWith(color: theme.indicatorColor),
@@ -546,14 +551,14 @@ class FormationsZoneState extends State<FormationsZone> {
               ),
               Row(
                 children: [
-              Flexible( child:Text(widget.startDate + " - " + widget.endDate,
+                  Flexible( child:Text(widget.startDate + " - " + widget.endDate,
                       style: theme.textTheme.headline4
                           .copyWith(color: theme.indicatorColor)))
                 ],
               ),
               Text(" "),
               Row(children: [
-    Flexible( child:Text(widget.description,
+                Flexible( child:Text(widget.description,
                     style: theme.textTheme.headline5
                         .copyWith(color: theme.indicatorColor)))
               ])
