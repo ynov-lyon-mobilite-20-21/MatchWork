@@ -170,6 +170,10 @@ class AuthenticationService {
       nonce: nonce,
     );
 
+    if(appleCredential != null){
+      this.currentUser.firstName = appleCredential.givenName;
+      this.currentUser.lastName = appleCredential.familyName;
+    }
     // Create an `OAuthCredential` from the credential returned by Apple.
     final oauthCredential = Firebase.OAuthProvider("apple.com").credential(
       idToken: appleCredential.identityToken,
