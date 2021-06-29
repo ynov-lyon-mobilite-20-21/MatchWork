@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
@@ -77,21 +75,24 @@ class _LoginViewState extends State<LoginView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              RoundLogoButton(
-                                  color: Colors.white,
-                                  logo: AppLogoImages.LogoGoogle,
-                                  size: 50.0,
-                                  onTap: () => model.loginWithGoogle().then(
-                                      (bool success) =>
-                                          loginWithExternalService(
-                                              context: context,
-                                              scaffoldKey: _scaffoldKey,
-                                              success: success,
-                                              error: model.error,
-                                              isCreatedUser:
-                                                  model.isUserCreated))),
                               Visibility(
-                                visible: Platform.isIOS,
+                                visible: false,
+                                child: RoundLogoButton(
+                                    color: Colors.white,
+                                    logo: AppLogoImages.LogoGoogle,
+                                    size: 50.0,
+                                    onTap: () => model.loginWithGoogle().then(
+                                        (bool success) =>
+                                            loginWithExternalService(
+                                                context: context,
+                                                scaffoldKey: _scaffoldKey,
+                                                success: success,
+                                                error: model.error,
+                                                isCreatedUser:
+                                                    model.isUserCreated))),
+                              ),
+                              Visibility(
+                                visible: false,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 15.0),
                                   child: RoundLogoButton(
