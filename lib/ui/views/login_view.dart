@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:match_work/core/constants/app_constants.dart';
@@ -76,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Visibility(
-                                visible: false,
+                                visible: Platform.isAndroid,
                                 child: RoundLogoButton(
                                     color: Colors.white,
                                     logo: AppLogoImages.LogoGoogle,
